@@ -1,0 +1,12 @@
+@font-face {
+    font-family: font_hospitalPlanner;
+    src: url(static/YesevaOne-Regular.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
