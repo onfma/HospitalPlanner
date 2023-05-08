@@ -19,7 +19,6 @@ public class Doctor extends Person {
         super(cnp, firstName, lastName, gender, phoneNumber, address);
     }
 
-
     public List<Cabinet> getSpecialties() {
         return specialties;
     }
@@ -29,6 +28,9 @@ public class Doctor extends Person {
     }
 
     public void addSpecialty(Cabinet specialty){
+        if (specialties.contains(specialty))
+            throw new IllegalArgumentException("This specialty already exists in the specialties list");
+
         specialties.add(specialty);
     }
 
@@ -45,6 +47,9 @@ public class Doctor extends Person {
     }
 
     public void addDoctorSchedule(DoctorSchedule doctorSchedule){
+        if (doctorSchedules.contains(doctorSchedule))
+            throw new IllegalArgumentException("This doctorSchedule already exists in the doctorSchedules list");
+
         doctorSchedules.add(doctorSchedule);
     }
 

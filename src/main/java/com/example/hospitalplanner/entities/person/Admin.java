@@ -32,6 +32,12 @@ public class Admin {
     }
 
     public void setEmail(String email) {
+        // Check the email format
+        String emailRegex = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+        if (!email.matches(emailRegex)) {
+            throw new IllegalArgumentException("Email format is invalid.");
+        }
+
         this.email = email;
     }
 
@@ -40,6 +46,28 @@ public class Admin {
     }
 
     public void setPassword(String password) {
+        // Check password composition
+        boolean containsUpperCase = false;
+        boolean containsLowerCase = false;
+        boolean containsDigit = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                containsUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                containsLowerCase = true;
+            } else if (Character.isDigit(c)) {
+                containsDigit = true;
+            }
+        }
+
+        if(password.length() < 8)
+            throw new IllegalArgumentException("Password must have at least 8 characters!");
+
+        if (!containsUpperCase || !containsLowerCase || !containsDigit) {
+            throw new IllegalArgumentException("Password must contain at least one uppercase letter, one lowercase letter, and one digit!");
+        }
+
         this.password = password;
     }
 
@@ -51,9 +79,8 @@ public class Admin {
         return doctorList;
     }
 
-    public List<Patient> removePatient(Patient patient) {
+    public void removePatient(Patient patient) {
         this.patientList.remove(patient);
-        return this.patientList;
     }
 
     public void removeDoctor(Doctor doctor) {
@@ -73,6 +100,11 @@ public class Admin {
     }
 
     public void addCabinet(Cabinet cabinet) {
+        if (cabinet == null)
+            throw new IllegalArgumentException("Cabinet cannot be null");
+        if (cabinetList.contains(cabinet))
+            throw new IllegalArgumentException("Cabinet already exists in the cabinetList list");
+
         this.cabinetList.add(cabinet);
     }
 
@@ -89,6 +121,11 @@ public class Admin {
     }
 
     public void addCabinetSchedule(CabinetSchedule cabinetSchedule) {
+        if (cabinetSchedule == null)
+            throw new IllegalArgumentException("CabinetSchedule cannot be null");
+        if (cabinetSchedulesList.contains(cabinetSchedule))
+            throw new IllegalArgumentException("CabinetSchedule already exists in the cabinetSchedulesList list");
+
         this.cabinetSchedulesList.add(cabinetSchedule);
     }
 
