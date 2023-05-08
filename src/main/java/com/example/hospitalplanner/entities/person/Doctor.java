@@ -15,7 +15,7 @@ public class Doctor extends Person {
     public Doctor(String email, String password){
         super(email, password);
     }
-    public Doctor(int cnp, String firstName, String lastName, String gender, String phoneNumber, String address) {
+    public Doctor(long cnp, String firstName, String lastName, char gender, String phoneNumber, String address) {
         super(cnp, firstName, lastName, gender, phoneNumber, address);
     }
 
