@@ -1,0 +1,33 @@
+.footer{
+    position: absolute;
+    width: 100%;
+    height: 170px;
+    left: 0px;
+    bottom: 0px;
+    background: #1F2B6C;
+    display: flex;
+    align-items: center;
+}
+
+.footer .text_box{
+    height: 100px;
+    width: 30%;
+    margin: auto;
+}
+
+.footer .text_box .text1{
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 52px;
+    text-align: center;
+    color: #BFD2F8;
+}
+
+.footer .text_box .text2{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 140%;
+    text-align: center;
+    color: #FCFEFE;
+}

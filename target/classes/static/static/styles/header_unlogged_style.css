@@ -19,29 +19,21 @@
 
 .header .loginButton{
     position: absolute;
+    right: 5%;
+    top: 32px;
+    cursor: pointer;
+
     display: flex;
     flex-direction: row;
     align-items: center;
-
-
-
-
+    gap: 8px;
     padding: 13px 35px;
-
-
-    left: 73.68%;
-    top: 32px;
-
     background: #BFD2F8;
     border: none;
     border-radius: 50px;
 
-    cursor: pointer;
-
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-
-    gap: 8px;
 
 }
