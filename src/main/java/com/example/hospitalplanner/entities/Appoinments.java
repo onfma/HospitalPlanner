@@ -6,11 +6,11 @@ import java.util.Objects;
 public class Appoinments {
     private int id;
     private int cabinetID;
-    private int doctorCNP;
-    private int patientCNP;
+    private long doctorCNP;
+    private long patientCNP;
     private LocalDateTime appointmentTime;
 
-    public Appoinments(int id, int cabinetID, int doctorCNP, int patientCNP, LocalDateTime appointmentTime){
+    public Appoinments(int id, int cabinetID, long doctorCNP, long patientCNP, LocalDateTime appointmentTime){
         this.id = id;
         this.cabinetID = cabinetID;
         this.doctorCNP = doctorCNP;
@@ -34,19 +34,19 @@ public class Appoinments {
         this.cabinetID = cabinetID;
     }
 
-    public int getDoctorCNP() {
+    public long getDoctorCNP() {
         return doctorCNP;
     }
 
-    public void setDoctorCNP(int doctorCNP) {
+    public void setDoctorCNP(long doctorCNP) {
         this.doctorCNP = doctorCNP;
     }
 
-    public int getPatientCNP() {
+    public long getPatientCNP() {
         return patientCNP;
     }
 
-    public void setPatientCNP(int patientCNP) {
+    public void setPatientCNP(long patientCNP) {
         this.patientCNP = patientCNP;
     }
 

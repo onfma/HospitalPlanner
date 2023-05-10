@@ -4,12 +4,12 @@ package com.example.hospitalplanner.entities.schedule;
 import java.time.LocalTime;
 
 public abstract class Schedule {
-    protected int id;
+    protected long id;
     protected String dayOfWeek;
     protected LocalTime startTime;
     protected LocalTime endTime;
 
-    public Schedule(int id, String dayOfWeek, LocalTime startTime, LocalTime endTime){
+    public Schedule(long id, String dayOfWeek, LocalTime startTime, LocalTime endTime){
         if (!String.valueOf(id).matches("\\d+"))
             throw new IllegalArgumentException("ID should only contain digits.");
         if (!dayOfWeek.matches("[a-zA-Z]+") || !(dayOfWeek.equals("Monday") || dayOfWeek.equals("Tuesday") || dayOfWeek.equals("Wednesday") || dayOfWeek.equals("Thursday") || dayOfWeek.equals("Friday")))
@@ -30,7 +30,7 @@ public abstract class Schedule {
         this.endTime = endTime;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
