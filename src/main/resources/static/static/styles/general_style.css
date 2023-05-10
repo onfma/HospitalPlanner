@@ -1,11 +1,15 @@
 @font-face {
-    font-family: 'Yeseva_One';
-    src: url("static/YesevaOne-Regular.ttf");
-    font-display: swap;
+    font-family: Yeseva_One;
+    src: url("static/fonts/YesevaOne-Regular.ttf");
 }
 
-body{
-    font-family: Yeseva_One;
+@font-face {
+    font-family: Work_Sans;
+    src: url("static/fonts/DMSans-Regular.ttf");
+}
+
+*{
+    font-family: Yeseva_One, Work_Sans, monospace;
 }
 
 html {
