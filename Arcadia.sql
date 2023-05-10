@@ -1,6 +1,7 @@
 CREATE TABLE User_authentication (
   Email VARCHAR2(100) PRIMARY KEY,
-  Password VARCHAR2(100) NOT NULL
+  Password VARCHAR2(100) NOT NULL,
+  salt VARCHAR2(100)
 );
 
 
@@ -101,7 +102,7 @@ VALUES ('maria.onofrei@admin.com', 'admin');
 
 -- Insert patients
 INSERT INTO Pacients (CNP, First_name, Last_name, Gender, Phone_number, Email, Address)
-VALUES (1234567890123, 'John', 'Doe', 'M', '+44-7456-123456', 'john.doe@example.com', '123 Main Street');
+VALUES (1234567890123, 'John', 'Doe', 'M', '+447456123456', 'john.doe@example.com', '123 Main Street');
 INSERT INTO Pacients (CNP, First_name, Last_name, Gender, Phone_number, Email, Address)
 VALUES (2345678901234, 'Jane', 'Smith', 'F', '+44-7456-234567', 'jane.smith@yahoo.com', '456 Oak Avenue');
 INSERT INTO Pacients (CNP, First_name, Last_name, Gender, Phone_number, Email, Address)

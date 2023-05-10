@@ -56,4 +56,34 @@ public class Doctor extends Person {
     public void removeDoctorSchedule(DoctorSchedule doctorSchedule){
         doctorSchedules.remove(doctorSchedule);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Doctor {" +
+                "CNP = " + cnp +
+                ", FIRST_NAME = '" + firstName + '\'' +
+                ", LAST_NAME = " + lastName +
+                ", GENDER = " + gender +
+                ", PHONE_NUMBER= " + phoneNumber +
+                ", EMAIL = " + email +
+                ", ADDRESS = " + address +
+                ", Specialties = \n"
+        );
+
+        for (Cabinet cabinet : this.specialties) {
+            sb.append("\t" + cabinet.getSpecialtyName());
+            sb.append("\n");
+        }
+
+        sb.append("\nDoctor Schedules:");
+
+        for (DoctorSchedule doctorSchedule : this.doctorSchedules) {
+            sb.append("\t" + doctorSchedule.toString());
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
 }

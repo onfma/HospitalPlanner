@@ -98,6 +98,10 @@ public abstract class Person {
         return cnp;
     }
 
+    public void setCnp(long cnp) {
+        this.cnp = cnp;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -136,7 +140,7 @@ public abstract class Person {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (!phoneNumber.matches("\\+44\\d{10}"))
+        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}"))
             throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44xxxxxxxxxx' and should contains only digits.");
 
         this.phoneNumber = phoneNumber;
@@ -147,7 +151,8 @@ public abstract class Person {
     }
 
     public void setEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+        String emailRegex = "^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+
         if (!email.matches(emailRegex)) {
             throw new IllegalArgumentException("Email format is invalid.");
         }
