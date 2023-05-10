@@ -1,9 +1,16 @@
 package com.example.hospitalplanner.test;
 
 import com.example.hospitalplanner.entities.Appoinments;
+import com.example.hospitalplanner.entities.Cabinet;
+import com.example.hospitalplanner.entities.person.Admin;
+import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
+import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
+import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +19,7 @@ public class TestPerson {
 //        constructorPerson_EmailPassword();
 //        constructorPerson();
 //        setMethods();
+        adminRights();
     }
 
     private void constructorPerson_EmailPassword() {
@@ -85,5 +93,67 @@ public class TestPerson {
 
         // Invalid adress format
         patient.setAddress("#@12, Baker Street");
+    }
+
+    public void adminRights() {
+        // Patient list
+        List<Patient> patientList = new ArrayList<>();
+
+        Patient patient1 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "12, Baker Street");
+        Patient patient2 = new Patient(1234567890124L, "Mihai", "Zoe", 'M', "+441234567891", "13, Baker Street");
+        Patient patient3 = new Patient(1234567890125L, "Antonia", "Popovici", 'F', "+441234567892", "14, Baker Street");
+
+        patientList.add(patient1);
+        patientList.add(patient2);
+        patientList.add(patient3);
+
+        // Doctor list
+        List<Doctor> doctorList = new ArrayList<>();
+
+        Doctor doctor1 = new Doctor(1234567890126L, "Alex", "Alexandru", 'M', "+441234467890", "15, Baker Street");
+        Doctor doctor2 = new Doctor(1234567890127L, "Naria", "Onofrei", 'F', "+441264467890", "16, Baker Street");
+        Doctor doctor3 = new Doctor(1234567890128L, "Narian", "Onofrei", 'M', "+441264587890", "17, Baker Street");
+
+        doctorList.add(doctor1);
+        doctorList.add(doctor2);
+        doctorList.add(doctor3);
+
+        // Cabinet list
+        List<Cabinet> cabinetList = new ArrayList<>();
+
+        Cabinet cabinet1 = new Cabinet(1, "Pediatrics");
+        Cabinet cabinet2 = new Cabinet(2, "Neurosurgery");
+        Cabinet cabinet3 = new Cabinet(3, "Oncology");
+
+        cabinetList.add(cabinet1);
+        cabinetList.add(cabinet2);
+        cabinetList.add(cabinet3);
+
+        // CabinetSchedule list
+        List<CabinetSchedule> cabinetSchedulesList = new ArrayList<>();
+
+        CabinetSchedule cabinetSchedule1 = new CabinetSchedule(1, "Monday",  LocalTime.of(10,0),  LocalTime.of(17,0));
+        CabinetSchedule cabinetSchedule2 = new CabinetSchedule(2, "Friday",  LocalTime.of(10,30),  LocalTime.of(13,0));
+        CabinetSchedule cabinetSchedule3 = new CabinetSchedule(3, "Monday",  LocalTime.of(12,0),  LocalTime.of(19,30));
+
+        // DoctorSchedule list
+        List<DoctorSchedule> doctorScheduleList = new ArrayList<>();
+
+        DoctorSchedule doctorSchedule1 = new DoctorSchedule(1234567890126L, "Monday", LocalTime.of(10,0),  LocalTime.of(17,0));
+        DoctorSchedule doctorSchedule2 = new DoctorSchedule(1234567890127L, "Tuesday", LocalTime.of(10,0),  LocalTime.of(17,0));
+        DoctorSchedule doctorSchedule3 = new DoctorSchedule(1234567890128L, "Wednesday", LocalTime.of(10,0),  LocalTime.of(17,0));
+
+        // AppoinmentsList list
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+
+        Appoinments appoinment1 = new Appoinments(1, 1, 1234567890126L , 1234567890123L, LocalDateTime.of(2023, 5, 12, 14, 30));
+        Appoinments appoinment2 = new Appoinments(2, 2, 1234567890127L , 1234567890123L, LocalDateTime.of(2023, 5, 13, 14, 30));
+        Appoinments appoinment3 = new Appoinments(1, 1, 1234567890128L , 1234567890123L, LocalDateTime.of(2023, 5, 14, 14, 30));
+
+        appoinmentsList.add(appoinment1);
+        appoinmentsList.add(appoinment2);
+        appoinmentsList.add(appoinment3);
+
+        Admin admin = new Admin(patientList, doctorList, cabinetList, cabinetSchedulesList, doctorScheduleList, appoinmentsList);
     }
 }

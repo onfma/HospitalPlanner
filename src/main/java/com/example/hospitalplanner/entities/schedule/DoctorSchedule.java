@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 public class DoctorSchedule extends Schedule {
-    public DoctorSchedule(int doctorCNP, String dayOfWeek, LocalTime startTime, LocalTime endTime) {
+    public DoctorSchedule(long doctorCNP, String dayOfWeek, LocalTime startTime, LocalTime endTime) {
         super(doctorCNP, dayOfWeek, startTime, endTime);
     }
 

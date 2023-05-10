@@ -4,12 +4,12 @@ package com.example.hospitalplanner.entities.schedule;
 import java.time.LocalTime;
 
 public abstract class Schedule {
-    protected int id;
+    protected long id;
     protected String dayOfWeek;
     protected LocalTime startTime;
     protected LocalTime endTime;
 
-    public Schedule(int id, String dayOfWeek, LocalTime startTime, LocalTime endTime){
+    public Schedule(long id, String dayOfWeek, LocalTime startTime, LocalTime endTime){
         if (!String.valueOf(id).matches("\\d+"))
             throw new IllegalArgumentException("ID should only contain digits.");
         if (!dayOfWeek.matches("[a-zA-Z]+") || !(dayOfWeek.equals("Monday") || dayOfWeek.equals("Tuesday") || dayOfWeek.equals("Wednesday") || dayOfWeek.equals("Thursday") || dayOfWeek.equals("Friday")))
@@ -25,7 +25,7 @@ public abstract class Schedule {
         this.endTime = endTime;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -34,10 +34,8 @@ public abstract class Schedule {
     }
 
     public void setDayOfWeek(String dayOfWeek) {
-        if (startTime.isAfter(endTime))
-            throw new IllegalArgumentException("Start time cannot be after end time.");
-        if (startTime.equals(endTime))
-            throw new IllegalArgumentException("Start time cannot be equals to end time.");
+        if (!dayOfWeek.matches("[a-zA-Z]+") || !(dayOfWeek.equals("Monday") || dayOfWeek.equals("Tuesday") || dayOfWeek.equals("Wednesday") || dayOfWeek.equals("Thursday") || dayOfWeek.equals("Friday")))
+            throw new IllegalArgumentException("Day of week should contain only letters and be one of the following: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'");
 
         this.dayOfWeek = dayOfWeek;
     }
@@ -60,8 +58,10 @@ public abstract class Schedule {
     }
 
     public void setEndTime(LocalTime endTime) {
-        if (endTime.getMinute() < 0 || endTime.getMinute() > 59 || endTime.getHour() < 0 || endTime.getHour() > 23)
-            throw new IllegalArgumentException("End times should contain only hours and minutes in the range 00:00 - 23:59.");
+        if (startTime.isAfter(endTime))
+            throw new IllegalArgumentException("Start time cannot be after end time.");
+        if (startTime.equals(endTime))
+            throw new IllegalArgumentException("Start time cannot be equals to end time.");
 
         this.endTime = endTime;
     }
