@@ -2,6 +2,10 @@ package com.example.hospitalplanner.entities.person;
 
 import com.example.hospitalplanner.entities.Appoinments;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 
 public abstract class Person {
@@ -13,6 +17,7 @@ public abstract class Person {
     protected String address;
     protected String email;
     protected String password;
+    protected String salt;
     protected List<Appoinments> appoinments;
 
     // Constructor
@@ -50,7 +55,16 @@ public abstract class Person {
 
         // Variable assignment
         this.email = email;
-        this.password = password;
+
+        // Generate salt
+        String salt = generateSalt();
+
+        // Hash password with salt
+        String hashedPassword = hashPassword(password, salt);
+
+        // Save salt and hashed password
+        this.salt = salt;
+        this.password = hashedPassword;
     }
 
     public Person(long cnp, String firstName, String lastName, char gender, String phoneNumber, String address) {
@@ -179,7 +193,19 @@ public abstract class Person {
             throw new IllegalArgumentException("Password must contain at least one uppercase letter, one lowercase letter, and one digit!");
         }
 
-        this.password = password;
+        // Generate salt
+        String salt = generateSalt();
+
+        // Hash password with salt
+        String hashedPassword = hashPassword(password, salt);
+
+        // Save salt and hashed password
+        this.salt = salt;
+        this.password = hashedPassword;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 
     public List<Appoinments> getAppoinments() {
@@ -207,5 +233,27 @@ public abstract class Person {
             throw new IllegalArgumentException("Appoinment cannot be null");
 
         appoinments.remove(appoinment);
+    }
+
+    private String generateSalt() {
+        // Generate a random salt
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+        return Base64.getEncoder().encodeToString(saltBytes);
+    }
+
+    private String hashPassword(String password, String salt) {
+        // Hash password with salt
+        String passwordAndSalt = password + salt;
+        String hashedPassword = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashedPasswordBytes = md.digest(passwordAndSalt.getBytes());
+            hashedPassword = Base64.getEncoder().encodeToString(hashedPasswordBytes);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return hashedPassword;
     }
 }

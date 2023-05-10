@@ -5,13 +5,15 @@ import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.person.Admin;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
-import com.example.hospitalplanner.entities.person.Person;
 import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class TestPerson {
@@ -20,6 +22,7 @@ public class TestPerson {
 //        constructorPerson();
 //        setMethods();
 //        adminRights();
+        passwordSaltHash();
     }
 
     private void constructorPerson_EmailPassword() {
@@ -166,5 +169,43 @@ public class TestPerson {
         newPatient.setGender('F');
 
         newPatientList.add(newPatient);
+    }
+
+    public void passwordSaltHash() {
+        // The same password saved different in the database
+        Patient patient1 = new Patient("alex@yahoo.com", "Parolatest1");
+//        System.out.println("Password: " + patient1.getPassword() + ", salt: " + patient1.getSalt());
+
+        Patient patient2 = new Patient("alexandru@yahoo.com", "Parolatest1");
+//        System.out.println("Password: " + patient2.getPassword() + ", salt: " + patient2.getSalt());
+
+        // test to see if the correct password is identical to the one saved in the database or a wrong
+        // password is different from the one saved in the database
+
+        // Correct hash password with salt
+        String correctHashedPassword = hashPassword("Parolatest1", patient1.getSalt());
+
+        if (!correctHashedPassword.equals(patient1.getPassword()))
+            throw new IllegalArgumentException("The password provided should be correct, but isn't!");
+
+        // Incorrect hash password with salt
+        String incorrectHashedPassword = hashPassword("hello@-13.", patient2.getSalt());
+
+        if (incorrectHashedPassword.equals(patient2.getPassword()))
+            throw new IllegalArgumentException("The password provided should be incorrect, but is!");
+    }
+
+    private String hashPassword(String password, String salt) {
+        // Hash password with salt
+        String passwordAndSalt = password + salt;
+        String hashedPassword = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashedPasswordBytes = md.digest(passwordAndSalt.getBytes());
+            hashedPassword = Base64.getEncoder().encodeToString(hashedPasswordBytes);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return hashedPassword;
     }
 }

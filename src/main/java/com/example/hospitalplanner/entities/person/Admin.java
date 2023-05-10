@@ -133,12 +133,12 @@ public class Admin {
         this.cabinetSchedulesList.remove(cabinetSchedule);
     }
 
-    // ce poate sa faca adminul?
+//       what can the admin do?
 
-// X    // sa vizualizeze datele pacientilor, doctorilor, programul doctorilor FARA a le edita (sterge, etc)
-// X        // poate doar sa stearga un doctor / pacient, fara a crea unul
-// X        // nu poate sa editeze datele unui doctor/pacient
-// X    // poate sa vada programarile pacientilor + sa le stearga
-// X    // sa editeze Cabinete (adauga, sterge)
-// X    // sa modifice CabinetSchedule
+//    X // to view the data of patients, doctors, doctors' schedule WITHOUT editing them (delete, etc.)
+//    X // can only delete a doctor / patient, without creating one
+//    X // cannot edit the data of a doctor/patient
+//    X // can see patients' appointments + delete them
+//    X // to edit Cabinets (add, delete)
+//    X // to modify CabinetSchedule
 }
