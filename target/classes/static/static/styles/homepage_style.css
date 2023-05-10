@@ -1,7 +1,45 @@
 .homepage_title{
-    font-weight: 600;
+    font-weight: 400;
     font-size: 64px;
     line-height: 74px;
     color: #1F2B6C;
     text-transform: uppercase;
+}
+
+.homepage_subtitle1{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    color: #159EEC;
+    text-transform: uppercase;
+    font-family: Work_Sans;
+}
+
+.homepage_subtitle2{
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 37px;
+    color: #1F2B6C;
+}
+
+.homepage_contact_box{
+    background: #BFD2F8;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.homepage_contact_box .title{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: #1F2B6C;
+}
+
+.homepage_contact_box .text{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #1F2B6C;
+    font-family: Work_Sans;
 }

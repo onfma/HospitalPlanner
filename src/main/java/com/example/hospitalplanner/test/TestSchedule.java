@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 public class TestSchedule {
     public TestSchedule(){
-        constructorSchedule();
+//        constructorSchedule();
     }
 
     private void constructorSchedule(){

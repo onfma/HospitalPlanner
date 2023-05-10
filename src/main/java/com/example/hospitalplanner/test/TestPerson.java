@@ -19,7 +19,7 @@ public class TestPerson {
 //        constructorPerson_EmailPassword();
 //        constructorPerson();
 //        setMethods();
-        adminRights();
+//        adminRights();
     }
 
     private void constructorPerson_EmailPassword() {
@@ -155,5 +155,16 @@ public class TestPerson {
         appoinmentsList.add(appoinment3);
 
         Admin admin = new Admin(patientList, doctorList, cabinetList, cabinetSchedulesList, doctorScheduleList, appoinmentsList);
+
+        // test if I can edit a patient's data
+        List<Patient> newPatientList = new ArrayList<>();
+        newPatientList = admin.getPatientList();
+
+        Patient newPatient = new Patient();
+        newPatient=newPatientList.get(0);
+
+        newPatient.setGender('F');
+
+        newPatientList.add(newPatient);
     }
 }
