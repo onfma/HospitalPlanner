@@ -1,5 +1,6 @@
 package com.example.hospitalplanner.entities.person;
 
+import com.example.hospitalplanner.database.DAO.PatientDAO;
 import com.example.hospitalplanner.entities.Appoinments;
 
 import java.security.MessageDigest;
@@ -22,11 +23,11 @@ public abstract class Person {
 
     // Constructor
 
-    public Person(){}
+    public Person() {}
 
     public Person(String email, String password){
         // Check the email format
-        String emailRegex = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+        String emailRegex = "^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
         if (!email.matches(emailRegex)) {
             throw new IllegalArgumentException("Email format is invalid.");
         }
@@ -67,7 +68,11 @@ public abstract class Person {
         this.password = hashedPassword;
     }
 
-    public Person(long cnp, String firstName, String lastName, char gender, String phoneNumber, String address) {
+    public Person(long cnp, String firstName, String lastName, char gender, String phoneNumber, String email, String address) {
+        // Check the email format
+        String emailRegex = "^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$";
+        if (!email.matches(emailRegex))
+            throw new IllegalArgumentException("Email format is invalid.");
         if (String.valueOf(cnp).length() != 13)
             throw new IllegalArgumentException("Invalid CNP: CNP should have exactly 13 digits.");
         if (!firstName.matches("[a-zA-Z]+"))
@@ -76,11 +81,10 @@ public abstract class Person {
             throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
         if (!(gender == 'M') && !(gender == 'F'))
             throw new IllegalArgumentException("Invalid gender: Gender should be 'M' or 'F'.");
-        if (!phoneNumber.matches("\\+44\\d{10}"))
-            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44xxxxxxxxxx' and should contains only digits.");
-        if (!address.matches("[a-zA-Z0-9,. ;]+")) {
+        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !phoneNumber.matches("\\+44\\d{10}"))
+            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
+        if (!address.matches("[a-zA-Z0-9,. ;]+"))
             throw new IllegalArgumentException("Invalid address: Address should contain only letters, digits, or the following characters: [,.;]");
-        }
 
 
         this.cnp = cnp;
@@ -88,6 +92,7 @@ public abstract class Person {
         this.lastName = lastName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
+        this.email = email;
         this.address = address;
     }
 
@@ -101,8 +106,8 @@ public abstract class Person {
             throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
         if (!(gender == 'M') && !(gender == 'F'))
             throw new IllegalArgumentException("Invalid gender: Gender should be 'M' or 'F'.");
-        if (!phoneNumber.matches("\\+44\\d{10}"))
-            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44xxxxxxxxxx' and should contains only digits.");
+        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !phoneNumber.matches("\\+44\\d{10}"))
+            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
         if (!address.matches("[a-zA-Z0-9,. ;]+")) {
             throw new IllegalArgumentException("Invalid address: Address should contain only letters, digits, or the following characters: [,.;]");
         }
@@ -165,8 +170,8 @@ public abstract class Person {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}"))
-            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44xxxxxxxxxx' and should contains only digits.");
+        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !phoneNumber.matches("\\+44\\d{10}"))
+            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
 
         this.phoneNumber = phoneNumber;
     }
@@ -238,6 +243,10 @@ public abstract class Person {
         return salt;
     }
 
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public List<Appoinments> getAppoinmentsList() {
         return appoinmentsList;
     }
@@ -286,4 +295,5 @@ public abstract class Person {
         }
         return hashedPassword;
     }
+
 }
