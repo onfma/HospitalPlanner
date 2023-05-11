@@ -16,7 +16,7 @@
 
 <body>
 
-<!-- HEADER -->
+    <!-- HEADER -->
     <div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
         <div class="d-flex justify-content-between bg-secondary mb-1 ml-5 px-5" style="background-color: transparent !important;">
             <div class="bg-info text-center" style="background-color: transparent !important;">
@@ -36,7 +36,7 @@
         <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Create account to Hospital<a style="color: #159EEC;">Planner</a></div>
 
         <!-- account form -->
-        <form action="/action_page.php" class="container-fluid mt-3">
+        <form action="#" class="container-fluid mt-3">
             <div class="row">
                 <!-- info boxes -->
                 <div class="col-sm-9 p-3">
@@ -66,7 +66,7 @@
                         <!-- CNP -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="static/img/cnp_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 33%;">
                                 <input type="text" class="form-control" id="cnp" placeholder="Enter your CNP" name="cnp" pattern="[0-9]{13}" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="cnp" style="display: flex; align-items: center;">
                                     Enter your CNP
@@ -76,7 +76,7 @@
                         <!-- sex -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3 dropdown" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="static/img/sex_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 30%;">
                                 <input type="text" class="form-control dropdown-toggle" data-bs-toggle="dropdown" id="sex" placeholder="Enter your sex" name="sex" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="sex" style="display: flex; align-items: center;">Enter your sex</label>
                                 <ul class="dropdown-menu">
@@ -90,7 +90,7 @@
                         <!-- tel -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="tel" class="form-control" id="tel" placeholder="Enter your phone number" name="tel" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="tel" style="display: flex; align-items: center;">
                                     Enter your phone number
@@ -100,7 +100,7 @@
                         <!-- email -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="email" style="display: flex; align-items: center;">
                                     Enter your email address
@@ -112,7 +112,7 @@
                         <!-- home address -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="text" class="form-control" id="home_address" placeholder="Enter your home address" name="home_address" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="home_address" style="display: flex; align-items: center;">
                                     Enter your home address
@@ -127,7 +127,7 @@
                 <!-- TODO: butoanele de pacient/doctor -->
                 <div class="col-sm-3 p-3 border-start border-4 text-center" style="border-color: #1F2B6C !important;">
                     <!-- type -->
-                    <div class="container-fluid mt-3 pt-3 pb-3 d-flex flex-column justify-content-around">
+                    <div class="container-fluid mt-3 pt-5 pb-3 d-flex flex-column justify-content-around">
                         <div class="p-2">
                             <button id="patientBtn" class="btn pt-2 pb-2 px-5" style="background: #BFD2F8; border-radius: 5px; border: none; font-size: 30px; line-height: 47px;">Patient</button>
                         </div>
@@ -137,11 +137,6 @@
                         <div class="p-2">
                             <button id="doctorBtn" class="btn pt-2 pb-2 px-5" style="background: #BFD2F8; border-radius: 5px; border: none; font-size: 30px; line-height: 47px;">Doctor</button>
                         </div>
-                    </div>
-
-                    <!-- next button -->
-                    <div class="container-fluid mt-3 pt-2">
-                        <button type="submit" class="btn pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Next</button>
                     </div>
                 </div>
             </div>
@@ -164,6 +159,20 @@
             var selectedOption = $(this).text();
             $('#sex').val(selectedOption);
         });
+    });
+
+    var patientBtn = document.getElementById('patientBtn');
+    var doctorBtn = document.getElementById('doctorBtn');
+
+    // Add click event listeners to the buttons
+    patientBtn.addEventListener('click', function() {
+        // Redirect to createAccountPasswordPage.html
+        window.location.href = 'createAccountPasswordPage.html';
+    });
+
+    doctorBtn.addEventListener('click', function() {
+        // Redirect to createAccountDoctorPage.html
+        window.location.href = 'createAccountDoctorPage.html';
     });
 
 </script>
