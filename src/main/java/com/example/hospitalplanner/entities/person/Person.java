@@ -18,7 +18,7 @@ public abstract class Person {
     protected String email;
     protected String password;
     protected String salt;
-    protected List<Appoinments> appoinments;
+    protected List<Appoinments> appoinmentsList;
 
     // Constructor
 
@@ -91,9 +91,34 @@ public abstract class Person {
         this.address = address;
     }
 
+
+    public Person(long cnp, String firstName, String lastName, char gender, String phoneNumber, String address, List<Appoinments> appoinmentsList) {
+        if (String.valueOf(cnp).length() != 13)
+            throw new IllegalArgumentException("Invalid CNP: CNP should have exactly 13 digits.");
+        if (!firstName.matches("[a-zA-Z]+"))
+            throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
+        if (!lastName.matches("[a-zA-Z]+"))
+            throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
+        if (!(gender == 'M') && !(gender == 'F'))
+            throw new IllegalArgumentException("Invalid gender: Gender should be 'M' or 'F'.");
+        if (!phoneNumber.matches("\\+44\\d{10}"))
+            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44xxxxxxxxxx' and should contains only digits.");
+        if (!address.matches("[a-zA-Z0-9,. ;]+")) {
+            throw new IllegalArgumentException("Invalid address: Address should contain only letters, digits, or the following characters: [,.;]");
+        }
+
+
+        this.cnp = cnp;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.appoinmentsList = appoinmentsList;
+    }
+
+
     // Getters and setters
-
-
     public long getCnp() {
         return cnp;
     }
@@ -213,31 +238,31 @@ public abstract class Person {
         return salt;
     }
 
-    public List<Appoinments> getAppoinments() {
-        return appoinments;
+    public List<Appoinments> getAppoinmentsList() {
+        return appoinmentsList;
     }
 
-    public void setAppoinments(List<Appoinments> appoinments) {
-        if (appoinments == null || appoinments.contains(null))
+    public void setAppoinments(List<Appoinments> appoinmentsList) {
+        if (appoinmentsList == null || appoinmentsList.contains(null))
             throw new IllegalArgumentException("Appoinments list cannot be null and cannot contain null values");
 
-        this.appoinments = appoinments;
+        this.appoinmentsList = appoinmentsList;
     }
 
     public void addAppoinments(Appoinments appoinment){
         if (appoinment == null)
             throw new IllegalArgumentException("Appoinment cannot be null");
-        if (appoinments.contains(appoinment))
+        if (appoinmentsList.contains(appoinment))
             throw new IllegalArgumentException("Appoinment already exists in the appoinments list");
 
-        appoinments.add(appoinment);
+        appoinmentsList.add(appoinment);
     }
 
     public void removeAppoinments(Appoinments appoinment){
         if (appoinment == null)
             throw new IllegalArgumentException("Appoinment cannot be null");
 
-        appoinments.remove(appoinment);
+        appoinmentsList.remove(appoinment);
     }
 
     private String generateSalt() {

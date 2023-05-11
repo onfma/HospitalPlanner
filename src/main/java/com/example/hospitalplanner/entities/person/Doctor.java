@@ -1,5 +1,6 @@
 package com.example.hospitalplanner.entities.person;
 
+import com.example.hospitalplanner.entities.Appoinments;
 import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.schedule.*;
 import com.example.hospitalplanner.entities.person.Person;
@@ -9,6 +10,7 @@ import java.util.List;
 public class Doctor extends Person {
     private List<Cabinet> specialties;
     private List<DoctorSchedule> doctorSchedules;
+    private List<Appoinments> appoinmentsList;
 
     public Doctor() {}
 
@@ -57,32 +59,52 @@ public class Doctor extends Person {
         doctorSchedules.remove(doctorSchedule);
     }
 
+    public List<Appoinments> getAppoinmentsList() {
+        return appoinmentsList;
+    }
+
+    @Override
+    public void setAppoinments(List<Appoinments> appoinments) {
+        super.setAppoinments(appoinments);
+    }
+
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Doctor {" +
-                "CNP = " + cnp +
-                ", FIRST_NAME = '" + firstName + '\'' +
-                ", LAST_NAME = " + lastName +
-                ", GENDER = " + gender +
-                ", PHONE_NUMBER= " + phoneNumber +
-                ", EMAIL = " + email +
-                ", ADDRESS = " + address +
-                ", Specialties = \n"
+        sb.append("Doctor (" +
+                "CNP = '" + cnp + "')" +
+                "\n\t\t- FIRST_NAME = '" + firstName + '\'' +
+                "\n\t\t- LAST_NAME = '" + lastName + '\'' +
+                "\n\t\t- GENDER = '" + gender + '\'' +
+                "\n\t\t- PHONE_NUMBER= '" + phoneNumber + '\'' +
+                "\n\t\t- EMAIL = '" + email + '\'' +
+                "\n\t\t- ADDRESS = '" + address + '\'' +
+                "\n"
         );
-
-        for (Cabinet cabinet : this.specialties) {
-            sb.append("\t" + cabinet.getSpecialtyName());
-            sb.append("\n");
-        }
-
-        sb.append("\nDoctor Schedules:");
-
-        for (DoctorSchedule doctorSchedule : this.doctorSchedules) {
-            sb.append("\t" + doctorSchedule.toString());
-            sb.append("\n");
-        }
+//
+//        sb.append("\nDoctor Specialties:");
+//
+//        for (Cabinet cabinet : this.specialties) {
+//            sb.append("\t" + cabinet.getSpecialtyName());
+//            sb.append("\n");
+//        }
+//
+//        sb.append("\nDoctor Schedules:");
+//
+//        for (DoctorSchedule doctorSchedule : this.doctorSchedules) {
+//            sb.append("\t" + doctorSchedule.toString());
+//            sb.append("\n");
+//        }
+//
+//        sb.append("\nDoctor Appoinments:");
+//
+//        for (Appoinments appoinments : this.appoinmentsList) {
+//            sb.append("\t" + appoinments.toString());
+//            sb.append("\n");
+//        }
 
         return sb.toString();
     }
