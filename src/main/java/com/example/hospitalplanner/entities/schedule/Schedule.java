@@ -9,6 +9,8 @@ public abstract class Schedule {
     protected LocalTime startTime;
     protected LocalTime endTime;
 
+    public Schedule() {}
+
     public Schedule(long id, String dayOfWeek, LocalTime startTime, LocalTime endTime){
         if (!String.valueOf(id).matches("\\d+"))
             throw new IllegalArgumentException("ID should only contain digits.");
@@ -32,6 +34,10 @@ public abstract class Schedule {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getDayOfWeek() {

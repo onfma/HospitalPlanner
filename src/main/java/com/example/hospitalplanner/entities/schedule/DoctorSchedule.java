@@ -1,9 +1,13 @@
 package com.example.hospitalplanner.entities.schedule;
 
+import org.json.JSONObject;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
 public class DoctorSchedule extends Schedule {
+    public DoctorSchedule(){
+    }
     public DoctorSchedule(long doctorCNP, String dayOfWeek, LocalTime startTime, LocalTime endTime) {
         super(doctorCNP, dayOfWeek, startTime, endTime);
     }
@@ -21,11 +25,18 @@ public class DoctorSchedule extends Schedule {
 
     @Override
     public String toString() {
-        return "Doctor Schedule{" +
-                "doctor_CNP=" + id +
-                ", dayOfWeek='" + dayOfWeek + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                '}';
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("doctor_CNP", id);
+        jsonObject.put("dayOfWeek", dayOfWeek);
+        jsonObject.put("startTime", startTime.toString());
+        jsonObject.put("endTime", endTime.toString());
+        return jsonObject.toString();
+
+//        return "Doctor Schedule{" +
+//                "doctor_CNP=" + id +
+//                ", dayOfWeek='" + dayOfWeek + '\'' +
+//                ", startTime=" + startTime +
+//                ", endTime=" + endTime +
+//                '}';
     }
 }

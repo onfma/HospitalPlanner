@@ -1,16 +1,19 @@
 package com.example.hospitalplanner.test;
 
 import com.example.hospitalplanner.database.DAO.DoctorDAO;
+import com.example.hospitalplanner.database.DAO.DoctorsScheduleDAO;
 import com.example.hospitalplanner.database.DAO.PatientDAO;
 import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
+import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,9 @@ public class TestDAO {
 
 //            testPatientDAO(connection);
 
-            testDoctorDAO(connection);
+//            testDoctorDAO(connection);
+
+            testDoctorScheduleDAO(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -46,6 +51,46 @@ public class TestDAO {
                 System.err.println(e);
             }
         }
+    }
+
+    public void testDoctorScheduleDAO(Connection connection) throws SQLException {
+        DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(connection);
+
+//        DoctorSchedule monday = new DoctorSchedule(5030524268902L, "Monday", LocalTime.of(9,0), LocalTime.of(16,0));
+//        DoctorSchedule tuesday = new DoctorSchedule(5030524268902L, "Tuesday", LocalTime.of(9,30), LocalTime.of(16,30));
+//        DoctorSchedule wednesday = new DoctorSchedule(5030524268902L, "Wednesday", LocalTime.of(10,0), LocalTime.of(17,0));
+//        DoctorSchedule thursday = new DoctorSchedule(5030524268902L, "Thursday", LocalTime.of(10,30), LocalTime.of(17,30));
+//        DoctorSchedule friday = new DoctorSchedule(5030524268902L, "Friday", LocalTime.of(10,15), LocalTime.of(17,15));
+//
+//        doctorsScheduleDAO.insert(monday);
+//        doctorsScheduleDAO.insert(tuesday);
+//        doctorsScheduleDAO.insert(wednesday);
+//        doctorsScheduleDAO.insert(thursday);
+//        doctorsScheduleDAO.insert(friday);
+
+        // Delete a specific day from a specific Doctor Schedule
+        doctorsScheduleDAO.deleteSpecificDoctorDaySchedule(5030524268902L, "Monday");
+
+        // Weekly Schedule Program for Doctor
+        System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeek(5030524268902L));
+
+        // Change startTime for a specific day from a Doctor's Schedule
+//        doctorsScheduleDAO.setStartTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(9,15));
+
+        // Change endTime for a specific day from a Doctor's Schedule
+//        doctorsScheduleDAO.setEndTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(16,15));
+
+        // Get daily schedule program for Doctor
+//        System.out.println(doctorsScheduleDAO.getDoctorSchedule_SpecificDay(5030524268902L, "Monday"));
+
+        // Delete all schedule program for a specific doctor
+
+        doctorsScheduleDAO.deleteALLDoctorDaySchedule(5030524268902L);
+
+        // Weekly Schedule Program for Doctor
+        System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeek(5030524268902L));
+
+        doctorsScheduleDAO.deleteALLDoctorDaySchedule(5030524268902L);
     }
 
     private void testDoctorDAO(Connection connection) throws SQLException {
