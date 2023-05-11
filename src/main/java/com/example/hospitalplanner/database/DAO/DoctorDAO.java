@@ -1,57 +1,58 @@
 package com.example.hospitalplanner.database.DAO;
 
-
 import com.example.hospitalplanner.entities.person.Patient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.hospitalplanner.entities.person.Doctor;
 
-public class PatientDAO {
+public class DoctorDAO {
     private Connection connection;
 
-    public PatientDAO(Connection connection) {
+    public DoctorDAO(Connection connection) {
         this.connection = connection;
     }
 
-    public List<Patient> select() throws SQLException {
-        String query = "SELECT * FROM pacients";
+    public List<Doctor> select() throws SQLException {
+        String query = "SELECT * FROM DOCTORS";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
 
-        List<Patient> patientList = new ArrayList<>();
+        List<Doctor> doctorList = new ArrayList<>();
         while (resultSet.next()) {
-            Patient patient = new Patient();
-            patient.setCnp(resultSet.getLong("CNP"));
-            patient.setFirstName(resultSet.getString("FIRST_NAME"));
-            patient.setLastName(resultSet.getString("LAST_NAME"));
-            patient.setGender(resultSet.getString("GENDER").charAt(0));
-            patient.setPhoneNumber(resultSet.getString("PHONE_NUMBER"));
-            patient.setEmail(resultSet.getString("EMAIL"));
-            patient.setAddress(resultSet.getString("ADDRESS"));
+            Doctor doctor = new Doctor();
+            doctor.setCnp(resultSet.getLong("CNP"));
+            doctor.setFirstName(resultSet.getString("FIRST_NAME"));
+            doctor.setLastName(resultSet.getString("LAST_NAME"));
+            doctor.setGender(resultSet.getString("GENDER").charAt(0));
+            doctor.setPhoneNumber(resultSet.getString("PHONE_NUMBER"));
+            doctor.setEmail(resultSet.getString("EMAIL"));
+            doctor.setAddress(resultSet.getString("ADDRESS"));
 
-            patientList.add(patient);
+            doctorList.add(doctor);
         }
 
         statement.close();
         resultSet.close();
-        return patientList;
+        return doctorList;
     }
 
 
-    public void insert(Patient patient) throws SQLException {
-        String query = "INSERT INTO pacients (CNP, FIRST_NAME, LAST_NAME, GENDER, PHONE_NUMBER, EMAIL, ADDRESS) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void insert(Doctor doctor) throws SQLException {
+        String query = "INSERT INTO DOCTORS (CNP, FIRST_NAME, LAST_NAME, GENDER, PHONE_NUMBER, EMAIL, ADDRESS) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
 
-        statement.setLong(1, patient.getCnp());
-        statement.setString(2, patient.getFirstName());
-        statement.setString(3, patient.getLastName());
-        statement.setString(4, String.valueOf(patient.getGender()));
-        statement.setString(5, patient.getPhoneNumber());
-        statement.setString(6, patient.getEmail());
-        statement.setString(7, patient.getAddress());
+        statement.setLong(1, doctor.getCnp());
+        statement.setString(2, doctor.getFirstName());
+        statement.setString(3, doctor.getLastName());
+        statement.setString(4, String.valueOf(doctor.getGender()));
+        statement.setString(5, doctor.getPhoneNumber());
+        statement.setString(6, doctor.getEmail());
+        statement.setString(7, doctor.getAddress());
 
         statement.executeUpdate();
 
@@ -59,7 +60,7 @@ public class PatientDAO {
     }
 
     public void delete(long CNP) throws SQLException {
-        String query = "DELETE FROM pacients WHERE CNP = ?";
+        String query = "DELETE FROM DOCTORS WHERE CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP);
         statement.executeUpdate();
@@ -68,7 +69,7 @@ public class PatientDAO {
     }
 
     public String getFirstName(long CNP) throws SQLException {
-        String query = "SELECT FIRST_NAME FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT FIRST_NAME FROM DOCTORS WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
@@ -87,7 +88,7 @@ public class PatientDAO {
         if (!newFirstName.matches("[a-zA-Z]+"))
             throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
 
-        String query = "UPDATE PACIENTS SET FIRST_NAME = ? WHERE CNP = ?";
+        String query = "UPDATE DOCTORS SET FIRST_NAME = ? WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, newFirstName); // set FirstName parameter
@@ -98,7 +99,7 @@ public class PatientDAO {
     }
 
     public String getLastName(long CNP) throws SQLException {
-        String query = "SELECT LAST_NAME FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT LAST_NAME FROM DOCTORS WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
@@ -117,7 +118,7 @@ public class PatientDAO {
         if (!newLastName.matches("[a-zA-Z]+"))
             throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
 
-        String query = "UPDATE PACIENTS SET LAST_NAME = ? WHERE CNP = ?";
+        String query = "UPDATE DOCTORS SET LAST_NAME = ? WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, newLastName); // set LastName parameter
@@ -128,7 +129,7 @@ public class PatientDAO {
     }
 
     public Character getGender(long CNP) throws SQLException {
-        String query = "SELECT GENDER FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT GENDER FROM DOCTORS WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
@@ -144,7 +145,7 @@ public class PatientDAO {
     }
 
     public String getPhoneNumber(long CNP) throws SQLException {
-        String query = "SELECT PHONE_NUMBER FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT PHONE_NUMBER FROM DOCTORS WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
@@ -163,7 +164,7 @@ public class PatientDAO {
         if (!newPhoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !newPhoneNumber.matches("\\+44\\d{10}"))
             throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
 
-        String query = "UPDATE PACIENTS SET PHONE_NUMBER = ? WHERE CNP = ?";
+        String query = "UPDATE DOCTORS SET PHONE_NUMBER = ? WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, newPhoneNumber); // set PhoneNumber parameter
@@ -174,7 +175,7 @@ public class PatientDAO {
     }
 
     public String getEmail(long CNP) throws SQLException {
-        String query = "SELECT EMAIL FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT EMAIL FROM DOCTORS WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
@@ -190,7 +191,7 @@ public class PatientDAO {
     }
 
     public String getAddress(long CNP) throws SQLException {
-        String query = "SELECT ADDRESS FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT ADDRESS FROM DOCTORS WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
@@ -209,7 +210,7 @@ public class PatientDAO {
         if (!newAddress.matches("[a-zA-Z0-9,. ;]+"))
             throw new IllegalArgumentException("Invalid address: Address should contain only letters, digits, or the following characters: [,.;]");
 
-        String query = "UPDATE PACIENTS SET ADDRESS = ? WHERE CNP = ?";
+        String query = "UPDATE DOCTORS SET ADDRESS = ? WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, newAddress); // set FirstName parameter
@@ -220,7 +221,7 @@ public class PatientDAO {
     }
 
     public boolean exists(long CNP) throws SQLException {
-        String query = "SELECT COUNT(*) AS cnt FROM PACIENTS WHERE CNP = ?";
+        String query = "SELECT COUNT(*) AS cnt FROM DOCTORS WHERE CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, CNP); // set CNP parameter
         ResultSet resultSet = statement.executeQuery();

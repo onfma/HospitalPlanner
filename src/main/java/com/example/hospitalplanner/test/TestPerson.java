@@ -24,7 +24,7 @@ public class TestPerson {
 //        constructorPerson();
 //        setMethods();
 //        adminRights();
-        passwordSaltHash();
+//        passwordSaltHash();
     }
 
     private void constructorPerson_EmailPassword() {
@@ -49,31 +49,33 @@ public class TestPerson {
 
     private void constructorPerson(){
         // Invalid CNP format
-        Patient patient1 = new Patient(1234567890123344L, "Claudiu", "Chichirau", 'M', "+441234567890", "12, Baker Street");
-        Patient patient2 = new Patient(12345L, "Claudiu", "Chichirau", 'M', "+441234567890", "12, Baker Street");
+        Patient patient1 = new Patient(1234567890123344L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient2 = new Patient(12345L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
 
         // Invalid firstName format
-        Patient patient3 = new Patient(1234567890123L, "Claudiu@", "Chichirau", 'M', "+441234567890", "12, Baker Street");
-        Patient patient4 = new Patient(1234567890123L, "11Claudiu", "Chichirau", 'M', "+441234567890", "12, Baker Street");
+        Patient patient3 = new Patient(1234567890123L, "Claudiu@", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient4 = new Patient(1234567890123L, "11Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
 
         // Invalid lastName format
-        Patient patient5 = new Patient(1234567890123L, "Claudiu", "Ch#@ichirau", 'M', "+441234567890", "12, Baker Street");
-        Patient patient6 = new Patient(1234567890123L, "Claudiu", "1Chic3hirau", 'M', "+441234567890", "12, Baker Street");
+        Patient patient5 = new Patient(1234567890123L, "Claudiu", "Ch#@ichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient6 = new Patient(1234567890123L, "Claudiu", "1Chic3hirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
 
         // Invalid gender format
-        Patient patient7 = new Patient(1234567890123L, "Claudiu", "Chichirau", '1', "+441234567890", "12, Baker Street");
-        Patient patient8 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'r', "+441234567890", "12, Baker Street");
+        Patient patient7 = new Patient(1234567890123L, "Claudiu", "Chichirau", '1', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient8 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'r', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
 
         // Invalid phoneNumber format
-        Patient patient9 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+44@234567890", "12, Baker Street");
-        Patient patient10 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+4412345678901111", "12, Baker Street");
-        Patient patient11 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+44123", "12, Baker Street");
+        Patient patient9 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+44@234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient10 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+4412345678901111", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient11 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+44123", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient12 = new Patient( 5030524268901L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","109B, Palace Street");
+
 
         // Invalid adress format
-        Patient patient12 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "#@12, Baker Street");
+        Patient patient13 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","#@12, Baker Street");
 
         // Correct format
-        Patient patient = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "12, Baker Street");
+        Patient patient = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
     }
 
     private void setMethods(){
@@ -104,9 +106,9 @@ public class TestPerson {
         // Patient list
         List<Patient> patientList = new ArrayList<>();
 
-        Patient patient1 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "12, Baker Street");
-        Patient patient2 = new Patient(1234567890124L, "Mihai", "Zoe", 'M', "+441234567891", "13, Baker Street");
-        Patient patient3 = new Patient(1234567890125L, "Antonia", "Popovici", 'F', "+441234567892", "14, Baker Street");
+        Patient patient1 = new Patient(1234567890123L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","12, Baker Street");
+        Patient patient2 = new Patient(1234567890124L, "Mihai", "Zoe", 'M', "+441234567891", "claudiu.chichirau@yahoo.com","13, Baker Street");
+        Patient patient3 = new Patient(1234567890125L, "Antonia", "Popovici", 'F', "+441234567892", "claudiu.chichirau@yahoo.com","14, Baker Street");
 
         patientList.add(patient1);
         patientList.add(patient2);
@@ -115,9 +117,9 @@ public class TestPerson {
         // Doctor list
         List<Doctor> doctorList = new ArrayList<>();
 
-        Doctor doctor1 = new Doctor(1234567890126L, "Alex", "Alexandru", 'M', "+441234467890", "15, Baker Street");
-        Doctor doctor2 = new Doctor(1234567890127L, "Naria", "Onofrei", 'F', "+441264467890", "16, Baker Street");
-        Doctor doctor3 = new Doctor(1234567890128L, "Narian", "Onofrei", 'M', "+441264587890", "17, Baker Street");
+        Doctor doctor1 = new Doctor(1234567890126L, "Alex", "Alexandru", 'M', "+441234467890", "claudiu.chichirau@yahoo.com","15, Baker Street");
+        Doctor doctor2 = new Doctor(1234567890127L, "Naria", "Onofrei", 'F', "+441264467890", "claudiu.chichirau@yahoo.com","16, Baker Street");
+        Doctor doctor3 = new Doctor(1234567890128L, "Narian", "Onofrei", 'M', "+441264587890", "claudiu.chichirau@yahoo.com","17, Baker Street");
 
         doctorList.add(doctor1);
         doctorList.add(doctor2);
