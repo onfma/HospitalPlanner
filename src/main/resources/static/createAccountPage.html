@@ -36,7 +36,7 @@
         <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Create account to Hospital<a style="color: #159EEC;">Planner</a></div>
 
         <!-- account form -->
-        <form action="#" class="container-fluid mt-3">
+        <form action="createAccountPasswordPage.html" class="container-fluid mt-3">
             <div class="row">
                 <!-- info boxes -->
                 <div class="col-sm-9 p-3">
@@ -125,7 +125,7 @@
 
                 <!-- account type -->
                 <!-- TODO: butoanele de pacient/doctor -->
-                <div class="col-sm-3 p-3 border-start border-4 text-center" style="border-color: #1F2B6C !important;">
+                <div class="col-sm-3 p-3 border-start border-4 text-center " style="border-color: #1F2B6C !important;">
                     <!-- type -->
                     <div class="container-fluid mt-3 pt-5 pb-3 d-flex flex-column justify-content-around">
                         <div class="p-2">
@@ -159,20 +159,6 @@
             var selectedOption = $(this).text();
             $('#sex').val(selectedOption);
         });
-    });
-
-    var patientBtn = document.getElementById('patientBtn');
-    var doctorBtn = document.getElementById('doctorBtn');
-
-    // Add click event listeners to the buttons
-    patientBtn.addEventListener('click', function() {
-        // Redirect to createAccountPasswordPage.html
-        window.location.href = 'createAccountPasswordPage.html';
-    });
-
-    doctorBtn.addEventListener('click', function() {
-        // Redirect to createAccountDoctorPage.html
-        window.location.href = 'createAccountDoctorPage.html';
     });
 
 </script>
