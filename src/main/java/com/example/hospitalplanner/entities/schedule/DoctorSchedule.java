@@ -31,12 +31,5 @@ public class DoctorSchedule extends Schedule {
         jsonObject.put("startTime", startTime.toString());
         jsonObject.put("endTime", endTime.toString());
         return jsonObject.toString();
-
-//        return "Doctor Schedule{" +
-//                "doctor_CNP=" + id +
-//                ", dayOfWeek='" + dayOfWeek + '\'' +
-//                ", startTime=" + startTime +
-//                ", endTime=" + endTime +
-//                '}';
     }
 }

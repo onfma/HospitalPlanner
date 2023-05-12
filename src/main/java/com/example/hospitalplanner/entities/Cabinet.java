@@ -1,11 +1,16 @@
 package com.example.hospitalplanner.entities;
 
+import org.json.JSONObject;
+
 import java.util.Formatter;
 import java.util.Objects;
 
 public class Cabinet {
     private int id;
     private String specialtyName;
+
+
+    public Cabinet() {}
 
     public Cabinet (int id, String specialtyName){
         this.id = id;
@@ -38,9 +43,9 @@ public class Cabinet {
     }
 
     public String toString() {
-        return "Cabinet [" +
-                "id=" + id +
-                ", specialtyName==" + specialtyName +
-                ']';
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("specialtyName", specialtyName);
+        return jsonObject.toString();
     }
 }

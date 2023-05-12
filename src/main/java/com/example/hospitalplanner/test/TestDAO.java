@@ -1,9 +1,7 @@
 package com.example.hospitalplanner.test;
 
-import com.example.hospitalplanner.database.DAO.DoctorDAO;
-import com.example.hospitalplanner.database.DAO.DoctorsScheduleDAO;
-import com.example.hospitalplanner.database.DAO.PatientDAO;
-import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
+import com.example.hospitalplanner.database.DAO.*;
+import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
@@ -36,7 +34,9 @@ public class TestDAO {
 
 //            testDoctorDAO(connection);
 
-            testDoctorScheduleDAO(connection);
+//            testDoctorScheduleDAO(connection);
+
+            testCabinetsDAO(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -53,20 +53,55 @@ public class TestDAO {
         }
     }
 
+    public void testCabinetsDAO(Connection connection) throws SQLException {
+        CabinetsDAO cabinetsDAO = new CabinetsDAO(connection);
+
+        Cabinet cabinet1 = new Cabinet(1,"Cardiology");
+        Cabinet cabinet2 = new Cabinet(2, "Neurology");
+        Cabinet cabinet3 = new Cabinet(3, "Dermatology");
+
+        cabinetsDAO.insert(cabinet1);
+        cabinetsDAO.insert(cabinet2);
+        cabinetsDAO.insert(cabinet3);
+
+        // Select all the patients
+        List<Cabinet> cabinetList = new ArrayList<>();
+
+        cabinetList = cabinetsDAO.select();
+
+        System.out.println("\nAll cabinets (AFTER INSERTION):");
+        for (Cabinet cabinet : cabinetList) {
+            System.out.println("\t" + cabinet);
+        }
+
+        cabinetsDAO.delete(cabinet1);
+        cabinetsDAO.delete(cabinet2);
+        cabinetsDAO.delete(cabinet3);
+
+        // Select all the patients
+        cabinetList = new ArrayList<>();
+
+        System.out.println("\nAll cabinets (AFTER DELETION):");
+        for (Cabinet cabinet : cabinetList) {
+            System.out.println("\t" + cabinet);
+        }
+
+    }
+
     public void testDoctorScheduleDAO(Connection connection) throws SQLException {
         DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(connection);
 
-//        DoctorSchedule monday = new DoctorSchedule(5030524268902L, "Monday", LocalTime.of(9,0), LocalTime.of(16,0));
-//        DoctorSchedule tuesday = new DoctorSchedule(5030524268902L, "Tuesday", LocalTime.of(9,30), LocalTime.of(16,30));
-//        DoctorSchedule wednesday = new DoctorSchedule(5030524268902L, "Wednesday", LocalTime.of(10,0), LocalTime.of(17,0));
-//        DoctorSchedule thursday = new DoctorSchedule(5030524268902L, "Thursday", LocalTime.of(10,30), LocalTime.of(17,30));
-//        DoctorSchedule friday = new DoctorSchedule(5030524268902L, "Friday", LocalTime.of(10,15), LocalTime.of(17,15));
-//
-//        doctorsScheduleDAO.insert(monday);
-//        doctorsScheduleDAO.insert(tuesday);
-//        doctorsScheduleDAO.insert(wednesday);
-//        doctorsScheduleDAO.insert(thursday);
-//        doctorsScheduleDAO.insert(friday);
+        DoctorSchedule monday = new DoctorSchedule(5030524268902L, "Monday", LocalTime.of(9,0), LocalTime.of(16,0));
+        DoctorSchedule tuesday = new DoctorSchedule(5030524268902L, "Tuesday", LocalTime.of(9,30), LocalTime.of(16,30));
+        DoctorSchedule wednesday = new DoctorSchedule(5030524268902L, "Wednesday", LocalTime.of(10,0), LocalTime.of(17,0));
+        DoctorSchedule thursday = new DoctorSchedule(5030524268902L, "Thursday", LocalTime.of(10,30), LocalTime.of(17,30));
+        DoctorSchedule friday = new DoctorSchedule(5030524268902L, "Friday", LocalTime.of(10,15), LocalTime.of(17,15));
+
+        doctorsScheduleDAO.insert(monday);
+        doctorsScheduleDAO.insert(tuesday);
+        doctorsScheduleDAO.insert(wednesday);
+        doctorsScheduleDAO.insert(thursday);
+        doctorsScheduleDAO.insert(friday);
 
         // Delete a specific day from a specific Doctor Schedule
         doctorsScheduleDAO.deleteSpecificDoctorDaySchedule(5030524268902L, "Monday");
@@ -75,16 +110,15 @@ public class TestDAO {
         System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeek(5030524268902L));
 
         // Change startTime for a specific day from a Doctor's Schedule
-//        doctorsScheduleDAO.setStartTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(9,15));
+        doctorsScheduleDAO.setStartTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(9,15));
 
         // Change endTime for a specific day from a Doctor's Schedule
-//        doctorsScheduleDAO.setEndTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(16,15));
+        doctorsScheduleDAO.setEndTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(16,15));
 
         // Get daily schedule program for Doctor
-//        System.out.println(doctorsScheduleDAO.getDoctorSchedule_SpecificDay(5030524268902L, "Monday"));
+        System.out.println(doctorsScheduleDAO.getDoctorSchedule_SpecificDay(5030524268902L, "Monday"));
 
         // Delete all schedule program for a specific doctor
-
         doctorsScheduleDAO.deleteALLDoctorDaySchedule(5030524268902L);
 
         // Weekly Schedule Program for Doctor

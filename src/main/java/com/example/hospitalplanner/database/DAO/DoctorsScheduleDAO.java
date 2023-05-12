@@ -145,4 +145,13 @@ public class DoctorsScheduleDAO {
 
         statement.close();
     }
+
+    public void delete(long CNP) throws SQLException {
+        String query = "DELETE FROM DOCTORS WHERE CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP);
+        statement.executeUpdate();
+
+        statement.close();
+    }
 }
