@@ -10,6 +10,8 @@ public class Appoinments {
     private long patientCNP;
     private LocalDateTime appointmentTime;
 
+
+    public Appoinments() {}
     public Appoinments(int id, int cabinetID, long doctorCNP, long patientCNP, LocalDateTime appointmentTime){
         this.id = id;
         this.cabinetID = cabinetID;
