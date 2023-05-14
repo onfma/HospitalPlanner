@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 public class CabinetSchedule extends Schedule {
+    public CabinetSchedule() {}
     public CabinetSchedule(int cabinetID, String dayOfWeek, LocalTime startTime, LocalTime endTime) {
         super(cabinetID, dayOfWeek, startTime, endTime);
     }

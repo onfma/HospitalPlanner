@@ -5,6 +5,7 @@ import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
+import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -36,7 +37,9 @@ public class TestDAO {
 
 //            testDoctorScheduleDAO(connection);
 
-            testCabinetsDAO(connection);
+//            testCabinetsDAO(connection);
+
+//            testCabinetsScheduleDAO(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -51,6 +54,69 @@ public class TestDAO {
                 System.err.println(e);
             }
         }
+    }
+
+    public void testCabinetsScheduleDAO(Connection connection) throws SQLException{
+        CabinetsScheduleDAO cabinetsScheduleDAO = new CabinetsScheduleDAO(connection);
+
+        CabinetSchedule monday = new CabinetSchedule(1, "Monday", LocalTime.of(9,0), LocalTime.of(16,0));
+        CabinetSchedule tuesday = new CabinetSchedule(1, "Tuesday", LocalTime.of(9,30), LocalTime.of(16,30));
+        CabinetSchedule wednesday = new CabinetSchedule(1, "Wednesday", LocalTime.of(10,0), LocalTime.of(17,0));
+        CabinetSchedule thursday = new CabinetSchedule(1, "Thursday", LocalTime.of(10,30), LocalTime.of(17,30));
+        CabinetSchedule friday = new CabinetSchedule(1, "Friday", LocalTime.of(10,15), LocalTime.of(17,15));
+
+        cabinetsScheduleDAO.insert(monday);
+        cabinetsScheduleDAO.insert(tuesday);
+        cabinetsScheduleDAO.insert(wednesday);
+        cabinetsScheduleDAO.insert(thursday);
+        cabinetsScheduleDAO.insert(friday);
+
+        // Select all the patients
+        List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
+
+        cabinetScheduleList = cabinetsScheduleDAO.select();
+
+        System.out.println("\nAll cabinets (AFTER INSERTION):");
+        for (CabinetSchedule cabinetSchedule : cabinetScheduleList) {
+            System.out.println("\t" + cabinetSchedule);
+        }
+
+        // Delete a specific day from a specific Cabinet Schedule
+        cabinetsScheduleDAO.deleteSpecificCabinetDaySchedule(1L, "Monday");
+
+        cabinetScheduleList = cabinetsScheduleDAO.select();
+
+        System.out.println("\nAll cabinets (AFTER DELETING MONDAY PROGRAM):");
+        for (CabinetSchedule cabinetSchedule : cabinetScheduleList) {
+            System.out.println("\t" + cabinetSchedule);
+        }
+
+        // Weekly Schedule Program for a Cabinet
+        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(1L));
+
+        // Change startTime for a specific day from a Cabinet's Schedule
+        cabinetsScheduleDAO.setStartTimeSpecificDay(1L, "Tuesday", LocalTime.of(9,15));
+
+        // Change endTime for a specific day from a Cabinet's Schedule
+        cabinetsScheduleDAO.setEndTimeSpecificDay(1L, "Tuesday", LocalTime.of(16,15));
+
+        cabinetScheduleList = cabinetsScheduleDAO.select();
+
+        System.out.println("\nAll cabinets (AFTER MODIFY START_TIME / END_TIME):");
+        for (CabinetSchedule cabinetSchedule : cabinetScheduleList) {
+            System.out.println("\t" + cabinetSchedule);
+        }
+
+        // Get daily schedule program for Cabinet
+        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_SpecificDay(1L, "Monday"));
+
+        // Delete all schedule program for a specific Cabinet
+        cabinetsScheduleDAO.deleteALLCabinetSchedule(1L);
+
+        // Weekly Schedule Program for Cabinet
+        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(1L));
+
+        cabinetsScheduleDAO.deleteALLCabinetSchedule(1L);
     }
 
     public void testCabinetsDAO(Connection connection) throws SQLException {
