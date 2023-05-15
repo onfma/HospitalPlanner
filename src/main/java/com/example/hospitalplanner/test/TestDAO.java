@@ -1,6 +1,7 @@
 package com.example.hospitalplanner.test;
 
 import com.example.hospitalplanner.database.DAO.*;
+import com.example.hospitalplanner.entities.Appoinments;
 import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
@@ -12,6 +13,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,8 @@ public class TestDAO {
 
 //            testCabinetsScheduleDAO(connection);
 
+//            testAppointmentDAO(connection);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (PropertyVetoException e) {
@@ -54,6 +59,42 @@ public class TestDAO {
                 System.err.println(e);
             }
         }
+    }
+
+    public void testAppointmentDAO(Connection connection) throws SQLException {
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO(connection);
+
+        Appoinments app1 = new Appoinments(1, 1, 5030524268902L, 5030524268901L, LocalDateTime.of(2023, 6, 01, 10, 0));
+        Appoinments app2 = new Appoinments(2, 1, 5030524268902L, 5031121835501L, LocalDateTime.of(2023, 6, 01, 11, 0));
+        Appoinments app3 = new Appoinments(3, 1, 5030524268902L, 5031124264501L, LocalDateTime.of(2023, 6, 01, 12, 0));
+
+        appointmentsDAO.insert(app1);
+        appointmentsDAO.insert(app2);
+        appointmentsDAO.insert(app3);
+
+        // Select all the patients
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+
+        appoinmentsList = appointmentsDAO.select();
+
+        System.out.println("\nAll appointments (AFTER INSERTION):");
+        for (Appoinments app : appoinmentsList) {
+            System.out.println("\t" + app);
+        }
+
+        System.out.println(appointmentsDAO.getDoctorAppointments(5030524268902L));
+
+        appointmentsDAO.setAppointmentTime(app3.getId(), LocalDateTime.of(2023, 6, 01, 15, 0));
+
+        System.out.println(appointmentsDAO.getPatientAppointments(5031124264501L));
+
+        System.out.println(appointmentsDAO.getCabinetAppointments(1));
+
+        appointmentsDAO.delete(app1.getId());
+        appointmentsDAO.delete(app2.getId());
+        appointmentsDAO.delete(app3.getId());
+
+
     }
 
     public void testCabinetsScheduleDAO(Connection connection) throws SQLException{
@@ -71,7 +112,7 @@ public class TestDAO {
         cabinetsScheduleDAO.insert(thursday);
         cabinetsScheduleDAO.insert(friday);
 
-        // Select all the patients
+        // Select all the cabinetSchedule
         List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
 
         cabinetScheduleList = cabinetsScheduleDAO.select();
@@ -246,8 +287,12 @@ public class TestDAO {
 
         // Insert a new Patient
         Patient patient1 = new Patient( 5030524268901L, "Claudiu", "Chichirau", 'M', "+441234567890", "claudiu.chichirau@yahoo.com","109B, Palace Street");
+        Patient patient2 = new Patient( 5031124264501L, "Matei", "Prisacariu", 'M', "+441575674701", "matei.prisacariu@yahoo.ro","111D, Palace Street");
+        Patient patient3 = new Patient( 5031121835501L, "Alexandra", "Olteanu", 'F', "+446276204730", "alexandru_olteanu@gmail.com","23A, Palace Street");
 
         patientDAO.insert(patient1);
+        patientDAO.insert(patient2);
+        patientDAO.insert(patient3);
 
         // Select all the patients
         patientList = patientDAO.select();
@@ -271,7 +316,7 @@ public class TestDAO {
         }
 
         System.out.println("Is there a patient with CNP '5030524268901L'? " + patientDAO.exists(5030524268901L));
-        patientDAO.delete(5030524268901L);
+//        patientDAO.delete(5030524268901L);
         System.out.println("Is there a patient with CNP '5030524268901L'? " + patientDAO.exists(5030524268901L));
 
     }
@@ -281,8 +326,12 @@ public class TestDAO {
 
         // Insert a new Patient
         Patient patient1 = new Patient("claudiu.chichirau@yahoo.com", "parolaluiClaudiu1");
+        Patient patient2 = new Patient("matei.prisacariu@yahoo.ro", "parolaluiMatei2");
+        Patient patient3 = new Patient("alexandru_olteanu@gmail.com", "parolaluAlexandrei2");
 
         userAuthenticationDAO.insert(patient1);
+        userAuthenticationDAO.insert(patient2);
+        userAuthenticationDAO.insert(patient3);
 
         System.out.println("\nParola: " + userAuthenticationDAO.getPassword("claudiu.chichirau@yahoo.com"));
         System.out.println("\nSalt: " + userAuthenticationDAO.getSalt("claudiu.chichirau@yahoo.com"));
@@ -303,7 +352,7 @@ public class TestDAO {
         }
 
         // Delete the pacient
-        userAuthenticationDAO.delete("claudiu.chichirau@yahoo.com");
+//        userAuthenticationDAO.delete("claudiu.chichirau@yahoo.com");
 
         patientList = userAuthenticationDAO.select();
 

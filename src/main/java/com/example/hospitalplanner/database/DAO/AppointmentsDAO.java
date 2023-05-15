@@ -5,13 +5,11 @@ import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +32,10 @@ public class AppointmentsDAO {
             appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setPatientCNP(resultSet.getLong("PATIENT_CNP"));
-            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime appointmentTime = LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter);
+            appoinment.setAppointmentTime(appointmentTime);
 
             appoinmentsList.add(appoinment);
         }
@@ -53,7 +54,7 @@ public class AppointmentsDAO {
         statement.setInt(2, appoinment.getCabinetID());
         statement.setLong(3, appoinment.getDoctorCNP());
         statement.setLong(4, appoinment.getPatientCNP());
-        statement.setString(4, String.valueOf(appoinment.getAppointmenTime()));
+        statement.setTimestamp(5, Timestamp.valueOf((appoinment.getAppointmenTime())));
         statement.executeUpdate();
 
         statement.close();
@@ -72,7 +73,7 @@ public class AppointmentsDAO {
             jsonObject.put("cabinetID", resultSet.getInt("CABINET_ID"));
             jsonObject.put("doctor_CNP", resultSet.getLong("DOCTOR_CNP"));
             jsonObject.put("patient_CNP", resultSet.getLong("PATIENT_CNP"));
-            jsonObject.put("appointmentTime", resultSet.getObject("APPOINTMENT_TIME", LocalTime.class).toString());
+            jsonObject.put("appointmentTime", resultSet.getObject("APPOINTMENT_TIME", LocalDateTime.class).toString());
 
             jsonArray.put(jsonObject);
         }
@@ -95,7 +96,7 @@ public class AppointmentsDAO {
             jsonObject.put("cabinetID", resultSet.getInt("CABINET_ID"));
             jsonObject.put("doctor_CNP", resultSet.getLong("DOCTOR_CNP"));
             jsonObject.put("patient_CNP", resultSet.getLong("PATIENT_CNP"));
-            jsonObject.put("appointmentTime", resultSet.getObject("APPOINTMENT_TIME", LocalTime.class).toString());
+            jsonObject.put("appointmentTime", resultSet.getObject("APPOINTMENT_TIME", LocalDateTime.class).toString());
 
             jsonArray.put(jsonObject);
         }
@@ -118,7 +119,7 @@ public class AppointmentsDAO {
             jsonObject.put("cabinetID", resultSet.getInt("CABINET_ID"));
             jsonObject.put("doctor_CNP", resultSet.getLong("DOCTOR_CNP"));
             jsonObject.put("patient_CNP", resultSet.getLong("PATIENT_CNP"));
-            jsonObject.put("appointmentTime", resultSet.getObject("APPOINTMENT_TIME", LocalTime.class).toString());
+            jsonObject.put("appointmentTime", resultSet.getObject("APPOINTMENT_TIME", LocalDateTime.class).toString());
 
             jsonArray.put(jsonObject);
         }
@@ -126,6 +127,42 @@ public class AppointmentsDAO {
         statement.close();
         resultSet.close();
         return jsonArray.toString();
+    }
+
+    public void setAppointmentTime(int id, LocalDateTime newAppointmentTime) throws SQLException {
+        String query = "UPDATE APPOINTMENTS SET APPOINTMENT_TIME = ? WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setTimestamp(1, Timestamp.valueOf((newAppointmentTime)));  // set APPOINTMENT_TIME parameter
+        statement.setInt(2, id);    // set ID parameter
+
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
+    public void setDoctor(int id, Long doctorCNP) throws SQLException {
+        String query = "UPDATE APPOINTMENTS SET DOCTOR_CNP = ? WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, doctorCNP);  // set DOCTOR_CNP parameter
+        statement.setInt(2, id);    // set ID parameter
+
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
+    public void setPatient(int id, Long patientCNP) throws SQLException {
+        String query = "UPDATE APPOINTMENTS SET PATIENT_CNP = ? WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, patientCNP);  // set PATIENT_CNP parameter
+        statement.setInt(2, id);    // set ID parameter
+
+        statement.executeUpdate();
+
+        statement.close();
     }
 
     public void delete(int id) throws SQLException {
@@ -159,98 +196,6 @@ public class AppointmentsDAO {
         String query = "DELETE FROM APPOINTMENTS WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, cabinetID);
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    ////////////////
-
-    public String getDoctorSchedule_SpecificDay(Long doctorCNP, String dayOfWeek) throws SQLException {
-        String query = "SELECT * FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
-        statement.setString(2, dayOfWeek);
-        ResultSet resultSet = statement.executeQuery();
-
-        JSONArray jsonArray = new JSONArray();
-        while (resultSet.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("doctor_CNP", resultSet.getLong("DOCTOR_CNP"));
-            jsonObject.put("dayOfWeek", resultSet.getString("DAY_OF_WEEK"));
-            jsonObject.put("startTime", resultSet.getObject("START_TIME", LocalTime.class).toString());
-            jsonObject.put("endTime", resultSet.getObject("END_TIME", LocalTime.class).toString());
-
-            jsonArray.put(jsonObject);
-        }
-
-        statement.close();
-        resultSet.close();
-        return jsonArray.toString();
-    }
-
-    public String getDoctorSchedule_FullWeek(Long doctorCNP) throws SQLException {
-        String query = "SELECT * FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
-        ResultSet resultSet = statement.executeQuery();
-
-        JSONArray jsonArray = new JSONArray();
-        while (resultSet.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("doctor_CNP", resultSet.getLong("DOCTOR_CNP"));
-            jsonObject.put("dayOfWeek", resultSet.getString("DAY_OF_WEEK"));
-            jsonObject.put("startTime", resultSet.getObject("START_TIME", LocalTime.class).toString());
-            jsonObject.put("endTime", resultSet.getObject("END_TIME", LocalTime.class).toString());
-
-            jsonArray.put(jsonObject);
-        }
-
-        statement.close();
-        resultSet.close();
-        return jsonArray.toString();
-    }
-
-    public void setStartTimeSpecificDay(Long doctorCNP, String dayOfWeek, LocalTime startTime) throws SQLException {
-        String query = "UPDATE DOCTORS_SCHEDULE SET START_TIME = ? WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-
-
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, String.valueOf(startTime)); // set startTime parameter
-        statement.setLong(2, doctorCNP); // set doctorCNP parameter
-        statement.setString(3, dayOfWeek); // set dayOfWeek parameter
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    public void setEndTimeSpecificDay(Long doctorCNP, String dayOfWeek, LocalTime endTime) throws SQLException {
-        String query = "UPDATE DOCTORS_SCHEDULE SET END_TIME = ? WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-
-
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, String.valueOf(endTime)); // set endTime parameter
-        statement.setLong(2, doctorCNP); // set doctorCNP parameter
-        statement.setString(3, dayOfWeek); // set dayOfWeek parameter
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    public void deleteSpecificDoctorDaySchedule(Long doctorCNP, String dayOfWeek) throws SQLException {
-        String query = "DELETE FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, doctorCNP); // set doctorCNP parameter
-        statement.setString(2, dayOfWeek); // set dayOfWeek parameter
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    public void deleteALLDoctorDaySchedule(Long doctorCNP) throws SQLException {
-        String query = "DELETE FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, doctorCNP); // set doctorCNP parameter
         statement.executeUpdate();
 
         statement.close();
