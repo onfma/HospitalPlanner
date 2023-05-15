@@ -158,4 +158,25 @@ public class UserAuthenticationDAO {
         }
         return hashedPassword;
     }
+
+    public boolean exists(String email) throws SQLException {
+        String query = "SELECT COUNT(*) AS cnt FROM USER_AUTHENTICATION WHERE EMAIL = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        boolean exists = false;
+        while (resultSet.next()) {
+            if ((resultSet.getInt("cnt") > 1))
+                throw new IllegalArgumentException("There are two persons with the same email! EMAIL = '" + email + "'");
+            else if((resultSet.getInt("cnt") == 1))
+                exists = true;
+            else if((resultSet.getInt("cnt") == 0))
+                exists = false;
+        }
+
+        statement.close();
+        resultSet.close();
+        return exists;
+    }
 }

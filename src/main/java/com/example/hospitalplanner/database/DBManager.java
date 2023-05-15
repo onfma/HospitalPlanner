@@ -37,7 +37,7 @@ public class DBManager {
         return instance;
     }
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return cpds.getConnection();
     }
 

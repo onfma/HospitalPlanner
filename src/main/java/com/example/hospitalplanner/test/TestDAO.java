@@ -3,6 +3,7 @@ package com.example.hospitalplanner.test;
 import com.example.hospitalplanner.database.DAO.*;
 import com.example.hospitalplanner.entities.Appoinments;
 import com.example.hospitalplanner.entities.Cabinet;
+import com.example.hospitalplanner.entities.person.Admin;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
@@ -32,7 +33,7 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
-//            testUserAuthenticationDAO(connection);
+            testUserAuthenticationDAO(connection);
 
 //            testPatientDAO(connection);
 
@@ -328,10 +329,13 @@ public class TestDAO {
         Patient patient1 = new Patient("claudiu.chichirau@yahoo.com", "parolaluiClaudiu1");
         Patient patient2 = new Patient("matei.prisacariu@yahoo.ro", "parolaluiMatei2");
         Patient patient3 = new Patient("alexandru_olteanu@gmail.com", "parolaluAlexandrei2");
+        Patient admin = new Patient("admin@admin.com", "Admin1234");
 
-        userAuthenticationDAO.insert(patient1);
-        userAuthenticationDAO.insert(patient2);
-        userAuthenticationDAO.insert(patient3);
+//        userAuthenticationDAO.insert(patient1);
+//        userAuthenticationDAO.insert(patient2);
+//        userAuthenticationDAO.insert(patient3);
+
+        userAuthenticationDAO.insert(admin);
 
         System.out.println("\nParola: " + userAuthenticationDAO.getPassword("claudiu.chichirau@yahoo.com"));
         System.out.println("\nSalt: " + userAuthenticationDAO.getSalt("claudiu.chichirau@yahoo.com"));
