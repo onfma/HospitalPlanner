@@ -241,5 +241,46 @@ public class DoctorDAO {
         return exists;
     }
 
+    public boolean existsByCNP(long CNP) throws SQLException {
+        String query = "SELECT COUNT(*) AS cnt FROM DOCTORS WHERE CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        boolean exists = false;
+        while (resultSet.next()) {
+            if ((resultSet.getInt("cnt") > 1))
+                throw new IllegalArgumentException("There are two doctors with the same CNP! CNP = '" + CNP + "'");
+            else if((resultSet.getInt("cnt") == 1))
+                exists = true;
+            else if((resultSet.getInt("cnt") == 0))
+                exists = false;
+        }
+
+        statement.close();
+        resultSet.close();
+        return exists;
+    }
+
+    public boolean existsByEmail(String email) throws SQLException {
+        String query = "SELECT COUNT(*) AS cnt FROM DOCTORS WHERE EMAIL = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        boolean exists = false;
+        while (resultSet.next()) {
+            if ((resultSet.getInt("cnt") > 1))
+                throw new IllegalArgumentException("There are two doctors with the same EMAIL! EMAIL = '" + email + "'");
+            else if((resultSet.getInt("cnt") == 1))
+                exists = true;
+            else if((resultSet.getInt("cnt") == 0))
+                exists = false;
+        }
+
+        statement.close();
+        resultSet.close();
+        return exists;
+    }
 
 }

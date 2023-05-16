@@ -1,5 +1,8 @@
 package com.example.hospitalplanner.controllers;
 
+import com.example.hospitalplanner.database.DAO.AdminDAO;
+import com.example.hospitalplanner.database.DAO.DoctorDAO;
+import com.example.hospitalplanner.database.DAO.PatientDAO;
 import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
 import com.example.hospitalplanner.database.DAOFactory;
 import org.springframework.stereotype.Controller;
@@ -34,8 +37,24 @@ public class LoginController {
 
             String hashedPassword = hashPassword(password, userAuthenticationDAO.getSalt(email));
 
-            if(hashedPassword.equals(userAuthenticationDAO.getPassword(email)))
-                System.out.println("Datele de autentificare sunt corecte!");
+            if(hashedPassword.equals(userAuthenticationDAO.getPassword(email))) {
+                // user succesfully connected
+
+                PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
+                DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
+                AdminDAO adminDAO = new AdminDAO(daoFactory.getConnection());
+
+                if(patientDAO.existsByEmail(email) && !doctorDAO.existsByEmail(email) && !adminDAO.existsByEmail(email)) {
+                    // redirect to PATIENT dashboard
+                    System.out.println("It's a PATIENT!");
+                } else if (!patientDAO.existsByEmail(email) && doctorDAO.existsByEmail(email) && !adminDAO.existsByEmail(email)) {
+                    // redirect to DOCTOR dashboard
+                    System.out.println("It's a DOCTOR!");
+                } else if (!patientDAO.existsByEmail(email) && !doctorDAO.existsByEmail(email) && adminDAO.existsByEmail(email)) {
+                    // redirect to ADMIN dashboard
+                    System.out.println("It's an ADMIN!");
+                }
+            }
             else
                 System.out.println("Datele de autentificare sunt GRESITE!\n\tEmail: " + email + ", parola introdusa: " + hashedPassword + ", parola din db: " + userAuthenticationDAO.getPassword(email));
         }

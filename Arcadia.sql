@@ -28,13 +28,7 @@ CREATE TABLE Doctors (
 
 
 CREATE TABLE Admins (
-  CNP NUMBER PRIMARY KEY,
-  First_name VARCHAR2(50) NOT NULL,
-  Last_name VARCHAR2(50) NOT NULL,
-  Gender CHAR(1) NOT NULL,
-  Phone_number VARCHAR2(20) NOT NULL,
-  Email VARCHAR2(100) REFERENCES User_authentication(Email),
-  Address VARCHAR2(200)
+  Email VARCHAR2(100) REFERENCES User_authentication(Email)
 );
 
 CREATE TABLE Cabinets (

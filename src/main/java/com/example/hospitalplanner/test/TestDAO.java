@@ -33,7 +33,9 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
-            testUserAuthenticationDAO(connection);
+//            testAdminDAO(connection);
+
+//            testUserAuthenticationDAO(connection);
 
 //            testPatientDAO(connection);
 
@@ -60,6 +62,15 @@ public class TestDAO {
                 System.err.println(e);
             }
         }
+    }
+
+    public void testAdminDAO(Connection connection) throws SQLException {
+        Admin admin = new Admin();
+        admin.setEmail("admin@admin.com");
+
+        AdminDAO adminDAO = new AdminDAO(connection);
+
+        adminDAO.insert(admin);
     }
 
     public void testAppointmentDAO(Connection connection) throws SQLException {
@@ -316,9 +327,9 @@ public class TestDAO {
             System.out.println("\t" + patient);
         }
 
-        System.out.println("Is there a patient with CNP '5030524268901L'? " + patientDAO.exists(5030524268901L));
+        System.out.println("Is there a patient with CNP '5030524268901L'? " + patientDAO.existsByCNP(5030524268901L));
 //        patientDAO.delete(5030524268901L);
-        System.out.println("Is there a patient with CNP '5030524268901L'? " + patientDAO.exists(5030524268901L));
+        System.out.println("Is there a patient with CNP '5030524268901L'? " + patientDAO.existsByCNP(5030524268901L));
 
     }
 

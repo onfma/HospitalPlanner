@@ -11,12 +11,14 @@ import java.util.List;
 public class Admin {
     private String email;
     private String password;
-    private final List<Patient> patientList;
-    private final List<Doctor> doctorList;
+    private List<Patient> patientList;
+    private List<Doctor> doctorList;
     private List<Cabinet> cabinetList;
     private List<CabinetSchedule> cabinetSchedulesList;
-    private final List<DoctorSchedule> doctorScheduleList;
-    private final List<Appoinments> appoinmentsList;
+    private List<DoctorSchedule> doctorScheduleList;
+    private List<Appoinments> appoinmentsList;
+
+    public Admin() {}
 
     public Admin(List<Patient> patientList, List<Doctor> doctorList, List<Cabinet> cabinetList, List<CabinetSchedule> cabinetSchedulesList, List<DoctorSchedule> doctorScheduleList, List<Appoinments> appoinmentsList) {
         this.patientList = Collections.unmodifiableList(patientList);
