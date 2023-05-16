@@ -9,6 +9,13 @@ Proiect __Programare Avansata__ - Anul II - FII (2023)
 Figma UX design: https://www.figma.com/file/6zpBQJNomRsYVidhVadLm7/MEDDICAL---Hospital-website-template-(Community)-(Community)?type=design&node-id=503%3A2300&t=SFmIibILdErc8FxS-1
 
 Ex account:
-  - email: admin@admin.com
-  - password: Admin1234
+- __Patient account__:
+  - email: "matei.prisacariu@yahoo.ro"
+  - password: "parolaluiMatei2"
+- __Doctor account__:
+  - email: "mihai.alexandru@yahoo.com"
+  - password: "MihaiAlexandru1"
+- __Admin account__:
+  - email: "admin@admin.com"
+  - password: "Admin1234"
 
