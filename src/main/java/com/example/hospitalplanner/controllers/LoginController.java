@@ -23,7 +23,7 @@ public class LoginController {
 
     @GetMapping
     public String showLoginPage() {
-        System.out.println("S-a afisat pagina!");
+        System.out.println("S-a afisat pagina loginPage.hmtl!");
         return "loginPage";
     }
 
@@ -48,6 +48,7 @@ public class LoginController {
                 if(patientDAO.existsByEmail(email) && !doctorDAO.existsByEmail(email) && !adminDAO.existsByEmail(email)) {
                     // redirect to PATIENT dashboard
                     System.out.println("It's a PATIENT!");
+                    return "redirect:/patientDashboard";
                 } else if (!patientDAO.existsByEmail(email) && doctorDAO.existsByEmail(email) && !adminDAO.existsByEmail(email)) {
                     // redirect to DOCTOR dashboard
                     System.out.println("It's a DOCTOR!");
@@ -65,10 +66,7 @@ public class LoginController {
             System.out.println("Email-ul introdus este gresit!\n\tEmail: " + email);
             throw new AuthenticationException("You entered the wrong password or email address!\nPlease fill in again!");
         }
-
-        // Logică pentru procesarea datelor de autentificare
-        // Aici poți valida credențialele, să verifici autentificarea și să returnezi o pagină de succes sau de eroare
-        return "redirect:/dashboard"; // Exemplu de redirecționare către o pagină de bord
+        return "redirect:/dashboard";
     }
 
     private String hashPassword(String password, String salt) {
