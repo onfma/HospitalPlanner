@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <title>HospitalPlanner</title>
@@ -53,6 +53,10 @@
             <input type="password" class="form-control" id="pwd_login" placeholder="Enter your password" name="pswd" required
                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
             <label for="pwd_login">Enter your password</label>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
         </div>
 
         <button type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Login</button>

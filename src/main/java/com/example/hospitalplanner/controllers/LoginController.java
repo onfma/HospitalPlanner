@@ -5,6 +5,7 @@ import com.example.hospitalplanner.database.DAO.DoctorDAO;
 import com.example.hospitalplanner.database.DAO.PatientDAO;
 import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
 import com.example.hospitalplanner.database.DAOFactory;
+import com.example.hospitalplanner.exceptions.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public String processLoginForm(@RequestParam("email") String email, @RequestParam("pswd") String password) throws SQLException {
+    public String processLoginForm(@RequestParam("email") String email, @RequestParam("pswd") String password) throws SQLException, AuthenticationException {
 
         DAOFactory daoFactory = new DAOFactory();
         UserAuthenticationDAO userAuthenticationDAO = new UserAuthenticationDAO(daoFactory.getConnection());
@@ -55,8 +56,14 @@ public class LoginController {
                     System.out.println("It's an ADMIN!");
                 }
             }
-            else
-                System.out.println("Datele de autentificare sunt GRESITE!\n\tEmail: " + email + ", parola introdusa: " + hashedPassword + ", parola din db: " + userAuthenticationDAO.getPassword(email));
+            else {
+                System.out.println("Parola este gresita!\n\tEmail: " + email + ", parola introdusa: " + hashedPassword + ", parola din db: " + userAuthenticationDAO.getPassword(email));
+                throw new AuthenticationException("You entered the wrong password or email address!\nPlease fill in again!");
+            }
+        }
+        else {
+            System.out.println("Email-ul introdus este gresit!\n\tEmail: " + email);
+            throw new AuthenticationException("You entered the wrong password or email address!\nPlease fill in again!");
         }
 
         // Logică pentru procesarea datelor de autentificare
