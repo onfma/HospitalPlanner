@@ -43,11 +43,11 @@ public class TestDAO {
 
 //            testDoctorScheduleDAO(connection);
 
-//            testCabinetsDAO(connection);
+            testCabinetsDAO(connection);
 
 //            testCabinetsScheduleDAO(connection);
 
-            testAppointmentDAO(connection);
+//            testAppointmentDAO(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -176,31 +176,27 @@ public class TestDAO {
         Cabinet cabinet2 = new Cabinet(2, "Neurology");
         Cabinet cabinet3 = new Cabinet(3, "Dermatology");
 
-        cabinetsDAO.insert(cabinet1);
-        cabinetsDAO.insert(cabinet2);
-        cabinetsDAO.insert(cabinet3);
+//        cabinetsDAO.insert(cabinet1);
+//        cabinetsDAO.insert(cabinet2);
+//        cabinetsDAO.insert(cabinet3);
 
         // Select all the patients
-        List<Cabinet> cabinetList = new ArrayList<>();
+        String cabinetList;
 
         cabinetList = cabinetsDAO.select();
 
-        System.out.println("\nAll cabinets (AFTER INSERTION):");
-        for (Cabinet cabinet : cabinetList) {
-            System.out.println("\t" + cabinet);
-        }
+        System.out.println("\nAll cabinets (AFTER INSERTION):\n" + cabinetList);
 
-        cabinetsDAO.delete(cabinet1);
-        cabinetsDAO.delete(cabinet2);
-        cabinetsDAO.delete(cabinet3);
+
+//        cabinetsDAO.delete(cabinet1);
+//        cabinetsDAO.delete(cabinet2);
+//        cabinetsDAO.delete(cabinet3);
 
         // Select all the patients
-        cabinetList = new ArrayList<>();
+//        cabinetList = cabinetsDAO.select();
 
-        System.out.println("\nAll cabinets (AFTER DELETION):");
-        for (Cabinet cabinet : cabinetList) {
-            System.out.println("\t" + cabinet);
-        }
+//        System.out.println("\nAll cabinets (AFTER DELETION):\n" + cabinetList);
+
 
     }
 
