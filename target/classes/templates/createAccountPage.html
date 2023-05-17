@@ -3,12 +3,12 @@
 
 <head>
     <title>HospitalPlanner</title>
-    <link rel="shortcut icon" href="static/img/page_icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../static/static/img/page_icon.png" type="image/x-icon">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <link rel="stylesheet" href="static/styles/general_style.css">
-    <link rel="stylesheet" href="static/styles/header_style.css">
-    <link rel="stylesheet" href="static/styles/homepage_style.css">
+    <link rel="stylesheet" href="../static/static/styles/general_style.css">
+    <link rel="stylesheet" href="../static/static/styles/header_style.css">
+    <link rel="stylesheet" href="../static/static/styles/homepage_style.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -37,7 +37,7 @@
         <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Create account to Hospital<a style="color: #159EEC;">Planner</a></div>
 
         <!-- account form -->
-        <form action="createAccountPasswordPage.html" class="container-fluid mt-3">
+        <form action="../static/createAccountPasswordPage.html" class="container-fluid mt-3">
             <div class="row">
                 <!-- info boxes -->
                 <div class="col-sm-9 p-3">
@@ -45,7 +45,7 @@
                         <!-- first name -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="../static/static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" name="first_name" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="first_name" style="display: flex; align-items: center;">
                                     Enter your first name
@@ -55,7 +55,7 @@
                         <!-- last name -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="../static/static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="text" class="form-control" id="last_name" placeholder="Enter your last name" name="last_name" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="last_name" style="display: flex; align-items: center;">
                                     Enter your last name
@@ -67,7 +67,7 @@
                         <!-- CNP -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/cnp_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 33%;">
+                                <img src="../static/static/img/cnp_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 33%;">
                                 <input type="text" class="form-control" id="cnp" placeholder="Enter your CNP" name="cnp" pattern="[0-9]{13}" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="cnp" style="display: flex; align-items: center;">
                                     Enter your CNP
@@ -77,7 +77,7 @@
                         <!-- sex -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3 dropdown" style="position: relative;">
-                                <img src="static/img/sex_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 30%;">
+                                <img src="../static/static/img/sex_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 30%;">
                                 <input type="text" class="form-control dropdown-toggle" data-bs-toggle="dropdown" id="sex" placeholder="Enter your sex" name="sex" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="sex" style="display: flex; align-items: center;">Enter your sex</label>
                                 <ul class="dropdown-menu">
@@ -91,7 +91,7 @@
                         <!-- tel -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="../static/static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="tel" class="form-control" id="tel" placeholder="Enter your phone number" name="tel" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="tel" style="display: flex; align-items: center;">
                                     Enter your phone number
@@ -101,7 +101,7 @@
                         <!-- email -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="../static/static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="email" style="display: flex; align-items: center;">
                                     Enter your email address
@@ -113,7 +113,7 @@
                         <!-- home address -->
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
-                                <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                                <img src="../static/static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                                 <input type="text" class="form-control" id="home_address" placeholder="Enter your home address" name="home_address" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="home_address" style="display: flex; align-items: center;">
                                     Enter your home address
