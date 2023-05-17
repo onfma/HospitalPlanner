@@ -37,7 +37,7 @@
         <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Create account to Hospital<a style="color: #159EEC;">Planner</a></div>
 
         <!-- account form -->
-        <form action="../static/createAccountPasswordPage.html" class="container-fluid mt-3">
+        <form action="../templates/loginPage.html" class="container-fluid mt-3">
             <div class="row">
                 <!-- info boxes -->
                 <div class="col-sm-9 p-3">
@@ -120,26 +120,38 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
-
-                </div>
-
-                <!-- account type -->
-                <!-- TODO: butoanele de pacient/doctor -->
-                <div class="col-sm-3 p-3 border-start border-4 text-center " style="border-color: #1F2B6C !important;">
-                    <!-- type -->
-                    <div class="container-fluid mt-3 pt-5 pb-3 d-flex flex-column justify-content-around">
-                        <div class="p-2">
-                            <button id="patientBtn" class="btn pt-2 pb-2 px-5" style="background: #BFD2F8; border-radius: 5px; border: none; font-size: 30px; line-height: 47px;">Patient</button>
-                        </div>
-
-                        <div class="p-2" style="font-family: 'Work Sans'; font-weight: 500; font-size: 20px; line-height: 28px; color: #1F2B6C;">OR</div>
-
-                        <div class="p-2">
-                            <button id="doctorBtn" class="btn pt-2 pb-2 px-5" style="background: #BFD2F8; border-radius: 5px; border: none; font-size: 30px; line-height: 47px;">Doctor</button>
+                        <!-- password -->
+                        <div class="col">
+                            <div class="form-floating mb-3 mt-3" style="position: relative;">
+                                <img src="../static/static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" required
+                                       style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                                <label for="pwd">Enter your password
+                                </label>
+                            </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- doctor / pacient -->
+                        <div class="form-floating mb-3 mt-3 dropdown" style="position: relative;">
+                            <img src="../static/static/img/medical_emote.png" alt="us" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 30%;">
+                            <input type="text" class="form-control dropdown-toggle" data-bs-toggle="dropdown" id="account_type" placeholder="Are you a patient? Or a doctor?" name="account_type" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px; padding: 20px;">
+                            <label for="account_type" style="display: flex; align-items: center; padding: 20px;">Are you a patient? Or a doctor?</label>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Patient</a></li>
+                                <li><a class="dropdown-item" href="#">Doctor</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
                 </div>
+
+                <div class="col-sm-3 p-3">
+                    <img src="../static/static/img/create_account_img.svg" alt="img" style="width: 110%">
+                </div>
+
+                <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Create Account</button>
+
             </div>
         </form>
     </div>
@@ -156,9 +168,10 @@
 
 <script>
     $(document).ready(function() {
-        $('.dropdown-menu a').click(function() {
+        $('.dropdown-menu a').click(function(event) {
+            event.preventDefault(); // Prevent the default behavior of following the href link
             var selectedOption = $(this).text();
-            $('#sex').val(selectedOption);
+            $(this).closest('.dropdown').find('.form-control').val(selectedOption);
         });
     });
 

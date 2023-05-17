@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Admin extends Person {
-    private String email;
-    private String password;
     private List<Patient> patientList;
     private List<Doctor> doctorList;
     private List<Cabinet> cabinetList;
@@ -19,6 +17,10 @@ public class Admin extends Person {
     private List<Appoinments> appoinmentsList;
 
     public Admin() {}
+
+    public Admin(String email) {
+        this.email = email;
+    }
 
     public Admin(String email, String password) {
         super(email, password);

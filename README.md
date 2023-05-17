@@ -10,12 +10,12 @@ Figma UX design: https://www.figma.com/file/6zpBQJNomRsYVidhVadLm7/MEDDICAL---Ho
 
 Ex account:
 - __Patient account__:
-  - email: "matei.prisacariu@yahoo.ro"
-  - password: "parolaluiMatei2"
+  - email: "patient1@yahoo.com"
+  - password: "Patient1234"
 - __Doctor account__:
-  - email: "mihai.alexandru@yahoo.com"
-  - password: "MihaiAlexandru1"
+  - email: "doctor1@yahoo.com"
+  - password: "Doctor1234"
 - __Admin account__:
-  - email: "admin@admin.com"
+  - email: "admin1@yahoo.com"
   - password: "Admin1234"
 

@@ -71,10 +71,10 @@ public class DoctorsSpecialitiesDAO {
         return jsonArray.toString();
     }
 
-    public String getCabinetSpecialities(Long doctorCNP) throws SQLException {
-        String query = "SELECT * FROM DOCTOR_SPECIALTIES WHERE DOCTOR_CNP = ?";
+    public String getDoctorsHaveSameSpeciality(int cabinetID) throws SQLException {
+        String query = "SELECT * FROM DOCTOR_SPECIALTIES WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
+        statement.setInt(1, cabinetID); // set DOCTOR_CNP parameter
         ResultSet resultSet = statement.executeQuery();
 
         JSONArray jsonArray = new JSONArray();
@@ -91,44 +91,8 @@ public class DoctorsSpecialitiesDAO {
         return jsonArray.toString();
     }
 
-    public void setStartTimeSpecificDay(Long doctorCNP, String dayOfWeek, LocalTime startTime) throws SQLException {
-        String query = "UPDATE DOCTORS_SCHEDULE SET START_TIME = ? WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-
-
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, String.valueOf(startTime)); // set startTime parameter
-        statement.setLong(2, doctorCNP); // set doctorCNP parameter
-        statement.setString(3, dayOfWeek); // set dayOfWeek parameter
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    public void setEndTimeSpecificDay(Long doctorCNP, String dayOfWeek, LocalTime endTime) throws SQLException {
-        String query = "UPDATE DOCTORS_SCHEDULE SET END_TIME = ? WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-
-
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, String.valueOf(endTime)); // set endTime parameter
-        statement.setLong(2, doctorCNP); // set doctorCNP parameter
-        statement.setString(3, dayOfWeek); // set dayOfWeek parameter
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    public void deleteSpecificDoctorDaySchedule(Long doctorCNP, String dayOfWeek) throws SQLException {
-        String query = "DELETE FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, doctorCNP); // set doctorCNP parameter
-        statement.setString(2, dayOfWeek); // set dayOfWeek parameter
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    public void deleteALLDoctorDaySchedule(Long doctorCNP) throws SQLException {
-        String query = "DELETE FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ?";
+    public void deleteAllDoctorSpecialities(Long doctorCNP) throws SQLException {
+        String query = "DELETE FROM DOCTOR_SPECIALTIES WHERE DOCTOR_CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, doctorCNP); // set doctorCNP parameter
         statement.executeUpdate();
@@ -136,10 +100,20 @@ public class DoctorsSpecialitiesDAO {
         statement.close();
     }
 
-    public void delete(long CNP) throws SQLException {
-        String query = "DELETE FROM DOCTORS WHERE CNP = ?";
+    public void deleteAllCabinetsDoctor(int cabinetID) throws SQLException {
+        String query = "DELETE FROM DOCTOR_SPECIALTIES WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, CNP);
+        statement.setInt(1, cabinetID); // set CABINET_ID parameter
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
+    public void delete(long doctorCNP, int cabinetID) throws SQLException {
+        String query = "DELETE FROM DOCTOR_SPECIALTIES WHERE CABINET_ID = ? AND DOCTOR_CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, cabinetID); // set DOCTOR_CNP parameter
+        statement.setLong(2, doctorCNP);
         statement.executeUpdate();
 
         statement.close();
