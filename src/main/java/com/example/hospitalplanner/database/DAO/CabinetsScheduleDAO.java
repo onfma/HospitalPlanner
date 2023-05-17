@@ -20,25 +20,25 @@ public class CabinetsScheduleDAO {
         this.connection = connection;
     }
 
-    public List<CabinetSchedule> select() throws SQLException {
+    public String  select() throws SQLException {
         String query = "SELECT * FROM CABINETS_SCHEDULE";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
 
-        List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
         while (resultSet.next()) {
-            CabinetSchedule cabinetSchedule = new CabinetSchedule();
-            cabinetSchedule.setId(resultSet.getInt("CABINET_ID"));
-            cabinetSchedule.setDayOfWeek(resultSet.getString("DAY_OF_WEEK"));
-            cabinetSchedule.setStartTime(LocalTime.parse(resultSet.getString("START_TIME")));
-            cabinetSchedule.setEndTime(LocalTime.parse(resultSet.getString("END_TIME")));
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("cabinetID", resultSet.getInt("CABINET_ID"));
+            jsonObject.put("dayOfWeek", resultSet.getString("DAY_OF_WEEK"));
+            jsonObject.put("startTime", resultSet.getString("START_TIME"));
+            jsonObject.put("endTime", resultSet.getString("END_TIME"));
 
-            cabinetScheduleList.add(cabinetSchedule);
+            jsonArray.put(jsonObject);
         }
 
         statement.close();
         resultSet.close();
-        return cabinetScheduleList;
+        return jsonArray.toString();
     }
 
 

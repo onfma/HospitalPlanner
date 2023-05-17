@@ -43,9 +43,9 @@ public class TestDAO {
 
 //            testDoctorScheduleDAO(connection);
 
-            testCabinetsDAO(connection);
+//            testCabinetsDAO(connection);
 
-//            testCabinetsScheduleDAO(connection);
+            testCabinetsScheduleDAO(connection);
 
 //            testAppointmentDAO(connection);
 
@@ -115,58 +115,49 @@ public class TestDAO {
         CabinetSchedule thursday = new CabinetSchedule(1, "Thursday", LocalTime.of(10,30), LocalTime.of(17,30));
         CabinetSchedule friday = new CabinetSchedule(1, "Friday", LocalTime.of(10,15), LocalTime.of(17,15));
 
-        cabinetsScheduleDAO.insert(monday);
-        cabinetsScheduleDAO.insert(tuesday);
-        cabinetsScheduleDAO.insert(wednesday);
-        cabinetsScheduleDAO.insert(thursday);
-        cabinetsScheduleDAO.insert(friday);
+//        cabinetsScheduleDAO.insert(monday);
+//        cabinetsScheduleDAO.insert(tuesday);
+//        cabinetsScheduleDAO.insert(wednesday);
+//        cabinetsScheduleDAO.insert(thursday);
+//        cabinetsScheduleDAO.insert(friday);
 
         // Select all the cabinetSchedule
-        List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
+        String cabinetScheduleList;
 
         cabinetScheduleList = cabinetsScheduleDAO.select();
 
-        System.out.println("\nAll cabinets (AFTER INSERTION):");
-        for (CabinetSchedule cabinetSchedule : cabinetScheduleList) {
-            System.out.println("\t" + cabinetSchedule);
-        }
+        System.out.println("\nAll cabinets (AFTER INSERTION):\n" + cabinetScheduleList);
 
         // Delete a specific day from a specific Cabinet Schedule
-        cabinetsScheduleDAO.deleteSpecificCabinetDaySchedule(1L, "Monday");
+//        cabinetsScheduleDAO.deleteSpecificCabinetDaySchedule(1L, "Monday");
 
-        cabinetScheduleList = cabinetsScheduleDAO.select();
+//        cabinetScheduleList = cabinetsScheduleDAO.select();
 
-        System.out.println("\nAll cabinets (AFTER DELETING MONDAY PROGRAM):");
-        for (CabinetSchedule cabinetSchedule : cabinetScheduleList) {
-            System.out.println("\t" + cabinetSchedule);
-        }
+//        System.out.println("\nAll cabinets (AFTER DELETING MONDAY PROGRAM):\n" + cabinetScheduleList);
 
         // Weekly Schedule Program for a Cabinet
-        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(1L));
+//        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(1L));
 
         // Change startTime for a specific day from a Cabinet's Schedule
-        cabinetsScheduleDAO.setStartTimeSpecificDay(1L, "Tuesday", LocalTime.of(9,15));
+//        cabinetsScheduleDAO.setStartTimeSpecificDay(1L, "Tuesday", LocalTime.of(9,15));
 
         // Change endTime for a specific day from a Cabinet's Schedule
-        cabinetsScheduleDAO.setEndTimeSpecificDay(1L, "Tuesday", LocalTime.of(16,15));
+//        cabinetsScheduleDAO.setEndTimeSpecificDay(1L, "Tuesday", LocalTime.of(16,15));
 
-        cabinetScheduleList = cabinetsScheduleDAO.select();
+//        cabinetScheduleList = cabinetsScheduleDAO.select();
 
-        System.out.println("\nAll cabinets (AFTER MODIFY START_TIME / END_TIME):");
-        for (CabinetSchedule cabinetSchedule : cabinetScheduleList) {
-            System.out.println("\t" + cabinetSchedule);
-        }
+//        System.out.println("\nAll cabinets (AFTER MODIFY START_TIME / END_TIME):\n" + cabinetScheduleList);
 
         // Get daily schedule program for Cabinet
-        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_SpecificDay(1L, "Monday"));
+//        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_SpecificDay(1L, "Monday"));
 
         // Delete all schedule program for a specific Cabinet
-        cabinetsScheduleDAO.deleteALLCabinetSchedule(1L);
+//        cabinetsScheduleDAO.deleteALLCabinetSchedule(1L);
 
         // Weekly Schedule Program for Cabinet
-        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(1L));
+//        System.out.println(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(1L));
 
-        cabinetsScheduleDAO.deleteALLCabinetSchedule(1L);
+//        cabinetsScheduleDAO.deleteALLCabinetSchedule(1L);
     }
 
     public void testCabinetsDAO(Connection connection) throws SQLException {
