@@ -72,11 +72,11 @@ CREATE TABLE Appointments (
 
 -- Insert pacients accounts
 INSERT INTO User_authentication(Email, Password)
-VALUES ('john.doe@example.com', 'secretpassword');
+VALUES ('admin@yahoo.com', 'Admin1234');
 INSERT INTO User_authentication (Email, Password)
-VALUES ('jane.smith@yahoo.com', 'secretpassword');
+VALUES ('patient@yahoo.com', 'Patient1234');
 INSERT INTO User_authentication (Email, Password)
-VALUES ('bob.johnson@yahoo.com', 'secretpassword');
+VALUES ('doctor@@yahoo.com', 'Doctor1234');
 
 -- Insert Doctors accounts
 INSERT INTO User_authentication (Email, Password)

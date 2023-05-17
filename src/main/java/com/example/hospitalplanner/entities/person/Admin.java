@@ -8,7 +8,7 @@ import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import java.util.Collections;
 import java.util.List;
 
-public class Admin {
+public class Admin extends Person {
     private String email;
     private String password;
     private List<Patient> patientList;
@@ -19,6 +19,10 @@ public class Admin {
     private List<Appoinments> appoinmentsList;
 
     public Admin() {}
+
+    public Admin(String email, String password) {
+        super(email, password);
+    }
 
     public Admin(List<Patient> patientList, List<Doctor> doctorList, List<Cabinet> cabinetList, List<CabinetSchedule> cabinetSchedulesList, List<DoctorSchedule> doctorScheduleList, List<Appoinments> appoinmentsList) {
         this.patientList = Collections.unmodifiableList(patientList);

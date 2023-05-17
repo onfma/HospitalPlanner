@@ -33,6 +33,8 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
+            testPopulateDB(connection);
+
 //            testAdminDAO(connection);
 
 //            testUserAuthenticationDAO(connection);
@@ -45,7 +47,7 @@ public class TestDAO {
 
 //            testCabinetsDAO(connection);
 
-            testCabinetsScheduleDAO(connection);
+//            testCabinetsScheduleDAO(connection);
 
 //            testAppointmentDAO(connection);
 
@@ -62,6 +64,117 @@ public class TestDAO {
                 System.err.println(e);
             }
         }
+    }
+
+    public void testPopulateDB(Connection connection) throws SQLException {
+
+        // insert EMAIL & PASSWORD
+        UserAuthenticationDAO userAuthenticationDAO = new UserAuthenticationDAO(connection);
+
+        Admin admin1 = new Admin("admin1@yahoo.com", "Admin1234");
+        Admin admin2 = new Admin("admin2@yahoo.com", "Admin1234");
+        Doctor doctor1 = new Doctor("doctor1@yahoo.com", "Doctor1234");
+        Doctor doctor2 = new Doctor("doctor2@yahoo.com", "Doctor1234");
+        Doctor doctor3 = new Doctor("doctor3@yahoo.com", "Doctor1234");
+        Doctor doctor4 = new Doctor("doctor4@yahoo.com", "Doctor1234");
+        Patient patient1 = new Patient("patient1@yahoo.com", "Patient1234");
+        Patient patient2 = new Patient("patient2@yahoo.com", "Patient1234");
+        Patient patient3 = new Patient("patient3@yahoo.com", "Patient1234");
+        Patient patient4 = new Patient("patient4@yahoo.com", "Patient1234");
+
+        userAuthenticationDAO.insert(admin1);
+        userAuthenticationDAO.insert(admin2);
+        userAuthenticationDAO.insert(doctor1);
+        userAuthenticationDAO.insert(doctor2);
+        userAuthenticationDAO.insert(doctor3);
+        userAuthenticationDAO.insert(doctor4);
+        userAuthenticationDAO.insert(patient1);
+        userAuthenticationDAO.insert(patient2);
+        userAuthenticationDAO.insert(patient3);
+        userAuthenticationDAO.insert(patient4);
+
+        // insert all the informations about patients
+        PatientDAO patientDAO = new PatientDAO(connection);
+
+        Patient Patient1 = new Patient( 5030524268901L, "Patient1", "patient1", 'M', "+441234567891", "patient1@yahoo.com","101B, Palace Street");
+        Patient Patient2 = new Patient( 5030524268902L, "Patient2", "patient2", 'M', "+441234567892", "patient2@yahoo.com","102B, Palace Street");
+        Patient Patient3 = new Patient( 5030524268903L, "Patient3", "patient3", 'M', "+441234567893", "patient3@yahoo.com","103B, Palace Street");
+        Patient Patient4 = new Patient( 5030524268904L, "Patient4", "patient4", 'M', "+441234567894", "patient4@yahoo.com","104B, Palace Street");
+
+        patientDAO.insert(Patient1);
+        patientDAO.insert(Patient2);
+        patientDAO.insert(Patient3);
+        patientDAO.insert(Patient4);
+
+        // insert all the informations about doctors
+        DoctorDAO doctorDAO = new DoctorDAO(connection);
+
+        Doctor Doctor1 = new Doctor( 5030524268701L, "Doctor1", "doctor1", 'M', "+441234567891", "doctor1@yahoo.com","101B, Oxford Street");
+        Doctor Doctor2 = new Doctor( 5030524268702L, "Doctor2", "doctor2", 'F', "+441234567892", "doctor2@yahoo.com","102B, Oxford Street");
+        Doctor Doctor3 = new Doctor( 5030524268703L, "Doctor3", "doctor3", 'M', "+441234567893", "doctor3@yahoo.com","103B, Oxford Street");
+        Doctor Doctor4 = new Doctor( 5030524268704L, "Doctor4", "doctor4", 'M', "+441234567894", "doctor4@yahoo.com","104B, Oxford Street");
+
+        doctorDAO.insert(Doctor1);
+        doctorDAO.insert(Doctor2);
+        doctorDAO.insert(Doctor3);
+        doctorDAO.insert(Doctor4);
+
+        // insert Doctor Specialities
+        DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(connection);
+
+        Doctors
+
+        // insert Cabinets
+        CabinetsDAO cabinetsDAO = new CabinetsDAO(connection);
+
+        Cabinet cabinet1 = new Cabinet(1, "Cardiology");
+        Cabinet cabinet2 = new Cabinet(2, "Neurology");
+        Cabinet cabinet3 = new Cabinet(3, "Dermatology");
+
+        cabinetsDAO.insert(cabinet1);
+        cabinetsDAO.insert(cabinet2);
+        cabinetsDAO.insert(cabinet3);
+
+        // insert CabinetSchedulle
+        CabinetsScheduleDAO cabinetsScheduleDAO = new CabinetsScheduleDAO(connection);
+
+        CabinetSchedule mondayC1 = new CabinetSchedule(1, "Monday", LocalTime.of(9,0), LocalTime.of(16,0));
+        CabinetSchedule tuesdayC1 = new CabinetSchedule(1, "Tuesday", LocalTime.of(9,30), LocalTime.of(16,30));
+        CabinetSchedule wednesdayC1 = new CabinetSchedule(1, "Wednesday", LocalTime.of(10,0), LocalTime.of(17,0));
+        CabinetSchedule thursdayC1 = new CabinetSchedule(1, "Thursday", LocalTime.of(10,30), LocalTime.of(17,30));
+        CabinetSchedule fridayC1 = new CabinetSchedule(1, "Friday", LocalTime.of(10,15), LocalTime.of(17,15));
+
+        cabinetsScheduleDAO.insert(mondayC1);
+        cabinetsScheduleDAO.insert(tuesdayC1);
+        cabinetsScheduleDAO.insert(wednesdayC1);
+        cabinetsScheduleDAO.insert(thursdayC1);
+        cabinetsScheduleDAO.insert(fridayC1);
+
+        CabinetSchedule mondayC2 = new CabinetSchedule(2, "Monday", LocalTime.of(11,0), LocalTime.of(17,0));
+        CabinetSchedule tuesdayC2 = new CabinetSchedule(2, "Tuesday", LocalTime.of(10,30), LocalTime.of(19,30));
+        CabinetSchedule wednesdayC2 = new CabinetSchedule(2, "Wednesday", LocalTime.of(12,0), LocalTime.of(18,0));
+        CabinetSchedule thursdayC2 = new CabinetSchedule(2, "Thursday", LocalTime.of(10,40), LocalTime.of(15,30));
+        CabinetSchedule fridayC2 = new CabinetSchedule(2, "Friday", LocalTime.of(9,20), LocalTime.of(18,15));
+
+        cabinetsScheduleDAO.insert(mondayC2);
+        cabinetsScheduleDAO.insert(tuesdayC2);
+        cabinetsScheduleDAO.insert(wednesdayC2);
+        cabinetsScheduleDAO.insert(thursdayC2);
+        cabinetsScheduleDAO.insert(fridayC2);
+
+        CabinetSchedule mondayC3 = new CabinetSchedule(3, "Monday", LocalTime.of(9,40), LocalTime.of(16,15));
+        CabinetSchedule tuesdayC3 = new CabinetSchedule(3, "Tuesday", LocalTime.of(11,15), LocalTime.of(18,50));
+        CabinetSchedule wednesdayC3 = new CabinetSchedule(3, "Wednesday", LocalTime.of(11,30), LocalTime.of(19,45));
+        CabinetSchedule thursdayC3 = new CabinetSchedule(3, "Thursday", LocalTime.of(9,45), LocalTime.of(17,50));
+        CabinetSchedule fridayC3 = new CabinetSchedule(3, "Friday", LocalTime.of(9,40), LocalTime.of(18,45));
+
+        cabinetsScheduleDAO.insert(mondayC3);
+        cabinetsScheduleDAO.insert(tuesdayC3);
+        cabinetsScheduleDAO.insert(wednesdayC3);
+        cabinetsScheduleDAO.insert(thursdayC3);
+        cabinetsScheduleDAO.insert(fridayC3);
+
+
     }
 
     public void testAdminDAO(Connection connection) throws SQLException {
