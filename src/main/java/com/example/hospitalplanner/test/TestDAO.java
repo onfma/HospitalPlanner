@@ -47,7 +47,7 @@ public class TestDAO {
 
 //            testCabinetsScheduleDAO(connection);
 
-//            testAppointmentDAO(connection);
+            testAppointmentDAO(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -76,35 +76,32 @@ public class TestDAO {
     public void testAppointmentDAO(Connection connection) throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(connection);
 
-        Appoinments app1 = new Appoinments(1, 1, 5030524268902L, 5030524268901L, LocalDateTime.of(2023, 6, 01, 10, 0));
-        Appoinments app2 = new Appoinments(2, 1, 5030524268902L, 5031121835501L, LocalDateTime.of(2023, 6, 01, 11, 0));
-        Appoinments app3 = new Appoinments(3, 1, 5030524268902L, 5031124264501L, LocalDateTime.of(2023, 6, 01, 12, 0));
+//        Appoinments app1 = new Appoinments(1, 1, 5030524268902L, 5030524268901L, LocalDateTime.of(2023, 6, 01, 10, 0));
+//        Appoinments app2 = new Appoinments(2, 1, 5030524268902L, 5031121835501L, LocalDateTime.of(2023, 6, 01, 11, 0));
+//        Appoinments app3 = new Appoinments(3, 1, 5030524268902L, 5031124264501L, LocalDateTime.of(2023, 6, 01, 12, 0));
 
-        appointmentsDAO.insert(app1);
-        appointmentsDAO.insert(app2);
-        appointmentsDAO.insert(app3);
+//        appointmentsDAO.insert(app1);
+//        appointmentsDAO.insert(app2);
+//        appointmentsDAO.insert(app3);
 
         // Select all the patients
-        List<Appoinments> appoinmentsList = new ArrayList<>();
+        String appoinmentsJSONobject;
 
-        appoinmentsList = appointmentsDAO.select();
+        appoinmentsJSONobject = appointmentsDAO.select();
 
-        System.out.println("\nAll appointments (AFTER INSERTION):");
-        for (Appoinments app : appoinmentsList) {
-            System.out.println("\t" + app);
-        }
+        System.out.println("\nAll appointments (AFTER INSERTION):\n"+appoinmentsJSONobject);
 
-        System.out.println(appointmentsDAO.getDoctorAppointments(5030524268902L));
+//        System.out.println(appointmentsDAO.getDoctorAppointments(5030524268902L));
 
-        appointmentsDAO.setAppointmentTime(app3.getId(), LocalDateTime.of(2023, 6, 01, 15, 0));
+//        appointmentsDAO.setAppointmentTime(app3.getId(), LocalDateTime.of(2023, 6, 01, 15, 0));
 
-        System.out.println(appointmentsDAO.getPatientAppointments(5031124264501L));
+//        System.out.println(appointmentsDAO.getPatientAppointments(5031124264501L));
 
-        System.out.println(appointmentsDAO.getCabinetAppointments(1));
+//        System.out.println(appointmentsDAO.getCabinetAppointments(1));
 
-        appointmentsDAO.delete(app1.getId());
-        appointmentsDAO.delete(app2.getId());
-        appointmentsDAO.delete(app3.getId());
+//        appointmentsDAO.delete(app1.getId());
+//        appointmentsDAO.delete(app2.getId());
+//        appointmentsDAO.delete(app3.getId());
 
 
     }

@@ -20,29 +20,26 @@ public class AppointmentsDAO {
         this.connection = connection;
     }
 
-    public List<Appoinments> select() throws SQLException {
+    public String select() throws SQLException {
         String query = "SELECT * FROM APPOINTMENTS";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
 
-        List<Appoinments> appoinmentsList = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
         while (resultSet.next()) {
-            Appoinments appoinment = new Appoinments();
-            appoinment.setId(resultSet.getInt("ID"));
-            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
-            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
-            appoinment.setPatientCNP(resultSet.getLong("PATIENT_CNP"));
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", resultSet.getInt("ID"));
+            jsonObject.put("cabinetID", resultSet.getInt("CABINET_ID"));
+            jsonObject.put("doctorCNP", resultSet.getLong("DOCTOR_CNP"));
+            jsonObject.put("patientCNP", resultSet.getLong("PATIENT_CNP"));
+            jsonObject.put("appointmentTime", resultSet.getString("APPOINTMENT_TIME"));
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime appointmentTime = LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter);
-            appoinment.setAppointmentTime(appointmentTime);
-
-            appoinmentsList.add(appoinment);
+            jsonArray.put(jsonObject);
         }
 
         statement.close();
         resultSet.close();
-        return appoinmentsList;
+        return jsonArray.toString();
     }
 
 
