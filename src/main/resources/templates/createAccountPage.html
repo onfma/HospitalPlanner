@@ -37,7 +37,7 @@
         <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Create account to Hospital<a style="color: #159EEC;">Planner</a></div>
 
         <!-- account form -->
-        <form action="/createAccount" method="POST" class="container-fluid mt-3">
+        <form action="" method="POST" class="container-fluid mt-3">
             <div class="row">
                 <!-- info boxes -->
                 <div class="col-sm-9 p-3">
@@ -159,6 +159,11 @@
 
                 <div th:if="${error}" class="alert alert-danger" role="alert">
                     <span th:text="${error}"></span>
+                </div>
+
+<!--                 TODO: claudiule fa pls aici cum ai facut la error, doar ca de data asta pt "cont creat cu success-->
+                <div th:if="${accountCreated}" class="container-fluid pt-4 pb-4 px-4 mb-3 mt-3 text-center" style="background-color: #1F2B6C; color: #FCFEFE; border-radius: 20px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">
+                    ACCOUNT CREATED! <br> <a style="font-size: 20px; font-family: Work_Sans;">You can now log into it.</a>
                 </div>
 
                 <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Create Account</button>

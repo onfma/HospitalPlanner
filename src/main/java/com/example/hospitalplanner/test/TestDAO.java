@@ -34,7 +34,7 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
-//            testPopulateDB(connection);
+            testPopulateDB(connection);
 
 //            testAdminDAO(connection);
 
@@ -104,10 +104,10 @@ public class TestDAO {
         // insert all the information about patients
         PatientDAO patientDAO = new PatientDAO(connection);
 
-        Patient Patient1 = new Patient( 5030524268901L, "Patient", "patient", 'M', "+441234567891", "patient1@yahoo.com","101B, Palace Street");
-        Patient Patient2 = new Patient( 5030524268902L, "Patient", "patient", 'M', "+441234567892", "patient2@yahoo.com","102B, Palace Street");
-        Patient Patient3 = new Patient( 5030524268903L, "Patient", "patient", 'M', "+441234567893", "patient3@yahoo.com","103B, Palace Street");
-        Patient Patient4 = new Patient( 5030524268904L, "Patient", "patient", 'M', "+441234567894", "patient4@yahoo.com","104B, Palace Street");
+        Patient Patient1 = new Patient( 5030524268901L, "Patient", "patient", 'M', "0712345678", "patient1@yahoo.com","101B, Palace Street");
+        Patient Patient2 = new Patient( 5030524268902L, "Patient", "patient", 'M', "0712345677", "patient2@yahoo.com","102B, Palace Street");
+        Patient Patient3 = new Patient( 5030524268903L, "Patient", "patient", 'M', "0712345676", "patient3@yahoo.com","103B, Palace Street");
+        Patient Patient4 = new Patient( 5030524268904L, "Patient", "patient", 'M', "0712345675", "patient4@yahoo.com","104B, Palace Street");
 
         patientDAO.insert(Patient1);
         patientDAO.insert(Patient2);
@@ -117,10 +117,10 @@ public class TestDAO {
         // insert all the information about doctors
         DoctorDAO doctorDAO = new DoctorDAO(connection);
 
-        Doctor Doctor1 = new Doctor( 5030524268701L, "Doctor", "doctor", 'M', "+441234567891", "doctor1@yahoo.com","101B, Oxford Street");
-        Doctor Doctor2 = new Doctor( 5030524268702L, "Doctor", "doctor", 'F', "+441234567892", "doctor2@yahoo.com","102B, Oxford Street");
-        Doctor Doctor3 = new Doctor( 5030524268703L, "Doctor", "doctor", 'M', "+441234567893", "doctor3@yahoo.com","103B, Oxford Street");
-        Doctor Doctor4 = new Doctor( 5030524268704L, "Doctor", "doctor", 'M', "+441234567894", "doctor4@yahoo.com","104B, Oxford Street");
+        Doctor Doctor1 = new Doctor( 5030524268701L, "Doctor", "doctor", 'M', "0712345678", "doctor1@yahoo.com","101B, Oxford Street");
+        Doctor Doctor2 = new Doctor( 5030524268702L, "Doctor", "doctor", 'F', "0712345678", "doctor2@yahoo.com","102B, Oxford Street");
+        Doctor Doctor3 = new Doctor( 5030524268703L, "Doctor", "doctor", 'M', "0712345678", "doctor3@yahoo.com","103B, Oxford Street");
+        Doctor Doctor4 = new Doctor( 5030524268704L, "Doctor", "doctor", 'M', "0712345678", "doctor4@yahoo.com","104B, Oxford Street");
 
         doctorDAO.insert(Doctor1);
         doctorDAO.insert(Doctor2);
