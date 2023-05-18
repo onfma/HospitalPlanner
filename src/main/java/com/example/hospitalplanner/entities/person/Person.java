@@ -75,14 +75,10 @@ public abstract class Person {
             throw new IllegalArgumentException("Email format is invalid.");
         if (String.valueOf(cnp).length() != 13)
             throw new IllegalArgumentException("Invalid CNP: CNP should have exactly 13 digits.");
-        if (!firstName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
-        if (!lastName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
         if (!(gender == 'M') && !(gender == 'F'))
             throw new IllegalArgumentException("Invalid gender: Gender should be 'M' or 'F'.");
-        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !phoneNumber.matches("\\+44\\d{10}"))
-            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
+        if (!phoneNumber.matches("\\d{10}"))
+            throw new IllegalArgumentException("Phone number should be a 10-digit number. EX: '0712345678'");
         if (!address.matches("[a-zA-Z0-9,. ;]+"))
             throw new IllegalArgumentException("Invalid address: Address should contain only letters, digits, or the following characters: [,.;]");
 
@@ -100,14 +96,10 @@ public abstract class Person {
     public Person(long cnp, String firstName, String lastName, char gender, String phoneNumber, String address, List<Appoinments> appoinmentsList) {
         if (String.valueOf(cnp).length() != 13)
             throw new IllegalArgumentException("Invalid CNP: CNP should have exactly 13 digits.");
-        if (!firstName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
-        if (!lastName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
         if (!(gender == 'M') && !(gender == 'F'))
             throw new IllegalArgumentException("Invalid gender: Gender should be 'M' or 'F'.");
-        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !phoneNumber.matches("\\+44\\d{10}"))
-            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
+        if (!phoneNumber.matches("\\d{10}"))
+            throw new IllegalArgumentException("Phone number should be a 10-digit number. EX: '0712345678'");
         if (!address.matches("[a-zA-Z0-9,. ;]+")) {
             throw new IllegalArgumentException("Invalid address: Address should contain only letters, digits, or the following characters: [,.;]");
         }
@@ -137,9 +129,6 @@ public abstract class Person {
     }
 
     public void setFirstName(String firstName) {
-        if (!firstName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
-
         this.firstName = firstName;
     }
 
@@ -148,9 +137,6 @@ public abstract class Person {
     }
 
     public void setLastName(String lastName) {
-        if (!lastName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
-
         this.lastName = lastName;
     }
 
@@ -170,8 +156,8 @@ public abstract class Person {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (!phoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !phoneNumber.matches("\\+44\\d{10}"))
-            throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
+        if (!phoneNumber.matches("\\d{10}"))
+            throw new IllegalArgumentException("Phone number should be a 10-digit number. EX: '0712345678'");
 
         this.phoneNumber = phoneNumber;
     }

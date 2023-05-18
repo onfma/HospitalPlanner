@@ -68,7 +68,7 @@
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
                                 <img src="../static/static/img/cnp_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 33%;">
-                                <input type="text" class="form-control" id="cnp" placeholder="Enter your CNP" name="cnp" pattern="[0-9]{13}" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                                <input type="text" class="form-control" id="cnp" placeholder="Enter your CNP" name="cnp" pattern="[0-9]{13}" title="CNP should have exactly 13 digits!" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="cnp" style="display: flex; align-items: center;">
                                     Enter your CNP
                                 </label>
@@ -92,7 +92,7 @@
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
                                 <img src="../static/static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                                <input type="tel" class="form-control" id="tel" placeholder="Enter your phone number" name="tel" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                                <input type="tel" class="form-control" id="tel" placeholder="Enter your phone number" name="tel" required pattern="[0-9]{10}" title="Phone number should be a 10-digit number. EX: '0712345678'" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="tel" style="display: flex; align-items: center;">
                                     Enter your phone number
                                 </label>
@@ -102,7 +102,10 @@
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
                                 <img src="../static/static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                                <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required
+                                       pattern="^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$" oninvalid="setCustomValidity('Email format should be in that format: user@example.com')"
+                                       oninput="setCustomValidity('')"
+                                       style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="email" style="display: flex; align-items: center;">
                                     Enter your email address
                                 </label>
@@ -114,7 +117,7 @@
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
                                 <img src="../static/static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                                <input type="text" class="form-control" id="home_address" placeholder="Enter your home address" name="home_address" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                                <input type="text" class="form-control" id="home_address" placeholder="Enter your home address" name="home_address" required pattern="[a-zA-Z0-9,. ;]+" title="Address should contain only letters, digits, or the following characters: [,.;]" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="home_address" style="display: flex; align-items: center;">
                                     Enter your home address
                                 </label>
@@ -124,7 +127,8 @@
                         <div class="col">
                             <div class="form-floating mb-3 mt-3" style="position: relative;">
                                 <img src="../static/static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
-                                <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" required
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
+                                       title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
                                        style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                                 <label for="pwd">Enter your password
                                 </label>
@@ -134,7 +138,7 @@
                     <div class="row">
                         <!-- doctor / pacient -->
                         <div class="form-floating mb-3 mt-3 dropdown" style="position: relative;">
-                            <img src="../static/static/img/medical_emote.png" alt="us" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 30%;">
+                            <img src="../static/static/img/medical_emote.png" alt="us user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 30%;">
                             <input type="text" class="form-control dropdown-toggle" data-bs-toggle="dropdown" id="account_type" placeholder="Are you a patient? Or a doctor?" name="account_type" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px; padding: 20px;">
                             <label for="account_type" style="display: flex; align-items: center; padding: 20px;">Are you a patient? Or a doctor?</label>
                             <ul class="dropdown-menu">

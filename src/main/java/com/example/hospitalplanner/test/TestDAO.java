@@ -292,7 +292,7 @@ public class TestDAO {
         // Select all the patients
         String appoinmentsJSONobject;
 
-        appoinmentsJSONobject = appointmentsDAO.select();
+        appoinmentsJSONobject = appointmentsDAO.selectJSON();
 
         System.out.println("\nAll appointments (AFTER INSERTION):\n"+appoinmentsJSONobject);
 
@@ -329,7 +329,7 @@ public class TestDAO {
         // Select all the cabinetSchedule
         String cabinetScheduleList;
 
-        cabinetScheduleList = cabinetsScheduleDAO.select();
+        cabinetScheduleList = cabinetsScheduleDAO.selectJSON();
 
         System.out.println("\nAll cabinets (AFTER INSERTION):\n" + cabinetScheduleList);
 
@@ -379,7 +379,7 @@ public class TestDAO {
         // Select all the patients
         String cabinetList;
 
-        cabinetList = cabinetsDAO.select();
+        cabinetList = cabinetsDAO.selectJSON();
 
         System.out.println("\nAll cabinets (AFTER INSERTION):\n" + cabinetList);
 
@@ -415,7 +415,7 @@ public class TestDAO {
         doctorsScheduleDAO.deleteSpecificDoctorDaySchedule(5030524268902L, "Monday");
 
         // Weekly Schedule Program for Doctor
-        System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeek(5030524268902L));
+        System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeekJSON(5030524268902L));
 
         // Change startTime for a specific day from a Doctor's Schedule
         doctorsScheduleDAO.setStartTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(9,15));
@@ -424,13 +424,13 @@ public class TestDAO {
         doctorsScheduleDAO.setEndTimeSpecificDay(5030524268902L, "Monday", LocalTime.of(16,15));
 
         // Get daily schedule program for Doctor
-        System.out.println(doctorsScheduleDAO.getDoctorSchedule_SpecificDay(5030524268902L, "Monday"));
+        System.out.println(doctorsScheduleDAO.getDoctorSchedule_SpecificDayJSON(5030524268902L, "Monday"));
 
         // Delete all schedule program for a specific doctor
         doctorsScheduleDAO.deleteALLDoctorDaySchedule(5030524268902L);
 
         // Weekly Schedule Program for Doctor
-        System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeek(5030524268902L));
+        System.out.println(doctorsScheduleDAO.getDoctorSchedule_FullWeekJSON(5030524268902L));
 
         doctorsScheduleDAO.deleteALLDoctorDaySchedule(5030524268902L);
     }
