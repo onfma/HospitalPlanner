@@ -3,12 +3,12 @@
 
 <head>
     <title>HospitalPlanner</title>
-    <link rel="shortcut icon" href="../static/static/img/page_icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="static/img/page_icon.png" type="image/x-icon">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <link rel="stylesheet" href="../static/static/styles/general_style.css">
-    <link rel="stylesheet" href="../static/static/styles/header_style.css">
-    <link rel="stylesheet" href="../static/static/styles/homepage_style.css">
+    <link rel="stylesheet" href="static/styles/general_style.css">
+    <link rel="stylesheet" href="static/styles/header_style.css">
+    <link rel="stylesheet" href="static/styles/homepage_style.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -41,10 +41,14 @@
         <div class="row">
             <!-- info boxes -->
             <div class="col-sm-12 p-3">
-                <div class="row">
+                <div class="row mb-3">
                     <!-- first name -->
-                    <div class="col">
-                        <div class="form-floating mb-3 mt-3" style="position: relative;">
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="firstName">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account first name:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">Maria</a>
+                        </div>
+                        <div class="form-floating mt-2 mb-3" style="position: relative;">
                             <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                             <input type="text" class="form-control" id="first_name" placeholder="Change your first name" name="first_name" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="first_name" style="display: flex; align-items: center;">
@@ -53,8 +57,12 @@
                         </div>
                     </div>
                     <!-- last name -->
-                    <div class="col">
-                        <div class="form-floating mb-3 mt-3" style="position: relative;">
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="lastName">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account last name:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">Onofrei</a>
+                        </div>
+                        <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                             <input type="text" class="form-control" id="last_name" placeholder="Change your last name" name="last_name" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="last_name" style="display: flex; align-items: center;">
@@ -63,10 +71,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+
+                <div class="row mb-3">
                     <!-- tel -->
-                    <div class="col">
-                        <div class="form-floating mb-3 mt-3" style="position: relative;">
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account phone number:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">0787859621</a>
+                        </div>
+                        <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                             <input type="tel" class="form-control" id="tel" placeholder="Change your phone number" name="tel" required pattern="[0-9]{10}" title="Phone number should be a 10-digit number. EX: '0712345678'" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="tel" style="display: flex; align-items: center;">
@@ -75,8 +88,12 @@
                         </div>
                     </div>
                     <!-- home address -->
-                    <div class="col">
-                        <div class="form-floating mb-3 mt-3" style="position: relative;">
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account home address:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">str vietii mele nr. nush</a>
+                        </div>
+                        <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
                             <input type="text" class="form-control" id="home_address" placeholder="Change your home address" name="home_address" required pattern="[a-zA-Z0-9,. ;]+" title="Address should contain only letters, digits, or the following characters: [,.;]" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="home_address" style="display: flex; align-items: center;">
@@ -85,11 +102,45 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <!-- email -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account email address:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">onofrei.maria02@yahoo.com</a>
+                        </div>
+                        <div class="form-floating mb-3 mt-2" style="position: relative;">
+                            <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required
+                                   pattern="^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$" oninvalid="setCustomValidity('Email format should be in that format: user@example.com')"
+                                   oninput="setCustomValidity('')"
+                                   style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                            <label for="email" style="display: flex; align-items: center;">
+                                Enter your email address
+                            </label>
+                        </div>
+                    </div>
+                    <!-- password -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account password:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">¯\_(ツ)_/¯</a>
+                        </div>
+                        <div class="form-floating mb-3 mt-2" style="position: relative;">
+                            <img src="static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
+                                   title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
+                                   style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                            <label for="pwd">Enter your password
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="container-fluid d-flex justify-content-around">
-                <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Create Account</button>
-                <button id="submitButtonAccount2" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Create Account1</button>
-            </div>
+
+            <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Create Account</button>
         </div>
     </form>
 </div>
