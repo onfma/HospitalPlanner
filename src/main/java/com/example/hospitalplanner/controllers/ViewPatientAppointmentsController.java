@@ -6,16 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-@RequestMapping("/patientViewAccount")
-public class ViewPatientAccountController {
+@RequestMapping("/myAppointments")
+public class ViewPatientAppointmentsController {
     @Autowired
     private HttpSession session;
 
     @GetMapping
-    public String showLoginPage() {
-        System.out.println("S-a afisat pagina patientViewAccount.hmtl!");
+    public String showMyAppointmentsPage() {
+        System.out.println("S-a afisat pagina patientAppointments.hmtl!");
         return "redirect:/"; // redirect to homepage
     }
 }
