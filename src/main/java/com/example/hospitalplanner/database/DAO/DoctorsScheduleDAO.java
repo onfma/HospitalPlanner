@@ -42,6 +42,27 @@ public class DoctorsScheduleDAO {
         return doctorScheduleList;
     }
 
+    public String selectJSON() throws SQLException {
+        String query = "SELECT * FROM DOCTORS_SCHEDULE";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("doctorCNP", resultSet.getLong("DOCTOR_CNP"));
+            jsonObject.put("dayOfWeek", resultSet.getString("DAY_OF_WEEK"));
+            jsonObject.put("startTime", resultSet.getString("START_TIME"));
+            jsonObject.put("endTime", resultSet.getString("END_TIME"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
+    }
+
 
     public void insert(DoctorSchedule doctorSchedule) throws SQLException {
         String query = "INSERT INTO DOCTORS_SCHEDULE (DOCTOR_CNP, DAY_OF_WEEK, START_TIME, END_TIME) VALUES (?, ?, ?, ?)";
@@ -56,7 +77,7 @@ public class DoctorsScheduleDAO {
         statement.close();
     }
 
-    public String getDoctorSchedule_SpecificDay(Long doctorCNP, String dayOfWeek) throws SQLException {
+    public String getDoctorSchedule_SpecificDayJSON(Long doctorCNP, String dayOfWeek) throws SQLException {
         String query = "SELECT * FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
@@ -79,7 +100,7 @@ public class DoctorsScheduleDAO {
         return jsonArray.toString();
     }
 
-    public String getDoctorSchedule_FullWeek(Long doctorCNP) throws SQLException {
+    public String getDoctorSchedule_FullWeekJSON(Long doctorCNP) throws SQLException {
         String query = "SELECT * FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter

@@ -2,6 +2,8 @@ package com.example.hospitalplanner.database.DAO;
 
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,6 +44,26 @@ public class UserAuthenticationDAO {
         return personListList;
     }
 
+    public String selectJSON() throws SQLException {
+        String query = "SELECT * FROM USER_AUTHENTICATION";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", resultSet.getString("EMAIL"));
+            jsonObject.put("password", resultSet.getString("PASSWORD"));
+            jsonObject.put("salt", resultSet.getString("SALT"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
+    }
+
 
     public void insert(Person person) throws SQLException {
         String query = "INSERT INTO USER_AUTHENTICATION (EMAIL, PASSWORD, SALT) VALUES (?, ?, ?)";
@@ -69,6 +91,26 @@ public class UserAuthenticationDAO {
         statement.close();
         resultSet.close();
         return password;
+    }
+
+    public String getPasswordJSON(String email) throws SQLException {
+        String query = "SELECT PASSWORD FROM USER_AUTHENTICATION WHERE EMAIL = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email); // set email parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("password", resultSet.getString("PASSWORD"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
     }
 
     public void setPassword(String email, String newPassword) throws SQLException {
@@ -126,6 +168,27 @@ public class UserAuthenticationDAO {
         statement.close();
         resultSet.close();
         return salt;
+    }
+
+    public String getSaltJSON(String email) throws SQLException {
+        String query = "SELECT SALT FROM USER_AUTHENTICATION WHERE EMAIL = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email); // set email parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("salt", resultSet.getString("SALT"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
+
     }
 
     public void delete(String email) throws SQLException {

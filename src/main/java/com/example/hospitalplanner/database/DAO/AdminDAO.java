@@ -2,6 +2,8 @@ package com.example.hospitalplanner.database.DAO;
 
 import com.example.hospitalplanner.entities.person.Admin;
 import com.example.hospitalplanner.entities.person.Patient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,6 +34,24 @@ public class AdminDAO {
         statement.close();
         resultSet.close();
         return adminArrayList;
+    }
+
+    public String selectJSON() throws SQLException {
+        String query = "SELECT * FROM ADMINS";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", resultSet.getString("EMAIL"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
     }
 
 

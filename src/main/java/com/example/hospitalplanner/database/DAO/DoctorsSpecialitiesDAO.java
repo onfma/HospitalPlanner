@@ -20,7 +20,26 @@ public class DoctorsSpecialitiesDAO {
         this.connection = connection;
     }
 
-    public String select() throws SQLException {
+    public List<DoctorSpeciality> select() throws SQLException {
+        String query = "SELECT * FROM DOCTOR_SPECIALTIES";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<DoctorSpeciality> doctorSpecialityList = new ArrayList<>();
+        while (resultSet.next()) {
+            DoctorSpeciality doctorSpeciality = new DoctorSpeciality();
+            doctorSpeciality.setCabinetID(resultSet.getInt("CABINET_ID"));
+            doctorSpeciality.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+
+            doctorSpecialityList.add(doctorSpeciality);
+        }
+
+        statement.close();
+        resultSet.close();
+        return doctorSpecialityList;
+    }
+
+    public String selectJSON() throws SQLException {
         String query = "SELECT * FROM DOCTOR_SPECIALTIES";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
@@ -51,7 +70,7 @@ public class DoctorsSpecialitiesDAO {
         statement.close();
     }
 
-    public String getDoctorSpecialities(Long doctorCNP) throws SQLException {
+    public String getDoctorSpecialitiesJSON(Long doctorCNP) throws SQLException {
         String query = "SELECT * FROM DOCTOR_SPECIALTIES WHERE DOCTOR_CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
@@ -71,7 +90,7 @@ public class DoctorsSpecialitiesDAO {
         return jsonArray.toString();
     }
 
-    public String getDoctorsHaveSameSpeciality(int cabinetID) throws SQLException {
+    public String getDoctorsHaveSameSpecialityJSON(int cabinetID) throws SQLException {
         String query = "SELECT * FROM DOCTOR_SPECIALTIES WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, cabinetID); // set DOCTOR_CNP parameter

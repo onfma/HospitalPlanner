@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.hospitalplanner.entities.person.Doctor;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class DoctorDAO {
     private Connection connection;
@@ -39,6 +41,30 @@ public class DoctorDAO {
         statement.close();
         resultSet.close();
         return doctorList;
+    }
+
+    public String selectJSON() throws SQLException {
+        String query = "SELECT * FROM DOCTORS";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("cnp", resultSet.getLong("CNP"));
+            jsonObject.put("firstName", resultSet.getString("FIRST_NAME"));
+            jsonObject.put("lastName", resultSet.getString("LAST_NAME"));
+            jsonObject.put("gender", resultSet.getString("GENDER").charAt(0));
+            jsonObject.put("phoneNumber", resultSet.getString("PHONE_NUMBER"));
+            jsonObject.put("email", resultSet.getString("EMAIL"));
+            jsonObject.put("adress", resultSet.getString("ADDRESS"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
     }
 
 
@@ -84,6 +110,26 @@ public class DoctorDAO {
         return firstName;
     }
 
+    public String getFirstNameJSON(long CNP) throws SQLException {
+        String query = "SELECT FIRST_NAME FROM DOCTORS WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("firstName", resultSet.getString("FIRST_NAME"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
+    }
+
     public void setFirstName(long CNP, String newFirstName) throws SQLException {
         if (!newFirstName.matches("[a-zA-Z]+"))
             throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
@@ -112,6 +158,26 @@ public class DoctorDAO {
         statement.close();
         resultSet.close();
         return lastName;
+    }
+
+    public String getLastNameJSON(long CNP) throws SQLException {
+        String query = "SELECT LAST_NAME FROM DOCTORS WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("lastName", resultSet.getString("LAST_NAME"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
     }
 
     public void setLastName(long CNP, String newLastName) throws SQLException {
@@ -144,6 +210,26 @@ public class DoctorDAO {
         return gender;
     }
 
+    public String getGenderJSON(long CNP) throws SQLException {
+        String query = "SELECT GENDER FROM DOCTORS WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("gender", resultSet.getString("GENDER").charAt(0));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
+    }
+
     public String getPhoneNumber(long CNP) throws SQLException {
         String query = "SELECT PHONE_NUMBER FROM DOCTORS WHERE CNP = ?";
 
@@ -160,6 +246,26 @@ public class DoctorDAO {
         return phoneNumber;
     }
 
+    public String getPhoneNumberJSON(long CNP) throws SQLException {
+        String query = "SELECT PHONE_NUMBER FROM DOCTORS WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("phoneNumber", resultSet.getString("PHONE_NUMBER").charAt(0));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
+    }
+
     public void setPhoneNumber(long CNP, String newPhoneNumber) throws SQLException {
         if (!newPhoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !newPhoneNumber.matches("\\+44\\d{10}"))
             throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
@@ -172,6 +278,26 @@ public class DoctorDAO {
         statement.executeUpdate();
 
         statement.close();
+    }
+
+    public String getEmailJSON(long CNP) throws SQLException {
+        String query = "SELECT EMAIL FROM DOCTORS WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", resultSet.getString("EMAIL"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
     }
 
     public String getEmail(long CNP) throws SQLException {
@@ -204,6 +330,26 @@ public class DoctorDAO {
         statement.close();
         resultSet.close();
         return ADDRESS;
+    }
+
+    public String getAddressJSON(long CNP) throws SQLException {
+        String query = "SELECT ADDRESS FROM DOCTORS WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, CNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("adress", resultSet.getString("ADDRESS"));
+
+            jsonArray.put(jsonObject);
+        }
+
+        statement.close();
+        resultSet.close();
+        return jsonArray.toString();
     }
 
     public void setAddress(long CNP, String newAddress) throws SQLException {

@@ -20,7 +20,28 @@ public class CabinetsScheduleDAO {
         this.connection = connection;
     }
 
-    public String  select() throws SQLException {
+    public List<CabinetSchedule> select() throws SQLException {
+        String query = "SELECT * FROM CABINETS_SCHEDULE";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
+        while (resultSet.next()) {
+            CabinetSchedule cabinetSchedule = new CabinetSchedule();
+            cabinetSchedule.setId(resultSet.getInt("CABINET_ID"));
+            cabinetSchedule.setDayOfWeek(resultSet.getString("DAY_OF_WEEK"));
+            cabinetSchedule.setStartTime(LocalTime.parse(resultSet.getString("START_TIME")));
+            cabinetSchedule.setEndTime(LocalTime.parse(resultSet.getString("END_TIME")));
+
+            cabinetScheduleList.add(cabinetSchedule);
+        }
+
+        statement.close();
+        resultSet.close();
+        return cabinetScheduleList;
+    }
+
+    public String selectJSON() throws SQLException {
         String query = "SELECT * FROM CABINETS_SCHEDULE";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
@@ -64,7 +85,30 @@ public class CabinetsScheduleDAO {
         statement.close();
     }
 
-    public String getCabinetSchedule_SpecificDay(Long cabinetID, String dayOfWeek) throws SQLException {
+    public List<CabinetSchedule> getCabinetSchedule_SpecificDay(Long cabinetID, String dayOfWeek) throws SQLException {
+        String query = "SELECT * FROM CABINETS_SCHEDULE WHERE CABINET_ID = ? AND DAY_OF_WEEK = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, cabinetID); // set CABINET_ID parameter
+        statement.setString(2, dayOfWeek);  // set DAY_OF_WEEK parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
+        while (resultSet.next()) {
+            CabinetSchedule cabinetSchedule = new CabinetSchedule();
+            cabinetSchedule.setId(resultSet.getInt("CABINET_ID"));
+            cabinetSchedule.setDayOfWeek(resultSet.getString("DAY_OF_WEEK"));
+            cabinetSchedule.setStartTime(LocalTime.parse(resultSet.getString("START_TIME")));
+            cabinetSchedule.setEndTime(LocalTime.parse(resultSet.getString("END_TIME")));
+
+            cabinetScheduleList.add(cabinetSchedule);
+        }
+
+        statement.close();
+        resultSet.close();
+        return cabinetScheduleList;
+    }
+
+    public String getCabinetSchedule_SpecificDayJSON(Long cabinetID, String dayOfWeek) throws SQLException {
         String query = "SELECT * FROM CABINETS_SCHEDULE WHERE CABINET_ID = ? AND DAY_OF_WEEK = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, cabinetID); // set CABINET_ID parameter
@@ -87,7 +131,7 @@ public class CabinetsScheduleDAO {
         return jsonArray.toString();
     }
 
-    public String getCabinetSchedule_FullWeek(Long cabinetID) throws SQLException {
+    public String getCabinetSchedule_FullWeekJSON(Long cabinetID) throws SQLException {
         String query = "SELECT * FROM CABINETS_SCHEDULE WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, cabinetID); // set CABINET_ID parameter
@@ -107,6 +151,28 @@ public class CabinetsScheduleDAO {
         statement.close();
         resultSet.close();
         return jsonArray.toString();
+    }
+
+    public List<CabinetSchedule> getCabinetSchedule_FullWeek(Long cabinetID) throws SQLException {
+        String query = "SELECT * FROM CABINETS_SCHEDULE WHERE CABINET_ID = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, cabinetID); // set CABINET_ID parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
+        while (resultSet.next()) {
+            CabinetSchedule cabinetSchedule = new CabinetSchedule();
+            cabinetSchedule.setId(resultSet.getInt("CABINET_ID"));
+            cabinetSchedule.setDayOfWeek(resultSet.getString("DAY_OF_WEEK"));
+            cabinetSchedule.setStartTime(LocalTime.parse(resultSet.getString("START_TIME")));
+            cabinetSchedule.setEndTime(LocalTime.parse(resultSet.getString("END_TIME")));
+
+            cabinetScheduleList.add(cabinetSchedule);
+        }
+
+        statement.close();
+        resultSet.close();
+        return cabinetScheduleList;
     }
 
     public void setStartTimeSpecificDay(Long cabinetID, String dayOfWeek, LocalTime startTime) throws SQLException {

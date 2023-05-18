@@ -20,7 +20,26 @@ public class CabinetsDAO {
         this.connection = connection;
     }
 
-    public String  select() throws SQLException {
+    public List<Cabinet> select() throws SQLException {
+        String query = "SELECT * FROM CABINETS";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Cabinet> cabinetList = new ArrayList<>();
+        while (resultSet.next()) {
+            Cabinet cabinet = new Cabinet();
+            cabinet.setId(resultSet.getInt("ID"));
+            cabinet.setSpecialtyName(resultSet.getString("SPECIALTY"));
+
+            cabinetList.add(cabinet);
+        }
+
+        statement.close();
+        resultSet.close();
+        return cabinetList;
+    }
+
+    public String  selectJSON() throws SQLException {
         String query = "SELECT * FROM CABINETS";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();

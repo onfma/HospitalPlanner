@@ -20,7 +20,29 @@ public class AppointmentsDAO {
         this.connection = connection;
     }
 
-    public String select() throws SQLException {
+    public List<Appoinments> select() throws SQLException {
+        String query = "SELECT * FROM APPOINTMENTS";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+        while (resultSet.next()) {
+            Appoinments appoinment = new Appoinments();
+            appoinment.setId(resultSet.getInt("ID"));
+            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
+            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            appoinmentsList.add(appoinment);
+        }
+
+        statement.close();
+        resultSet.close();
+        return appoinmentsList;
+    }
+
+    public String selectJSON() throws SQLException {
         String query = "SELECT * FROM APPOINTMENTS";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
@@ -57,7 +79,7 @@ public class AppointmentsDAO {
         statement.close();
     }
 
-    public String getDoctorAppointments(Long doctorCNP) throws SQLException {
+    public String getDoctorAppointmentsJSON(Long doctorCNP) throws SQLException {
         String query = "SELECT * FROM APPOINTMENTS WHERE DOCTOR_CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
@@ -80,7 +102,30 @@ public class AppointmentsDAO {
         return jsonArray.toString();
     }
 
-    public String getPatientAppointments(Long patientCNP) throws SQLException {
+    public List<Appoinments> getDoctorAppointments(Long doctorCNP) throws SQLException {
+        String query = "SELECT * FROM APPOINTMENTS WHERE DOCTOR_CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+        while (resultSet.next()) {
+            Appoinments appoinment = new Appoinments();
+            appoinment.setId(resultSet.getInt("ID"));
+            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
+            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            appoinmentsList.add(appoinment);
+        }
+
+        statement.close();
+        resultSet.close();
+        return appoinmentsList;
+    }
+
+    public String getPatientAppointmentsJSON(Long patientCNP) throws SQLException {
         String query = "SELECT * FROM APPOINTMENTS WHERE PATIENT_CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, patientCNP); // set DOCTOR_CNP parameter
@@ -103,7 +148,30 @@ public class AppointmentsDAO {
         return jsonArray.toString();
     }
 
-    public String getCabinetAppointments(int cabinetID) throws SQLException {
+    public List<Appoinments> getPatientAppointments(Long patientCNP) throws SQLException {
+        String query = "SELECT * FROM APPOINTMENTS WHERE PATIENT_CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, patientCNP); // set DOCTOR_CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+        while (resultSet.next()) {
+            Appoinments appoinment = new Appoinments();
+            appoinment.setId(resultSet.getInt("ID"));
+            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
+            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            appoinmentsList.add(appoinment);
+        }
+
+        statement.close();
+        resultSet.close();
+        return appoinmentsList;
+    }
+
+    public String getCabinetAppointmentsJSON(int cabinetID) throws SQLException {
         String query = "SELECT * FROM APPOINTMENTS WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, cabinetID); // set DOCTOR_CNP parameter
@@ -124,6 +192,29 @@ public class AppointmentsDAO {
         statement.close();
         resultSet.close();
         return jsonArray.toString();
+    }
+
+    public List<Appoinments> getCabinetAppointments(int cabinetID) throws SQLException {
+        String query = "SELECT * FROM APPOINTMENTS WHERE CABINET_ID = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, cabinetID); // set DOCTOR_CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+        while (resultSet.next()) {
+            Appoinments appoinment = new Appoinments();
+            appoinment.setId(resultSet.getInt("ID"));
+            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
+            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            appoinmentsList.add(appoinment);
+        }
+
+        statement.close();
+        resultSet.close();
+        return appoinmentsList;
     }
 
     public void setAppointmentTime(int id, LocalDateTime newAppointmentTime) throws SQLException {
