@@ -17,109 +17,121 @@
 
 <body>
 
-    <!-- HEADER -->
-    <div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
-        <div class="d-flex justify-content-between mb-1 ml-5 px-5" style="background-color: transparent !important;">
-            <div class="bg-info text-center" style="background-color: transparent !important;">
-                <div class="header_title">HOSPITAL<a style="color: #159EEC;">PLANNER</a></div>
+<!-- HEADER -->
+<div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
+    <div class="d-flex justify-content-between mb-1 ml-5 px-5" style="background-color: transparent !important;">
+        <div class="bg-info text-center" style="background-color: transparent !important;">
+            <div class="header_title">HOSPITAL<a style="color: #159EEC;">PLANNER</a></div>
+        </div>
+        <div class="d-flex flex-row-reverse">
+            <div class="p-2">
+                <a href="/patientViewAccount" ><button type="button" class="btn"
+                                                       style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Account</button></a>
             </div>
-            <div class="d-flex flex-row-reverse">
-                <div class="p-2">
-                    <a href="/patientViewAccount" ><button type="button" class="btn"
-                                                      style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Account</button></a>
-                </div>
-                <div class="p-2 px-5">
-                    <a href="" ><button type="button" class="btn"
-                                                      style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button></a>
-                </div>
+            <div class="p-2 px-5">
+                <a href="" ><button type="button" class="btn"
+                                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button></a>
+            </div>
+            <div class="p-2 px-5">
+                <a href="/myAppointments" ><button type="button" class="btn"
+                                                   style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button></a>
             </div>
         </div>
-    </div>
-
-    <!-- BODY -->
-    <div class="container-fluid pb-5 px-5" style="background-color: transparent !important; margin-top: 50px; margin-bottom: 50px;">
-
-        <!-- account form -->
-        <div class="container-fluid mt-3">
-            <div class="row">
-                <!-- make appointment -->
-                <div class="col-sm-3 p-3 d-flex flex-column justify-content-center align-items-center text-center">
-                    <div class="container-fluid pb-5">
-                        <a style="text-align: center; font-family: 'Work Sans'; text-transform: uppercase; font-weight: 700; font-size: 18px; line-height: 21px; color: #159EEC;">Trusted Care</a>
-                        <br>
-                        <a style="text-align: center; font-weight: 400; font-size: 32px; line-height: 37px; color: #1F2B6C;">Our Doctors</a>
-                    </div>
-                    <a href="">
-                        <button class="btn btn-primary pt-2 pb-2 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 20px; line-height: 42px; font-family: Work_Sans;">Make an appointment</button>
-                    </a>
-                </div>
-
-                <!-- doctor preview -->
-                <div class="col-sm-9 p-3 d-flex justify-content-around" style="height: 530px">
-                    <!-- doctor 1 -->
-                    <div style="width: 300px">
-                        <div class="container-fluid" style="height: 340px; position: relative;">
-                            <img src="static/img/doctor1.svg" alt="doctor1" style="position: absolute; top: 0; left: 0; width: 100%; height: 350px; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                        </div>
-                        <div id="credentials1">
-                            <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
-                            <div class="container-fluid text-center" style="background-color: #BFD2F8;">
-                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
-                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
-                            </div>
-                            <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
-                        </div>
-                    </div>
-                    <!-- doctor 2 -->
-                    <div style="width: 300px">
-                        <div class="container-fluid" style="height: 340px; position: relative;">
-                            <img src="static/img/doctor2.svg" alt="doctor2" style="position: absolute; top: 0; left: 0; width: 100%; height: 350px;">
-                        </div>
-                        <div id="credentials2">
-                            <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
-                            <div class="container-fluid text-center" style="background-color: #BFD2F8;">
-                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
-                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
-                            </div>
-                            <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
-                        </div>
-                    </div>
-                    <!-- doctor 3 -->
-                    <div style="width: 300px">
-                        <div class="container-fluid" style="height: 340px; position: relative;">
-                            <img src="static/img/doctor3.svg" alt="doctor3" style="position: absolute; top: 0; left: 0; width: 100%; height: 350px;">
-                        </div>
-                        <div id="credentials3">
-                            <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
-                            <div class="container-fluid text-center" style="background-color: #BFD2F8;">
-                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
-                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
-                            </div>
-                            <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<!-- FOOTER -->
-<div class="container-fluid pt-5 pb-3 px-5" style="background-color: #1F2B6C;">
-    <div class="container-fluid pt-2 pb-2 px-5 text-center header_title" style="color: #BFD2F8;">HOSPITALPLANNER</div>
-    <div class="container-fluid pt-2 pb-5 px-5 text-center" style="font-weight: 400; font-size: 18px; line-height: 140%; color: #FCFEFE; font-family: Work_Sans;">
-        Proiecteare Avansata - Facultatea de Informatica Iasi - 2023<br>© Chichirau Claudiu-Constantin & Onofrei Maria
     </div>
 </div>
+
+<!-- BODY -->
+<div class="container-fluid pb-5 px-5" style="background-color: transparent !important; margin-top: 50px; margin-bottom: 50px;">
+    <!-- account form -->
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- make appointment -->
+            <div class="col-sm-3 p-3 d-flex flex-column justify-content-center align-items-center text-center">
+                <div class="container-fluid pb-5">
+                    <a style="text-align: center; font-family: 'Work Sans'; text-transform: uppercase; font-weight: 700; font-size: 18px; line-height: 21px; color: #159EEC;">Trusted Care</a>
+                    <br>
+                    <a style="text-align: center; font-weight: 400; font-size: 32px; line-height: 37px; color: #1F2B6C;">Our Doctors</a>
+                </div>
+                <a href="">
+                    <button class="btn btn-primary pt-2 pb-2 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 20px; line-height: 42px; font-family: Work_Sans;">Make an appointment</button>
+                </a>
+            </div>
+            <a href="/makeAppointment">
+                <button class="btn btn-primary pt-2 pb-2 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 20px; line-height: 42px; font-family: Work_Sans;">Make an appointment</button>
+            </a>
+        </div>
+
+        <!-- doctor preview -->
+        <div class="col-sm-9 p-3 d-flex justify-content-around" style="background-color: cornflowerblue; height: 500px">
+            <!-- doctor 1 -->
+            <div class="p-2 bg-info" style="width: 300px">
+                Flex item 1
+                <div class="container-fluid text-center" style="background-color: #BFD2F8;">
+                    <!-- doctor preview -->
+                    <div class="col-sm-9 p-3 d-flex justify-content-around" style="height: 530px">
+                        <!-- doctor 1 -->
+                        <div style="width: 300px">
+                            <div class="container-fluid" style="height: 340px; position: relative;">
+                                <img src="static/img/doctor1.svg" alt="doctor1" style="position: absolute; top: 0; left: 0; width: 100%; height: 350px; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                            </div>
+                            <div id="credentials1">
+                                <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
+                                <div class="container-fluid text-center" style="background-color: #BFD2F8;">
+                                    <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
+                                    <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
+                                </div>
+                                <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
+                            </div>
+                        </div>
+                        <!-- doctor 2 -->
+                        <div style="width: 300px">
+                            <div class="container-fluid" style="height: 340px; position: relative;">
+                                <img src="static/img/doctor2.svg" alt="doctor2" style="position: absolute; top: 0; left: 0; width: 100%; height: 350px;">
+                            </div>
+                            <div id="credentials2">
+                                <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
+                                <div class="container-fluid text-center" style="background-color: #BFD2F8;">
+                                    <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
+                                    <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
+                                </div>
+                                <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
+                            </div>
+                        </div>
+                        <!-- doctor 3 -->
+                        <div style="width: 300px">
+                            <div class="container-fluid" style="height: 340px; position: relative;">
+                                <img src="static/img/doctor3.svg" alt="doctor3" style="position: absolute; top: 0; left: 0; width: 100%; height: 350px;">
+                            </div>
+                            <div id="credentials3">
+                                <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
+                                <div class="container-fluid text-center" style="background-color: #BFD2F8;">
+                                    <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
+                                    <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
+                                </div>
+                                <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="container-fluid pt-5 pb-3 px-5" style="background-color: #1F2B6C;">
+            <div class="container-fluid pt-2 pb-2 px-5 text-center header_title" style="color: #BFD2F8;">HOSPITALPLANNER</div>
+            <div class="container-fluid pt-2 pb-5 px-5 text-center" style="font-weight: 400; font-size: 18px; line-height: 140%; color: #FCFEFE; font-family: Work_Sans;">
+                Proiecteare Avansata - Facultatea de Informatica Iasi - 2023<br>© Chichirau Claudiu-Constantin & Onofrei Maria
+            </div>
+        </div>
 
 </body>
 
 <script>
-  $(document).ready(function() {
-    $('.dropdown-menu a').click(function() {
-      var selectedOption = $(this).text();
-      $('#sex').val(selectedOption);
+    $(document).ready(function() {
+        $('.dropdown-menu a').click(function() {
+            var selectedOption = $(this).text();
+            $('#sex').val(selectedOption);
+        });
     });
-  });
-
 </script>
 </html>
