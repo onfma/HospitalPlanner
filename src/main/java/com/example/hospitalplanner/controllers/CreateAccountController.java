@@ -46,29 +46,41 @@ public class CreateAccountController {
         if(!userAuthenticationDAO.exists(email)) {
             // insert email & password in "UserAuthentication" table
             if (accountType.equals("Patient")) { // it's a Patient
-                Patient patient = new Patient(email, password);
-
-                userAuthenticationDAO.insert(patient);
-
-                // insert the rest of information in the "Patient" table
                 PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
-                Patient newPatient = new Patient(cnp, firstName, lastName, gender, phoneNumber, email, adress);
 
-                patientDAO.insert(newPatient);
+                if(!patientDAO.existsByCNP(cnp)) {
 
-                return "redirect:/"; // redirect to homepage
+                    Patient patient = new Patient(email, password);
+
+                    userAuthenticationDAO.insert(patient);
+
+                    // insert the rest of information in the "Patient" table
+                    Patient newPatient = new Patient(cnp, firstName, lastName, gender, phoneNumber, email, adress);
+
+                    patientDAO.insert(newPatient);
+
+                    return "redirect:/"; // redirect to homepage
+                }
+                else
+                    throw new CreateAccountException("There is already an account with this CNP!\nPlease try again with another CNP!");
             } else if (accountType.equals("Doctor")) { // it's a Doctor
-                Doctor doctor = new Doctor(email, password);
-
-                userAuthenticationDAO.insert(doctor);
-
-                // insert the rest of information in the "Doctor" table
                 DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
-                Doctor newDoctor = new Doctor(cnp, firstName, lastName, gender, phoneNumber, email, adress);
 
-                doctorDAO.insert(newDoctor);
+                if(!doctorDAO.existsByCNP(cnp)) {
 
-                return null; //  redirect to page to complete speciality information, etc
+                    Doctor doctor = new Doctor(email, password);
+
+                    userAuthenticationDAO.insert(doctor);
+
+                    // insert the rest of information in the "Doctor" table
+                    Doctor newDoctor = new Doctor(cnp, firstName, lastName, gender, phoneNumber, email, adress);
+
+                    doctorDAO.insert(newDoctor);
+
+                    return null; //  redirect to page to complete speciality information, etc
+                }
+                else
+                    throw new CreateAccountException("There is already an account with this CNP!\nPlease try again with another CNP!");
             }
         } else
             throw new CreateAccountException("There is already an account with this email!\nPlease try again with another email adress!");
