@@ -16,6 +16,6 @@ public class ViewPatientAccountController {
     @GetMapping
     public String showLoginPage() {
         System.out.println("S-a afisat pagina patientViewAccount.hmtl!");
-        return "redirect:/"; // redirect to homepage
+        return "patientViewAccount";
     }
 }
