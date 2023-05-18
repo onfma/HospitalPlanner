@@ -6,6 +6,8 @@ import com.example.hospitalplanner.database.DAO.PatientDAO;
 import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
 import com.example.hospitalplanner.database.DAOFactory;
 import com.example.hospitalplanner.exceptions.AuthenticationException;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,9 @@ import java.util.Base64;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+
+    @Autowired
+    private HttpSession session;
 
     @GetMapping
     public String showLoginPage() {
@@ -39,8 +44,10 @@ public class LoginController {
             String hashedPassword = hashPassword(password, userAuthenticationDAO.getSalt(email));
 
             if(hashedPassword.equals(userAuthenticationDAO.getPassword(email))) {
-                // user succesfully connected
+                // Store the user's information in the session
+                session.setAttribute("email", email);
 
+                // user succesfully connected
                 PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
                 DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
                 AdminDAO adminDAO = new AdminDAO(daoFactory.getConnection());
@@ -58,12 +65,10 @@ public class LoginController {
                 }
             }
             else {
-                System.out.println("Parola este gresita!\n\tEmail: " + email + ", parola introdusa: " + hashedPassword + ", parola din db: " + userAuthenticationDAO.getPassword(email));
                 throw new AuthenticationException("You entered the wrong password or email address!\nPlease fill in again!");
             }
         }
         else {
-            System.out.println("Email-ul introdus este gresit!\n\tEmail: " + email);
             throw new AuthenticationException("You entered the wrong password or email address!\nPlease fill in again!");
         }
         return "redirect:/dashboard";

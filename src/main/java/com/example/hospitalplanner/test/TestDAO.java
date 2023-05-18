@@ -34,7 +34,7 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
-            testPopulateDB(connection);
+//            testPopulateDB(connection);
 
 //            testAdminDAO(connection);
 
@@ -52,6 +52,8 @@ public class TestDAO {
 
 //            testAppointmentDAO(connection);
 
+            testSmth(connection);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (PropertyVetoException e) {
@@ -65,6 +67,12 @@ public class TestDAO {
                 System.err.println(e);
             }
         }
+    }
+
+    public void testSmth(Connection connection) throws SQLException {
+        PatientDAO patientDAO = new PatientDAO(connection);
+
+        System.out.println(patientDAO.searchJSON(5020703228905L));
     }
 
     public void testPopulateDB(Connection connection) throws SQLException {
@@ -93,7 +101,7 @@ public class TestDAO {
         userAuthenticationDAO.insert(patient3);
         userAuthenticationDAO.insert(patient4);
 
-        // insert all the informations about patients
+        // insert all the information about patients
         PatientDAO patientDAO = new PatientDAO(connection);
 
         Patient Patient1 = new Patient( 5030524268901L, "Patient", "patient", 'M', "+441234567891", "patient1@yahoo.com","101B, Palace Street");
@@ -106,7 +114,7 @@ public class TestDAO {
         patientDAO.insert(Patient3);
         patientDAO.insert(Patient4);
 
-        // insert all the informations about doctors
+        // insert all the information about doctors
         DoctorDAO doctorDAO = new DoctorDAO(connection);
 
         Doctor Doctor1 = new Doctor( 5030524268701L, "Doctor", "doctor", 'M', "+441234567891", "doctor1@yahoo.com","101B, Oxford Street");
@@ -119,7 +127,7 @@ public class TestDAO {
         doctorDAO.insert(Doctor3);
         doctorDAO.insert(Doctor4);
 
-        // insert all the informations about ADMIN
+        // insert all the information about ADMIN
         AdminDAO adminDAO = new AdminDAO(connection);
 
         Admin admin11 = new Admin("admin1@yahoo.com");
