@@ -366,6 +366,33 @@ public class DoctorDAO {
         statement.close();
     }
 
+    public long getCNP(String email) throws SQLException {
+        String query = "SELECT CNP FROM DOCTORS WHERE EMAIL = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email); // set EMAIL parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        long cnp = 0;
+        while (resultSet.next())
+            cnp = (resultSet.getLong("CNP"));
+
+        statement.close();
+        resultSet.close();
+        return cnp;
+    }
+
+    public void setEmail(long CNP, String newEmail) throws SQLException {
+        String query = "UPDATE DOCTORS SET EMAIL = ? WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, newEmail); // set FirstName parameter
+        statement.setLong(2, CNP); // set CNP parameter
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
     public boolean exists(long CNP) throws SQLException {
         String query = "SELECT COUNT(*) AS cnt FROM DOCTORS WHERE CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);

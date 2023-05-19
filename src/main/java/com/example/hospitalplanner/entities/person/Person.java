@@ -191,6 +191,10 @@ public abstract class Person {
         return password;
     }
 
+    public void setPasswordController(String password) {
+        this.password = password;
+    }
+
     public void setPassword(String password) {
         // Check password composition
         boolean containsUpperCase = false;

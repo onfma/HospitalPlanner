@@ -60,7 +60,7 @@ public class CreateAccountController {
 
                     patientDAO.insert(newPatient);
 
-                    throw new ChangeAccountSuccess("Your account was successfully created!");
+                    throw new CreateAccountException("Your account was successfully created!");
                 }
                 else
                     throw new CreateAccountException("There is already an account with this CNP!\nPlease try again with another CNP!");

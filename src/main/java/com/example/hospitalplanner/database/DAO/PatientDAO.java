@@ -182,6 +182,17 @@ public class PatientDAO {
         statement.close();
     }
 
+    public void setEmail(long CNP, String newEmail) throws SQLException {
+        String query = "UPDATE PACIENTS SET EMAIL = ? WHERE CNP = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, newEmail); // set FirstName parameter
+        statement.setLong(2, CNP); // set CNP parameter
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
     public String getLastName(long CNP) throws SQLException {
         String query = "SELECT LAST_NAME FROM PACIENTS WHERE CNP = ?";
 
