@@ -36,6 +36,9 @@
         <!-- title -->
         <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Create account to Hospital<a style="color: #159EEC;">Planner</a></div>
 
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <span th:text="${successMessage}"></span>
+        </div>
         <!-- account form -->
         <form action="" method="POST" class="container-fluid mt-3">
             <div class="row">

@@ -8,6 +8,7 @@ import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
 import com.example.hospitalplanner.exceptions.AuthenticationException;
+import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
 import com.example.hospitalplanner.exceptions.CreateAccountException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class CreateAccountController {
                                    @RequestParam("email") String email,
                                    @RequestParam("home_address") String adress,
                                    @RequestParam("pswd") String password,
-                                   @RequestParam("account_type") String accountType) throws SQLException, CreateAccountException {
+                                   @RequestParam("account_type") String accountType) throws SQLException, CreateAccountException, ChangeAccountSuccess {
 
         DAOFactory daoFactory = new DAOFactory();
 
@@ -59,7 +60,7 @@ public class CreateAccountController {
 
                     patientDAO.insert(newPatient);
 
-                    return "redirect:/"; // redirect to homepage
+                    throw new ChangeAccountSuccess("Your account was successfully created!");
                 }
                 else
                     throw new CreateAccountException("There is already an account with this CNP!\nPlease try again with another CNP!");

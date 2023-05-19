@@ -4,6 +4,7 @@ import com.example.hospitalplanner.exceptions.AuthenticationException;
 import com.example.hospitalplanner.exceptions.ChangeAccountException;
 import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
 import com.example.hospitalplanner.exceptions.CreateAccountException;
+import com.example.hospitalplanner.exceptions.CreateAccountSuccess;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,13 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(CreateAccountException.class)
     public ModelAndView handleCreateAccountException(CreateAccountException ex) {
+        ModelAndView modelAndView = new ModelAndView("createAccountPage");
+        modelAndView.addObject("successMessage", ex.getMessage());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(CreateAccountSuccess.class)
+    public ModelAndView handleCreateAccountSuccess(CreateAccountSuccess ex) {
         ModelAndView modelAndView = new ModelAndView("createAccountPage");
         modelAndView.addObject("error", ex.getMessage());
         return modelAndView;
