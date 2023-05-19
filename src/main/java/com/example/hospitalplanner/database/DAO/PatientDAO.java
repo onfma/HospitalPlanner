@@ -119,6 +119,22 @@ public class PatientDAO {
         return jsonArray.toString();
     }
 
+    public long getCNP(String email) throws SQLException {
+        String query = "SELECT CNP FROM PACIENTS WHERE EMAIL = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email); // set EMAIL parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        long cnp = 0;
+        while (resultSet.next())
+            cnp = (resultSet.getLong("CNP"));
+
+        statement.close();
+        resultSet.close();
+        return cnp;
+    }
+
     public String getFirstName(long CNP) throws SQLException {
         String query = "SELECT FIRST_NAME FROM PACIENTS WHERE CNP = ?";
 
@@ -156,9 +172,6 @@ public class PatientDAO {
     }
 
     public void setFirstName(long CNP, String newFirstName) throws SQLException {
-        if (!newFirstName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid first name: First name should contain only letters.");
-
         String query = "UPDATE PACIENTS SET FIRST_NAME = ? WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -206,9 +219,6 @@ public class PatientDAO {
     }
 
     public void setLastName(long CNP, String newLastName) throws SQLException {
-        if (!newLastName.matches("[a-zA-Z]+"))
-            throw new IllegalArgumentException("Invalid last name: Last name should contain only letters.");
-
         String query = "UPDATE PACIENTS SET LAST_NAME = ? WHERE CNP = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -292,7 +302,7 @@ public class PatientDAO {
     }
 
     public void setPhoneNumber(long CNP, String newPhoneNumber) throws SQLException {
-        if (!newPhoneNumber.matches("\\+44-\\d{4}-\\d{6}") && !newPhoneNumber.matches("\\+44\\d{10}"))
+        if (!newPhoneNumber.matches("\\d{10}"))
             throw new IllegalArgumentException("Invalid phone number: Phone number should be in the format '+44-xxxx-xxxxxx' or '+44xxxxxxxxxx' and should contains only digits.");
 
         String query = "UPDATE PACIENTS SET PHONE_NUMBER = ? WHERE CNP = ?";

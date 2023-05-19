@@ -37,7 +37,7 @@
     <div class="container-fluid pt-2 pb-5 px-5 text-center homepage_title">Modify your <a style="color: #159EEC;">account</a></div>
 
     <!-- account form -->
-    <form action="" method="POST" class="container-fluid mt-3">
+    <form action="/patientViewAccount" method="POST" class="container-fluid mt-3">
         <div class="row">
             <!-- info boxes -->
             <div class="col-sm-12 p-3">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-floating mt-2 mb-3" style="position: relative;">
                             <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                            <input type="text" class="form-control" id="first_name" placeholder="Change your first name" name="first_name" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                            <input type="text" class="form-control" id="first_name" placeholder="Change your first name" name="first_name" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="first_name" style="display: flex; align-items: center;">
                                 Change your first name
                             </label>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                            <input type="text" class="form-control" id="last_name" placeholder="Change your last name" name="last_name" required style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                            <input type="text" class="form-control" id="last_name" placeholder="Change your last name" name="last_name" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="last_name" style="display: flex; align-items: center;">
                                 Change your last name
                             </label>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                            <input type="tel" class="form-control" id="tel" placeholder="Change your phone number" name="tel" required pattern="[0-9]{10}" title="Phone number should be a 10-digit number. EX: '0712345678'" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                            <input type="tel" class="form-control" id="tel" placeholder="Change your phone number" name="tel" pattern="[0-9]{10}" title="Phone number should be a 10-digit number. EX: '0712345678'" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="tel" style="display: flex; align-items: center;">
                                 Change your phone number
                             </label>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                            <input type="text" class="form-control" id="home_address" placeholder="Change your home address" name="home_address" required pattern="[a-zA-Z0-9,. ;]+" title="Address should contain only letters, digits, or the following characters: [,.;]" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                            <input type="text" class="form-control" id="home_address" placeholder="Change your home address" name="home_address" pattern="[a-zA-Z0-9,. ;]+" title="Address should contain only letters, digits, or the following characters: [,.;]" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="home_address" style="display: flex; align-items: center;">
                                 Change your home address
                             </label>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email"
                                    pattern="^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$" oninvalid="setCustomValidity('Email format should be in that format: user@example.com')"
                                    oninput="setCustomValidity('')"
                                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
@@ -129,7 +129,7 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
                                    title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
                                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="pwd">Enter your password
@@ -140,7 +140,15 @@
 
             </div>
 
-            <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;">Create Account</button>
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+
+            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 26px; line-height: 42px; font-family: Work_Sans;" disabled>Save Changes</button>
         </div>
     </form>
 </div>
@@ -164,5 +172,23 @@
         });
     });
 
+    $(document).ready(function() {
+        $('input').on('input', function() {
+            var formValid = false;
+
+            $('input').each(function() {
+                if ($(this).val().trim() !== '') {
+                    formValid = true;
+                    return false;
+                }
+            });
+
+            if (formValid) {
+                $('#submitButtonAccount').removeAttr('disabled');
+            } else {
+                $('#submitButtonAccount').attr('disabled', 'disabled');
+            }
+        });
+    });
 </script>
 </html>
