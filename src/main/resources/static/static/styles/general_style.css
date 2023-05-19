@@ -40,3 +40,11 @@ html {
     background-color: #1F2B6C;
     color: #FCFEFE;
 }
+
+.text_schedule{
+    color: #FCFEFE;
+    font-family: Work_Sans;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
