@@ -19,3 +19,24 @@ html {
 .table-hover tbody tr:hover {
     background-color: rgba(21, 158, 236, 0.15);
 }
+
+.specializare_box{
+    width: 30%;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.19);
+    background-color: transparent;
+    color: #1F2B6C;
+    font-family: Work_Sans;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.specializare_box:hover{
+    background-color: #1F2B6C;
+    color: #FCFEFE;
+}
