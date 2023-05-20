@@ -19,3 +19,62 @@ html {
 .table-hover tbody tr:hover {
     background-color: rgba(21, 158, 236, 0.15);
 }
+
+.specializare_box{
+    width: 30%;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.19);
+    background-color: transparent;
+    color: #1F2B6C;
+    font-family: Work_Sans;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.specializare_box:hover{
+    background-color: #1F2B6C;
+    color: #FCFEFE;
+}
+
+.text_schedule{
+    color: #FCFEFE;
+    font-family: Work_Sans;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.time_box{
+    background-color: #BFD2F8;
+    color: #1F2B6C;
+    font-family: Work_Sans;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+
+    font-family: Yeseva_One;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 55px;
+    color: #1F2B6C;
+}
+
+.doctor_box{
+    background-color: #BFD2F8;
+    border-radius: 10px;
+}

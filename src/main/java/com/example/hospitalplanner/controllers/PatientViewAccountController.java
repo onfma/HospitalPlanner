@@ -6,10 +6,8 @@ import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
 import com.example.hospitalplanner.database.DAOFactory;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
-import com.example.hospitalplanner.exceptions.AuthenticationException;
 import com.example.hospitalplanner.exceptions.ChangeAccountException;
 import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
-import com.example.hospitalplanner.exceptions.CreateAccountException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,7 @@ import java.util.Base64;
 
 @Controller
 @RequestMapping("/patientViewAccount")
-public class ViewPatientAccountController {
+public class PatientViewAccountController {
     @Autowired
     private HttpSession session;
 

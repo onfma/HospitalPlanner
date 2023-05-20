@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/makeAppointment")
-public class MakeAppointmentController {
+public class PatientMakeAppointmentController {
     @Autowired
     private HttpSession session;
 
