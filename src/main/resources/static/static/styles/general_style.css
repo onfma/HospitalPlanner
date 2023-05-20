@@ -73,3 +73,8 @@ html {
     line-height: 55px;
     color: #1F2B6C;
 }
+
+.doctor_box{
+    background-color: #BFD2F8;
+    border-radius: 10px;
+}
