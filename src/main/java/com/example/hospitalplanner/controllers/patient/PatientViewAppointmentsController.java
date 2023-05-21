@@ -62,7 +62,7 @@ public class PatientViewAppointmentsController {
             appointmentModels.add(appointmentModel);
         }
 
-        // Adaugă lista de programări în model
+        // add appointments list in model
         model.addAttribute("appointments", appointmentModels);
 
         return "patientViewAppointments";
