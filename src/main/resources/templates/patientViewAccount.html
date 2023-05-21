@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <!-- gender -->
-                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="gender">
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="gender">
                         <div>
                             <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Gender:</a>
                             <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.gender}"></a>
@@ -145,12 +145,12 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email"
+                            <input type="email" class="form-control" id="email" placeholder="Change your email address" name="email"
                                    pattern="^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$" oninvalid="setCustomValidity('Email format should be in that format: user@example.com')"
                                    oninput="setCustomValidity('')"
                                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
                             <label for="email" style="display: flex; align-items: center;">
-                                Enter your email address
+                                Change your email address
                             </label>
                         </div>
                     </div>
@@ -162,10 +162,10 @@
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
+                            <input type="password" class="form-control" id="pwd" placeholder="Change your password" name="pswd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
                                    title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
                                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                            <label for="pwd">Enter your password
+                            <label for="pwd">Change your password
                             </label>
                         </div>
                     </div>
