@@ -39,7 +39,7 @@ public class CabinetsDAO {
         return cabinetList;
     }
 
-    public String  selectJSON() throws SQLException {
+    public String selectJSON() throws SQLException {
         String query = "SELECT * FROM CABINETS";
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();

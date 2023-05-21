@@ -1,5 +1,6 @@
 package com.example.hospitalplanner.database.DAO;
 
+import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSpeciality;
 import org.json.JSONArray;
@@ -68,6 +69,26 @@ public class DoctorsSpecialitiesDAO {
         statement.executeUpdate();
 
         statement.close();
+    }
+
+    public List<DoctorSpeciality> getDoctorSpecialities(Long doctorCNP) throws SQLException {
+        String query = "SELECT * FROM DOCTOR_SPECIALTIES WHERE DOCTOR_CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<DoctorSpeciality> doctorSpecialityList = new ArrayList<>();
+        while (resultSet.next()) {
+            DoctorSpeciality doctorSpeciality = new DoctorSpeciality();
+            doctorSpeciality.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            doctorSpeciality.setCabinetID(resultSet.getInt("CABINET_ID"));
+
+            doctorSpecialityList.add(doctorSpeciality);
+        }
+
+        statement.close();
+        resultSet.close();
+        return doctorSpecialityList;
     }
 
     public String getDoctorSpecialitiesJSON(Long doctorCNP) throws SQLException {

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <title>HospitalPlanner</title>
@@ -54,7 +54,6 @@
                 </div>
 
                 <!-- doctor preview -->
-                <!-- doctor preview -->
                 <div class="col-sm-9 p-3 d-flex justify-content-around" style="height: 530px">
                     <!-- doctor 1 -->
                     <div style="width: 300px">
@@ -64,8 +63,8 @@
                         <div id="credentials1">
                             <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
                             <div class="container-fluid text-center" style="background-color: #BFD2F8;">
-                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
-                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
+                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;" th:text="${doctor[0].firstName + ' ' + doctor[0].lastName}"></div>
+                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;" th:text="${doctor[0].specialityName}"></div>
                             </div>
                             <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
                         </div>
@@ -78,8 +77,8 @@
                         <div id="credentials2">
                             <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
                             <div class="container-fluid text-center" style="background-color: #BFD2F8;">
-                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
-                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
+                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;" th:text="${doctor[1].firstName + ' ' + doctor[1].lastName}"></div>
+                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;" th:text="${doctor[1].specialityName}"></div>
                             </div>
                             <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
                         </div>
@@ -92,8 +91,8 @@
                         <div id="credentials3">
                             <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px;"></div>
                             <div class="container-fluid text-center" style="background-color: #BFD2F8;">
-                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;">Doctor’s Name</div>
-                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;">Specializare</div>
+                                <div class="container-fluid pt-4 pb-2" style="font-family: 'Work Sans'; font-weight: 400; font-size: 20px; line-height: 140%; color: #1F2B6C;" th:text="${doctor[2].firstName + ' ' + doctor[2].lastName}"></div>
+                                <div class="container-fluid pb-4" style="font-family: 'Work Sans'; font-weight: 700; font-size: 20px; line-height: 21px; color: #1F2B6C; text-transform: uppercase;" th:text="${doctor[2].specialityName}"></div>
                             </div>
                             <div class="container-fluid text-center" style="background-color: #1F2B6C; height: 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"></div>
                         </div>
