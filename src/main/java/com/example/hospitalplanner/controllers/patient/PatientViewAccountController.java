@@ -1,4 +1,4 @@
-package com.example.hospitalplanner.controllers;
+package com.example.hospitalplanner.controllers.patient;
 
 import com.example.hospitalplanner.database.DAO.DoctorDAO;
 import com.example.hospitalplanner.database.DAO.PatientDAO;

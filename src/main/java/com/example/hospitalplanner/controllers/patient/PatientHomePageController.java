@@ -1,4 +1,4 @@
-package com.example.hospitalplanner.controllers;
+package com.example.hospitalplanner.controllers.patient;
 
 import ch.qos.logback.core.model.Model;
 import com.example.hospitalplanner.database.DAO.DoctorDAO;

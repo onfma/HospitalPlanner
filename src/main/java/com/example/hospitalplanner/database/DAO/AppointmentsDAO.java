@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class AppointmentsDAO {
         statement.setInt(2, appoinment.getCabinetID());
         statement.setLong(3, appoinment.getDoctorCNP());
         statement.setLong(4, appoinment.getPatientCNP());
-        statement.setTimestamp(5, Timestamp.valueOf((appoinment.getAppointmenTime())));
+        statement.setTimestamp(5, Timestamp.valueOf((appoinment.getAppointmentTime())));
         statement.executeUpdate();
 
         statement.close();
@@ -156,12 +157,14 @@ public class AppointmentsDAO {
 
         List<Appoinments> appoinmentsList = new ArrayList<>();
         while (resultSet.next()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
             Appoinments appoinment = new Appoinments();
             appoinment.setId(resultSet.getInt("ID"));
             appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
-            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
 
             appoinmentsList.add(appoinment);
         }

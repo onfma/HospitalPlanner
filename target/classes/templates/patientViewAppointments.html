@@ -41,75 +41,35 @@
   <!-- BODY -->
   <div class="container-fluid pb-5 px-5 d-flex mb-3" style="margin-top: 50px; margin-bottom: 50px;">
 
-  <!-- appointments -->
-  <div class="p-5 flex-fill" style="width:50%">
-    <div class="d-flex flex-column justify-content-around mb-3">
-      <!-- appointment 1 -->
-      <div class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
-        <div class="p-3" style="width: 80%">
-          <div class="pb-1 d-inline-flex " style="width:100%">
-            <img src="static/img/calendar_emote.svg" alt="calendar" style="width: 10%">
-            <div class="px-3" style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">
-              <a style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%;">Monday</a>, 5 september 2023
-              <br>
-              <a style="font-family: Work_Sans; font-weight: 400; font-size: 16px; line-height: 140%;">09:00 AM - 07:00 PM</a>
+    <!-- appointments -->
+    <div class="p-5 flex-fill" style="width:50%">
+      <div class="d-flex flex-column justify-content-around mb-3">
+        <!-- iterate through appointments -->
+        <div th:each="appointment : ${appointments}" class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
+          <div class="p-3" style="width: 80%">
+            <div class="pb-1 d-inline-flex " style="width:100%">
+              <img src="static/img/calendar_emote.svg" alt="calendar" style="width: 10%">
+              <div class="px-3" style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">
+                <a style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%;" th:text="${appointment.appointmentTime.toLocalDate()}"></a>
+                <br>
+                <a style="font-family: Work_Sans; font-weight: 400; font-size: 16px; line-height: 140%;" th:text="${appointment.appointmentTime.toLocalTime()}"></a>
+              </div>
+            </div>
+            <div style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%; width:100%;">
+              <span th:text="${appointment.doctorFirstName}"></span>
+              <a style="color: #159EEC;">-</a>
+              <span th:text="${appointment.doctorLastName}"></span>
+              <a style="color: #159EEC;">-</a>
+              <span th:text="${appointment.specialityName}"></span>
             </div>
           </div>
-          <div style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%; width:100%;">
-            Doctor Name
-            <a style="color: #159EEC;">-</a>
-            <a style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">Cabinet name</a>
+          <div class="" style="display: flex; align-items: center; justify-content: center; ">
+            <button type="button" class="btn px-5" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;"
+                    data-appointment-id="${appointment.appointmentId}" onclick="cancelAppointment(this)">Cancel</button>
           </div>
         </div>
-        <div class="" style="display: flex; align-items: center; justify-content: center; ">
-          <button type="button" class="btn px-5" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">Cancel</button>
-        </div>
+        <!-- end of iteration -->
       </div>
-
-      <!-- appointment 2 -->
-      <div class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
-        <div class="p-3" style="width: 80%">
-          <div class="pb-1 d-inline-flex " style="width:100%">
-            <img src="static/img/calendar_emote.svg" alt="calendar" style="width: 10%">
-            <div class="px-3" style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">
-              <a style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%;">Monday</a>, 5 september 2023
-              <br>
-              <a style="font-family: Work_Sans; font-weight: 400; font-size: 16px; line-height: 140%;">09:00 AM - 07:00 PM</a>
-            </div>
-          </div>
-          <div style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%; width:100%;">
-            Doctor Name
-            <a style="color: #159EEC;">-</a>
-            <a style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">Cabinet name</a>
-          </div>
-        </div>
-        <div class="" style="display: flex; align-items: center; justify-content: center; ">
-          <button type="button" class="btn px-5" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">Cancel</button>
-        </div>
-      </div>
-
-      <!-- appointment 3 -->
-      <div class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
-        <div class="p-3" style="width: 80%">
-          <div class="pb-1 d-inline-flex " style="width:100%">
-            <img src=".static/img/calendar_emote.svg" alt="calendar" style="width: 10%">
-            <div class="px-3" style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">
-              <a style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%;">Monday</a>, 5 september 2023
-              <br>
-              <a style="font-family: Work_Sans; font-weight: 400; font-size: 16px; line-height: 140%;">09:00 AM - 07:00 PM</a>
-            </div>
-          </div>
-          <div style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%; width:100%;">
-            Doctor Name
-            <a style="color: #159EEC;">-</a>
-            <a style="font-family: Work_Sans; font-weight: 400; font-size: 18px; line-height: 140%;">Cabinet name</a>
-          </div>
-        </div>
-        <div class="" style="display: flex; align-items: center; justify-content: center; ">
-          <button type="button" class="btn px-5" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">Cancel</button>
-        </div>
-      </div>
-
     </div>
 
     <!-- make a new appointment -->
@@ -170,5 +130,27 @@
       }
     });
   });
+
+<!--  for cancel button-->
+  function cancelAppointment(button) {
+  var appointmentId = button.getAttribute("data-appointment-id");
+  var formData = new FormData();
+  formData.append("appointmentId", appointmentId);
+
+  fetch("/cancelAppointment", {
+    method: "POST",
+    body: formData
+  })
+  .then(function(response) {
+    if (response.ok) {
+      location.reload();
+    } else {
+      console.error("Error canceling the appointment:", response.statusText);
+    }
+  })
+  .catch(function(error) {
+    console.error("Error canceling the appointment:", error);
+  });
+}
 </script>
 </html>

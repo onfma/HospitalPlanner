@@ -52,9 +52,10 @@ public class Appoinments {
         this.patientCNP = patientCNP;
     }
 
-    public LocalDateTime getAppointmenTime() {
+    public LocalDateTime getAppointmentTime() {
         return appointmentTime;
     }
+
 
     public void setAppointmentTime(LocalDateTime appointmentTime) {
         this.appointmentTime = appointmentTime;

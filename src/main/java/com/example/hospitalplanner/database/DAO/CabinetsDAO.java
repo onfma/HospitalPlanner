@@ -70,6 +70,22 @@ public class CabinetsDAO {
         statement.close();
     }
 
+    public String getSpecialityName(int cabinetID) throws SQLException {
+        String query = "SELECT SPECIALTY FROM CABINETS WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, cabinetID); // set cabinetID parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        String specialityName = null;
+        while (resultSet.next())
+            specialityName = (resultSet.getString("SPECIALTY"));
+
+        statement.close();
+        resultSet.close();
+        return specialityName;
+    }
+
     public void delete(Cabinet cabinet) throws SQLException {
         String query = "DELETE FROM CABINETS WHERE ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
