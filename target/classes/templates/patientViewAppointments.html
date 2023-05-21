@@ -16,7 +16,6 @@
 </head>
 
 <!--TODO: planner din titlu sa fie cu albastrul mai deschis-->
-<!--TODO: sa se faca legatura interfata programare - json/sql-->
 <body>
 
   <!-- HEADER -->
@@ -42,7 +41,7 @@
   <div class="container-fluid pb-5 px-5 d-flex mb-3" style="margin-top: 50px; margin-bottom: 50px;">
 
     <!-- appointments -->
-    <div class="p-5 flex-fill" style="width:50%">
+    <div class="p-5 flex-fill" style="width:50%;">
       <div class="d-flex flex-column justify-content-around mb-3">
         <!-- iterate through appointments -->
         <div th:each="appointment : ${appointments}" class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
@@ -57,7 +56,6 @@
             </div>
             <div style="font-family: Work_Sans; font-weight: 700; font-size: 18px; line-height: 140%; width:100%;">
               <span th:text="${appointment.doctorFirstName}"></span>
-              <a style="color: #159EEC;">-</a>
               <span th:text="${appointment.doctorLastName}"></span>
               <a style="color: #159EEC;">-</a>
               <span th:text="${appointment.specialityName}"></span>
@@ -70,13 +68,12 @@
         </div>
         <!-- end of iteration -->
       </div>
-    </div>
 
-    <!-- make a new appointment -->
-    <div class="p-4 d-inline-flex mb-3 justify-content-center" style="background-color: #159EEC; border-radius: 10px; color: #FCFEFE; width: 100%">
-      <a href="/makeAppointment">
-        <button class="btn btn-primary pt-2 pb-2 px-5"
-                style="background-color: #159EEC;
+      <!-- make a new appointment -->
+      <div class="p-4 d-inline-flex mb-3 justify-content-center" style="background-color: #159EEC; border-radius: 10px; color: #FCFEFE; width: 100%">
+        <a href="/makeAppointment">
+          <button class="btn btn-primary pt-2 pb-2 px-5"
+                  style="background-color: #159EEC;
                         color: #FCFEFE;
                         border: none;
                         border-radius: 50px;
@@ -84,12 +81,12 @@
                         font-size: 20px;
                         line-height: 42px;
                         font-family: Work_Sans;">Make a new appointment</button></a>
+      </div>
     </div>
-
+    <!-- title -->
+    <div class="p-2 pt-3 pb-3 homepage_title" style="display: flex; align-items: center; ">my appointments<br>at<br> HospitalPlanner</div>
   </div>
 
-  <!-- title -->
-  <div class="p-2 flex-fill pt-3 pb-3 homepage_title" style="display: flex; align-items: center; ">my appointments<br>at<br> HospitalPlanner</div>
 
 </div>
 
@@ -143,7 +140,9 @@
     body: formData})
   .then(function(response) {
     if (response.ok) {
-      button.style.backgroundColor = "black"; location.reload(); //button.style.backgroundColor = "black"; // aici nu mai merge functia
+      //button.style.backgroundColor = "black"; // aici nu mai merge functia
+      location.reload();
+      // button.style.backgroundColor = "black"; // aici nu mai merge functia
     } else {
       console.error("Error canceling the appointment:", response.statusText);
     }
