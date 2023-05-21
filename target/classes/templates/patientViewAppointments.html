@@ -136,21 +136,20 @@
   var appointmentId = button.getAttribute("data-appointment-id");
   var formData = new FormData();
   formData.append("appointmentId", appointmentId);
+  //button.style.backgroundColor = "black"; // aici merge functia
 
   fetch("/cancelAppointment", {
     method: "POST",
-    body: formData
-  })
+    body: formData})
   .then(function(response) {
     if (response.ok) {
-      location.reload();
+      button.style.backgroundColor = "black"; location.reload(); //button.style.backgroundColor = "black"; // aici nu mai merge functia
     } else {
       console.error("Error canceling the appointment:", response.statusText);
     }
   })
   .catch(function(error) {
-    console.error("Error canceling the appointment:", error);
-  });
-}
+    console.error("Error canceling the appointment:", error);})
+  }
 </script>
 </html>
