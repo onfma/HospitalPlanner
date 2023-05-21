@@ -59,6 +59,7 @@ public class LoginController {
                 } else if (!patientDAO.existsByEmail(email) && doctorDAO.existsByEmail(email) && !adminDAO.existsByEmail(email)) {
                     // redirect to DOCTOR dashboard
                     System.out.println("It's a DOCTOR!");
+                    return "redirect:/doctorDashboard";
                 } else if (!patientDAO.existsByEmail(email) && !doctorDAO.existsByEmail(email) && adminDAO.existsByEmail(email)) {
                     // redirect to ADMIN dashboard
                     System.out.println("It's an ADMIN!");

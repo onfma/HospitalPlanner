@@ -10,6 +10,7 @@ import com.example.hospitalplanner.entities.person.Person;
 import com.example.hospitalplanner.exceptions.AuthenticationException;
 import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
 import com.example.hospitalplanner.exceptions.CreateAccountException;
+import com.example.hospitalplanner.exceptions.CreateAccountSuccess;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +38,7 @@ public class CreateAccountController {
                                    @RequestParam("email") String email,
                                    @RequestParam("home_address") String adress,
                                    @RequestParam("pswd") String password,
-                                   @RequestParam("account_type") String accountType) throws SQLException, CreateAccountException, ChangeAccountSuccess {
+                                   @RequestParam("account_type") String accountType) throws SQLException, CreateAccountException, ChangeAccountSuccess, CreateAccountSuccess {
 
         DAOFactory daoFactory = new DAOFactory();
 
@@ -60,7 +61,7 @@ public class CreateAccountController {
 
                     patientDAO.insert(newPatient);
 
-                    throw new CreateAccountException("Your account was successfully created!");
+                    throw new CreateAccountSuccess("Your account was successfully created!");
                 }
                 else
                     throw new CreateAccountException("There is already an account with this CNP!\nPlease try again with another CNP!");
@@ -78,7 +79,7 @@ public class CreateAccountController {
 
                     doctorDAO.insert(newDoctor);
 
-                    return null; //  redirect to page to complete speciality information, etc
+                    throw new CreateAccountSuccess("Your account was successfully created!");
                 }
                 else
                     throw new CreateAccountException("There is already an account with this CNP!\nPlease try again with another CNP!");

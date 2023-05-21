@@ -143,7 +143,9 @@
     body: formData})
   .then(function(response) {
     if (response.ok) {
-      button.style.backgroundColor = "black"; location.reload(); //button.style.backgroundColor = "black"; // aici nu mai merge functia
+      //button.style.backgroundColor = "black"; // aici nu mai merge functia
+      location.reload();
+      // button.style.backgroundColor = "black"; // aici nu mai merge functia
     } else {
       console.error("Error canceling the appointment:", response.statusText);
     }

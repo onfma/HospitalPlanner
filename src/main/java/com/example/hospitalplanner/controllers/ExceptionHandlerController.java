@@ -22,14 +22,14 @@ public class ExceptionHandlerController {
     @ExceptionHandler(CreateAccountException.class)
     public ModelAndView handleCreateAccountException(CreateAccountException ex) {
         ModelAndView modelAndView = new ModelAndView("createAccountPage");
-        modelAndView.addObject("successMessage", ex.getMessage());
+        modelAndView.addObject("error", ex.getMessage());
         return modelAndView;
     }
 
     @ExceptionHandler(CreateAccountSuccess.class)
     public ModelAndView handleCreateAccountSuccess(CreateAccountSuccess ex) {
         ModelAndView modelAndView = new ModelAndView("createAccountPage");
-        modelAndView.addObject("error", ex.getMessage());
+        modelAndView.addObject("successMessage", ex.getMessage());
         return modelAndView;
     }
 
