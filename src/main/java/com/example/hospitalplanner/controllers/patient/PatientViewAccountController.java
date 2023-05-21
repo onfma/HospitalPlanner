@@ -61,7 +61,8 @@ public class PatientViewAccountController {
                                            @RequestParam("tel") String newPhoneNumber,
                                            @RequestParam("email") String newEmail,
                                            @RequestParam("home_address") String newAddress,
-                                           @RequestParam("pswd") String newPassword) throws SQLException, ChangeAccountException, ChangeAccountSuccess {
+                                           @RequestParam("pswd") String newPassword,
+                                           Model model) throws SQLException, ChangeAccountException, ChangeAccountSuccess {
 
         DAOFactory daoFactory = new DAOFactory();
 
@@ -73,34 +74,34 @@ public class PatientViewAccountController {
 
         if(patientDAO.existsByEmail(personEmail) == true) { // it's a patient
             long cnp = patientDAO.getCNP(personEmail);
-
-            if(!newFirstName.equals("")) // verify if it's the same FirstName as in DB
-                if(newFirstName.equals(patientDAO.getFirstName(cnp)))
-                    throw new ChangeAccountException("You entered the same 'First Name' field!\nPlease fill in again!");
-
-            if(!newLastName.equals(""))  // verify if it's the same LastName as in DB
-                if(newLastName.equals(patientDAO.getLastName(cnp)))
-                    throw new ChangeAccountException("You entered the same 'Last Name' field!\nPlease fill in again!");
-
-            if(!newPhoneNumber.equals("")) // verify if it's the same LastName as in DB
-                if(newPhoneNumber.equals(patientDAO.getPhoneNumber(cnp)))
-                    throw new ChangeAccountException("You entered the same 'Phone Number' field!\nPlease fill in again!");
-
-            if(!newEmail.equals("")) // verify if it's the same Email as in DB
-                if(newEmail.equals(patientDAO.getEmail(cnp)))
-                    throw new ChangeAccountException("You entered the same 'Email' field!\nPlease fill in again!");
-
-            if(!newAddress.equals(""))  // verify if it's the same address as in DB
-                if(newAddress.equals(patientDAO.getAddress(cnp)))
-                    throw new ChangeAccountException("You entered the same 'Address' field!\nPlease fill in again!");
+//
+//            if(!newFirstName.equals("")) // verify if it's the same FirstName as in DB
+//                if(newFirstName.equals(patientDAO.getFirstName(cnp)))
+//                    throw new ChangeAccountException("You entered the same 'First Name' field!\nPlease fill in again!");
+//
+//            if(!newLastName.equals(""))  // verify if it's the same LastName as in DB
+//                if(newLastName.equals(patientDAO.getLastName(cnp)))
+//                    throw new ChangeAccountException("You entered the same 'Last Name' field!\nPlease fill in again!");
+//
+//            if(!newPhoneNumber.equals("")) // verify if it's the same LastName as in DB
+//                if(newPhoneNumber.equals(patientDAO.getPhoneNumber(cnp)))
+//                    throw new ChangeAccountException("You entered the same 'Phone Number' field!\nPlease fill in again!");
+//
+//            if(!newEmail.equals("")) // verify if it's the same Email as in DB
+//                if(newEmail.equals(patientDAO.getEmail(cnp)))
+//                    throw new ChangeAccountException("You entered the same 'Email' field!\nPlease fill in again!");
+//
+//            if(!newAddress.equals(""))  // verify if it's the same address as in DB
+//                if(newAddress.equals(patientDAO.getAddress(cnp)))
+//                    throw new ChangeAccountException("You entered the same 'Address' field!\nPlease fill in again!");
 
             UserAuthenticationDAO userAuthenticationDAO = new UserAuthenticationDAO(daoFactory.getConnection());
-            if(!newPassword.equals("")) { // verify if it's the same password as in DB
-                String hashedPassword = hashPassword(newPassword, userAuthenticationDAO.getSalt(personEmail));
-
-                if (hashedPassword.equals(userAuthenticationDAO.getPassword(personEmail)))
-                    throw new ChangeAccountException("You entered the same 'Password' field!\nPlease fill in again!");
-            }
+//            if(!newPassword.equals("")) { // verify if it's the same password as in DB
+//                String hashedPassword = hashPassword(newPassword, userAuthenticationDAO.getSalt(personEmail));
+//
+//                if (hashedPassword.equals(userAuthenticationDAO.getPassword(personEmail)))
+//                    throw new ChangeAccountException("You entered the same 'Password' field!\nPlease fill in again!");
+//            }
 
             if(!newFirstName.equals("")) // change FirstName
                 patientDAO.setFirstName(cnp, newFirstName);
@@ -137,7 +138,7 @@ public class PatientViewAccountController {
             if(!newPassword.equals("")) // change password
                 userAuthenticationDAO.setPassword(personEmail, newPassword);
 
-            throw new ChangeAccountSuccess("Your account information has been successfully updated!");
+//            throw new ChangeAccountSuccess("Your account information has been successfully updated!");
 
         } else if (doctorDAO.existsByEmail(personEmail) == true) { // it's a doctor
             long cnp = doctorDAO.getCNP(personEmail);
@@ -211,9 +212,7 @@ public class PatientViewAccountController {
         }
 
 
-        return "redirect:/patientViewAccount"; // redirect to homepage
-
-//        return null;
+        return showViewPatientAccountPage(model); // redirect to patient dashboard
     }
 
     private String hashPassword(String password, String salt) {
