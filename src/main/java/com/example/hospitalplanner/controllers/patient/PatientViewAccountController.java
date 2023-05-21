@@ -11,6 +11,7 @@ import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +30,28 @@ public class PatientViewAccountController {
     private HttpSession session;
 
     @GetMapping
-    public String showViewPatientAccountPage() {
+    public String showViewPatientAccountPage(Model model) throws SQLException {
         System.out.println("S-a afisat pagina patientViewAccount.hmtl!");
+
+        DAOFactory daoFactory = new DAOFactory();
+        PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
+
+        String personEmail = (String) session.getAttribute("email");
+        long cnp = patientDAO.getCNP(personEmail);
+
+        Patient patient = new Patient();
+
+        patient.setCnp(cnp);
+        patient.setFirstName(patientDAO.getFirstName(cnp));
+        patient.setLastName(patientDAO.getLastName(cnp));
+        patient.setGender(patientDAO.getGender(cnp));
+        patient.setPhoneNumber(patientDAO.getPhoneNumber(cnp));
+        patient.setAddress(patientDAO.getAddress(cnp));
+        patient.setEmail(patientDAO.getEmail(cnp));
+
+        // Add patient in model
+        model.addAttribute("patient", patient);
+
         return "patientViewAccount";
     }
 

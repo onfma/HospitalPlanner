@@ -58,11 +58,28 @@
             <!-- info boxes -->
             <div class="col-sm-12 p-3">
                 <div class="row mb-3">
+                    <!-- cnp -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="cnp">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">CNP:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.cnp}"></a>
+                        </div>
+                    </div>
+                    <!-- gender -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="gender">
+                        <div>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Gender:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.gender}"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
                     <!-- first name -->
                     <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="firstName">
                         <div>
-                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account first name:</a>
-                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">Maria</a>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">First name:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.firstName}"></a>
                         </div>
                         <div class="form-floating mt-2 mb-3" style="position: relative;">
                             <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
@@ -75,8 +92,8 @@
                     <!-- last name -->
                     <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="lastName">
                         <div>
-                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account last name:</a>
-                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">Onofrei</a>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Last name:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.lastName}"></a>
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
@@ -92,8 +109,8 @@
                     <!-- tel -->
                     <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
                         <div>
-                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account phone number:</a>
-                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">0787859621</a>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Phone number:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.phoneNumber}"></a>
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
@@ -106,8 +123,8 @@
                     <!-- home address -->
                     <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
                         <div>
-                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account home address:</a>
-                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">str vietii mele nr. nush</a>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Address:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.address}"></a>
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
@@ -123,8 +140,8 @@
                     <!-- email -->
                     <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
                         <div>
-                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account email address:</a>
-                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">onofrei.maria02@yahoo.com</a>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Email address:</a>
+                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.email}"></a>
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
@@ -140,8 +157,8 @@
                     <!-- password -->
                     <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
                         <div>
-                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Account password:</a>
-                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">¯\_(ツ)_/¯</a>
+                            <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Password:</a>
+<!--                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">¯\_(ツ)_/¯</a>-->
                         </div>
                         <div class="form-floating mb-3 mt-2" style="position: relative;">
                             <img src="static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
