@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
   <title>HospitalPlanner</title>
@@ -60,8 +60,7 @@
                         font-weight: 400;
                         font-size: 32px;
                         line-height: 37px;
-                        color: #1F2B6C;">
-              Cabinetul nume specializare
+                        color: #1F2B6C;" th:text="${cabinet.cabinetName} + ' Cabinet'">
             </div>
             <!-- intructiuni -->
             <div style="font-family: Work_Sans;
@@ -98,7 +97,7 @@
                                               font-weight: 500;
                                               font-size: 16px;
                                               line-height: 22px;
-                                              text-align: center;"> nume cabinet (asta este fix, nu poate fi modificat)</div>
+                                              text-align: center;" th:text="${cabinet.cabinetName}"></div>
                 </div>
               </div>
 
@@ -124,26 +123,14 @@
                                   text-align: center;
                                   cursor: pointer;">
                     <option disabled selected></option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">nume doctor 1</option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">nume doctor 2</option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">nume doctor 3</option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">nume doctor 4</option>
+                    <option th:each="doctor : ${cabinet.doctorList}"
+                            style="font-family: Work_Sans;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 22px;
+                        text-align: center;"
+                            th:text="${doctor.firstName} + ' ' + ${doctor.lastName}">
+                    </option>
                   </select>
                 </div>
               </div>
@@ -170,26 +157,14 @@
                                   text-align: center;
                                   cursor: pointer;">
                     <option disabled selected></option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">tip consultatie 1</option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">tip consultatie 2</option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">tip consultatie 3</option>
-                    <option style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  text-align: center;">tip consultatie 4</option>
+                    <option th:each="examination : ${cabinet.examinationList}"
+                            style="font-family: Work_Sans;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 22px;
+                        text-align: center;"
+                            th:text="${examination.examinationName}">
+                    </option>
                   </select>
                 </div>
               </div>
@@ -277,46 +252,10 @@
         <!-- zile -->
         <div class="container-fluid px-5 pb-4 d-flex flex-column justify-content-between text-center" style="height: 70%; color: #FCFEFE;">
           <!-- luni -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Monday</div>
+          <div class="d-flex justify-content-center" th:each="cabinetSchedule : ${cabinet.cabinetScheduleList}">
+            <div class="p-2 text_schedule" style="width: 20%; text-align: start" th:text="${cabinetSchedule.dayOfWeek}"></div>
             <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">09:00 AM - 07:00 PM</div>
-          </div>
-          <!-- marti -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Tuesday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">09:00 AM - 07:00 PM</div>
-          </div>
-          <!-- miercuri -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Thursday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">09:00 AM - 07:00 PM</div>
-          </div>
-          <!-- joi -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Friday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">09:00 AM - 07:00 PM</div>
-          </div>
-          <!-- vineri -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Saturday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">09:00 AM - 07:00 PM</div>
-          </div>
-          <!-- sambata -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Sunday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">09:00 AM - 07:00 PM</div>
-          </div>
-          <!-- duminica -->
-          <div class="d-flex justify-content-center">
-            <div class="p-2 text_schedule" style="width: 20%; text-align: start">Monday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-            <div class="p-2 text_schedule" style="width: 45%; text-align: end">Closed</div>
+            <div class="p-2 text_schedule" style="width: 45%; text-align: end" th:text="${cabinetSchedule.startTime} + ' - ' + ${cabinetSchedule.endTime}"></div>
           </div>
         </div>
 

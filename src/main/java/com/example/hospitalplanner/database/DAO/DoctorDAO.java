@@ -438,7 +438,7 @@ public class DoctorDAO {
     public boolean existsByEmail(String email) throws SQLException {
         String query = "SELECT COUNT(*) AS cnt FROM DOCTORS WHERE EMAIL = ?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, email); // set CNP parameter
+        statement.setString(1, email); // set email parameter
         ResultSet resultSet = statement.executeQuery();
 
         boolean exists = false;
@@ -454,6 +454,28 @@ public class DoctorDAO {
         statement.close();
         resultSet.close();
         return exists;
+    }
+
+    public Doctor findByCNP(long doctorCNP) throws SQLException {
+        String query = "SELECT * FROM DOCTORS WHERE CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, doctorCNP); // set CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        Doctor doctor = new Doctor();
+        while (resultSet.next()) {
+            doctor.setCnp(resultSet.getLong("CNP"));
+            doctor.setFirstName(resultSet.getString("FIRST_NAME"));
+            doctor.setLastName(resultSet.getString("LAST_NAME"));
+            doctor.setGender(resultSet.getString("GENDER").charAt(0));
+            doctor.setPhoneNumber(resultSet.getString("PHONE_NUMBER"));
+            doctor.setEmail(resultSet.getString("EMAIL"));
+            doctor.setAddress(resultSet.getString("ADDRESS"));
+        }
+
+        statement.close();
+        resultSet.close();
+        return doctor;
     }
 
 }

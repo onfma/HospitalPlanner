@@ -1,6 +1,7 @@
 package com.example.hospitalplanner.database.DAO;
 
 import com.example.hospitalplanner.entities.Cabinet;
+import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSpeciality;
 import org.json.JSONArray;
@@ -129,6 +130,27 @@ public class DoctorsSpecialitiesDAO {
         statement.close();
         resultSet.close();
         return jsonArray.toString();
+    }
+
+    public List<Doctor> getDoctorsHaveSameSpeciality(int cabinetID) throws SQLException {
+        String query = "SELECT * FROM DOCTOR_SPECIALTIES WHERE CABINET_ID = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, cabinetID); // set DOCTOR_CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        DoctorDAO doctorDAO = new DoctorDAO(connection);
+
+        List<Doctor> doctorList = new ArrayList<>();
+        while (resultSet.next()) {
+            Doctor doctor = new Doctor();
+            doctor = doctorDAO.findByCNP(resultSet.getLong("DOCTOR_CNP"));
+
+            doctorList.add(doctor);
+        }
+
+        statement.close();
+        resultSet.close();
+        return doctorList;
     }
 
     public void deleteAllDoctorSpecialities(Long doctorCNP) throws SQLException {
