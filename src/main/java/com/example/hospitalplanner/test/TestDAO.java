@@ -35,7 +35,7 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
-//            testPopulateDB(connection);
+            testPopulateDB(connection);
 
 //            testAdminDAO(connection);
 
@@ -53,7 +53,7 @@ public class TestDAO {
 
 //            testAppointmentDAO(connection);
 
-            testSmth(connection);
+//            testSmth(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -292,7 +292,36 @@ public class TestDAO {
 //        doctorsScheduleDAO.insert(thursdayD4);
 //        doctorsScheduleDAO.insert(fridayD4);
 //
-//        // insert Appointments
+        // insert Examinations
+        ExaminationDAO examinationDAO = new ExaminationDAO(connection);
+
+        Examination examination1 = new Examination(1, 1, "Acne consultation");
+        Examination examination2 = new Examination(2, 1, "Skin cancer screening");
+        Examination examination3 = new Examination(3, 1, "Psoriasis management");
+        Examination examination4 = new Examination(4, 1, "Hair loss assessment");
+        Examination examination5 = new Examination(5, 2, "Cardiac consultation");
+        Examination examination6 = new Examination(6, 2, "ECG");
+        Examination examination7 = new Examination(7, 2, "Stress test");
+        Examination examination8 = new Examination(8, 2, "Coronary angiography");
+        Examination examination9 = new Examination(9, 3, "Headache assessment ");
+        Examination examination10 = new Examination(10, 3, "Stroke evaluation");
+        Examination examination11 = new Examination(11, 3, "Epilepsy diagnosis and treatment");
+        Examination examination12 = new Examination(12, 3, "Parkinson's disease management ");
+
+        examinationDAO.insert(examination1);
+        examinationDAO.insert(examination2);
+        examinationDAO.insert(examination3);
+        examinationDAO.insert(examination4);
+        examinationDAO.insert(examination5);
+        examinationDAO.insert(examination6);
+        examinationDAO.insert(examination7);
+        examinationDAO.insert(examination8);
+        examinationDAO.insert(examination9);
+        examinationDAO.insert(examination10);
+        examinationDAO.insert(examination11);
+        examinationDAO.insert(examination12);
+
+        // insert Appointments
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(connection);
 
         Appoinments app1 = new Appoinments(1, 1, 5030524268701L, 5030524268901L, LocalDateTime.of(2023, 6, 01, 10, 0), 3);
@@ -312,6 +341,16 @@ public class TestDAO {
         appointmentsDAO.insert(app6);
         appointmentsDAO.insert(app7);
         appointmentsDAO.insert(app8);
+
+
+        Appoinments appHistory1 = new Appoinments(9, 1, 5030524268701L, 5030524268901L, LocalDateTime.of(2023, 5, 11, 10, 0), 2);
+        Appoinments appHistory2 = new Appoinments(10, 1, 5030524268701L, 5030524268901L, LocalDateTime.of(2023, 5, 15, 16, 30), 3);
+
+        appointmentsDAO.insert(appHistory1);
+        appointmentsDAO.insert(appHistory2);
+
+        appointmentsDAO.setDiagnosis(10, "Psoriasis vulgaris with moderate severity affecting the scalp, elbows, and knees.");
+        appointmentsDAO.setTreatment(10, "Topical corticosteroids for scalp, calcipotriene ointment for elbows and knees, and regular moisturizing. Avoid triggers such as stress and certain medications.");
 
     }
 
