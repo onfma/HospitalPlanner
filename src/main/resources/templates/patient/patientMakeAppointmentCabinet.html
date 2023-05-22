@@ -13,47 +13,37 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
-
-<!--TODO: treb sa existe cate o pag de asta pt fiecare cabinet in parte-->
-<!--TODO: formularul de programare definitivat-->
 <body>
 
 
-<!-- HEADER -->
-<div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
-  <div class="d-flex justify-content-between mb-1 ml-5 px-5" style="background-color: transparent !important;">
-    <div class="bg-info text-center" style="background-color: transparent !important;">
-      <div class="header_title">HOSPITAL<a style="color: #159EEC;">PLANNER</a></div>
-    </div>
-    <div class="d-flex flex-row-reverse">
-      <!-- Logout button -->
-      <div class="p-2">
-        <a href="/logout">
-          <button type="button" class="btn"
-                  style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">Logout</button>
-        </a>
+  <!-- HEADER -->
+  <div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
+    <div class="d-flex justify-content-between mb-1 ml-5 px-5" style="background-color: transparent !important;">
+      <div class="bg-info text-center" style="background-color: transparent !important;">
+        <div class="header_title">HOSPITAL<a style="color: #159EEC;">PLANNER</a></div>
       </div>
+      <div class="d-flex flex-row-reverse">
+        <!-- View Account button -->
+        <div class="p-2">
+          <a href="/patientViewAccount">
+            <button type="button" class="btn"
+                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Account</button>
+          </a>
+        </div>
 
-      <!-- View Account button -->
-      <div class="p-2">
-        <a href="/patientViewAccount">
-          <button type="button" class="btn"
-                  style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Account</button>
-        </a>
-      </div>
-
-      <!-- My Appointments button -->
-      <div class="p-2 px-5">
-        <a href="/myAppointments">
-          <button type="button" class="btn"
-                  style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button>
-        </a>
+        <!-- My Appointments button -->
+        <div class="p-2 px-5">
+          <a href="/myAppointments">
+            <button type="button" class="btn"
+                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- BODY -->
   <div class="container-fluid">
@@ -80,19 +70,184 @@
                         font-size: 16px;
                         line-height: 22px;
                         color: #212124;">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Quisque placerat scelerisque tortor ornare ornare.
-              Convallis felis vitae tortor augue. Velit nascetur proin massa in.
-              Consequat faucibus porttitor enim et.
-
-              <br><br>aici va veni cv text de intructiuni la stilul cum iti faci programarea/ cum functioneaza alg in spate
-
-              <br><br>also caseta asta nu e definitivata ptc inca n.am inteles cum vine alg pe care il facem :)
+              Welcome to HospitalPlanner! In order to make an appointment at one of our clinics,
+              please provide the name of the doctor you wish to see, as well as the type of consultation
+              you require. Additionally, select the desired date and starting time for your appointment
+              based on your preferences and the clinic's schedule displayed on the right side of the page.
+              To minimize wait times and avoid unnecessary congestion, we recommend considering the suggestions
+              provided by our website regarding the preferred appointment time and date.
+              <br><br>Thank you for your understanding and cooperation.
             </div>
           </div>
-          <!-- box -->
+
+          <!-- FORMULAR-->
           <form class="mt-2" style="background-color: #1F2B6C;">
-            <div style="height: 150px"></div>
+            <div class="container-fluid">
+              <!-- Cabinet-->
+              <div class="row">
+                <div class="p-3 container-fluid d-flex justify-content-start" style="text-align: center;
+                                                                                      border: 2px solid;
+                                                                                      border-color: transparent transparent #BFD2F8 transparent;
+                                                                                      color: #BFD2F8;">
+                  <div class="col-sm-2" style="font-family: Work_Sans;
+                                              font-weight: 600;
+                                              font-size: 16px;
+                                              line-height: 22px;
+                                              text-align: start;">Cabinet:</div>
+                  <div class="col-sm-10" style="font-family: Work_Sans;
+                                              font-weight: 500;
+                                              font-size: 16px;
+                                              line-height: 22px;
+                                              text-align: center;"> nume cabinet (asta este fix, nu poate fi modificat)</div>
+                </div>
+              </div>
+
+              <!-- Doctor-->
+              <div class="row">
+                <div class="p-3 container-fluid d-flex justify-content-start" style="text-align: center;
+                                                                                      border: 2px solid;
+                                                                                      border-color: transparent transparent #BFD2F8 transparent;
+                                                                                      color: #BFD2F8;">
+                  <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
+                                              font-weight: 600;
+                                              font-size: 16px;
+                                              line-height: 22px;
+                                              text-align: start;">Doctor:</div>
+                  <select class="form-select" id="select_doctor" name="select_doctor" title="Select your preferred doctor" required
+                          style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  color: #BFD2F8;
+                                  background-color: #1F2B6C;
+                                  border:none;
+                                  text-align: center;
+                                  cursor: pointer;">
+                    <option disabled selected></option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">nume doctor 1</option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">nume doctor 2</option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">nume doctor 3</option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">nume doctor 4</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Tip Consult-->
+              <div class="row">
+                <div class="p-3 container-fluid d-flex justify-content-start" style="text-align: center;
+                                                                                      border: 2px solid;
+                                                                                      border-color: transparent transparent #BFD2F8 transparent;
+                                                                                      color: #BFD2F8;">
+                  <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
+                                              font-weight: 600;
+                                              font-size: 16px;
+                                              line-height: 22px;
+                                              text-align: start;">Consultation:</div>
+                  <select class="form-select" id="select_consultation" name="select_consultation" title="Select your consultation type" required
+                          style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  color: #BFD2F8;
+                                  background-color: #1F2B6C;
+                                  border:none;
+                                  text-align: center;
+                                  cursor: pointer;">
+                    <option disabled selected></option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">tip consultatie 1</option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">tip consultatie 2</option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">tip consultatie 3</option>
+                    <option style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  text-align: center;">tip consultatie 4</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Date & Time-->
+              <div class="row ">
+                <div class="col-sm-6 p-3 container-fluid d-flex justify-content-start" style="font-family: Work_Sans;
+                                                  font-weight: 500;
+                                                  font-size: 16px;
+                                                  line-height: 22px;
+                                                  text-align: start;
+                                                  color: #BFD2F8;
+                                                  border: 2px solid;
+                                                  border-color: #BFD2F8 #BFD2F8 #BFD2F8 transparent;">
+                  <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
+                                              font-weight: 600;
+                                              font-size: 16px;
+                                              line-height: 22px;
+                                              text-align: start;">Date:</div>
+                  <input class="container-fluid col-sm-10" type="date" id="date" required
+                         style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  color: #BFD2F8;
+                                  background-color: #1F2B6C;
+                                  border:none;
+                                  text-align: center;
+                                  cursor: pointer;">
+                </div>
+                <div class="col-sm-6 p-3 container-fluid d-flex justify-content-start" style="font-family: Work_Sans;
+                                                  font-weight: 500;
+                                                  font-size: 16px;
+                                                  line-height: 22px;
+                                                  text-align: start;
+                                                  color: #BFD2F8;
+                                                  border: 2px solid;
+                                                  border-color: #BFD2F8 #BFD2F8 #BFD2F8 transparent;">
+                  <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
+                                              font-weight: 600;
+                                              font-size: 16px;
+                                              line-height: 22px;
+                                              text-align: start;">Time:</div>
+                  <input class="container-fluid col-sm-10" type="time" id="time" required
+                         style="font-family: Work_Sans;
+                                  font-weight: 500;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  color: #BFD2F8;
+                                  background-color: #1F2B6C;
+                                  border:none;
+                                  text-align: center;
+                                  cursor: pointer;">
+                </div>
+              </div>
+
+            </div>
+
             <button class="container-fluid p-2" type="submit"
                     style="background-color: #BFD2F8;
                             font-family: Work_Sans;
