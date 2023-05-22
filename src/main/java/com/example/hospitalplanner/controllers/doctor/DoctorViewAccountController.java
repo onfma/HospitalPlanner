@@ -1,27 +1,29 @@
 package com.example.hospitalplanner.controllers.doctor;
 
 
-import com.example.hospitalplanner.database.DAO.DoctorDAO;
-import com.example.hospitalplanner.database.DAO.PatientDAO;
-import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
+import com.example.hospitalplanner.database.DAO.*;
 import com.example.hospitalplanner.database.DAOFactory;
+import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
+import com.example.hospitalplanner.entities.schedule.DoctorSpeciality;
 import com.example.hospitalplanner.exceptions.ChangeAccountException;
 import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
+import com.example.hospitalplanner.models.MakeAppointmetModel;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/doctorViewAccount")
@@ -33,6 +35,7 @@ public class DoctorViewAccountController {
     public String showDoctorDashboard(Model model) throws SQLException {
         System.out.println("S-a afisat pagina doctorDashboard.html.hmtl!");
 
+        // Doctor Information
         DAOFactory daoFactory = new DAOFactory();
         DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
 
@@ -49,10 +52,43 @@ public class DoctorViewAccountController {
         doctor.setAddress(doctorDAO.getAddress(cnp));
         doctor.setEmail(doctorDAO.getEmail(cnp));
 
-        // Add patient in model
-        model.addAttribute("doctor", doctor);
+        // Doctor Specializations
+        DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
+        CabinetsDAO cabinetsDAO = new CabinetsDAO(daoFactory.getConnection());
 
-        return "doctorViewAccount";
+        List<DoctorSpeciality> doctorSpecialityList = doctorsSpecialitiesDAO.getDoctorSpecialities(cnp);
+        List<MakeAppointmetModel> doctorSpecialities = new ArrayList<>();
+
+        for(DoctorSpeciality doctorSpeciality : doctorSpecialityList) {
+            MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
+            makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(doctorSpeciality.getCabinetID()));
+
+            doctorSpecialities.add(makeAppointmetModel);
+        }
+
+        // Doctor NE-Specializations
+        List<DoctorSpeciality> doctorNESpecialityLisy = doctorsSpecialitiesDAO.select();
+        List<MakeAppointmetModel> doctorNESpecialities = new ArrayList<>();
+
+        for(DoctorSpeciality doctorSpeciality : doctorNESpecialityLisy) {
+            MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
+            makeAppointmetModel.setCabinetID(doctorSpeciality.getCabinetID());
+            makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(doctorSpeciality.getCabinetID()));
+
+            doctorNESpecialities.add(makeAppointmetModel);
+        }
+
+        // eliminate specializations that are not of the doctor
+        doctorNESpecialities.removeIf(speciality -> doctorSpecialities.stream().anyMatch(s -> s.getCabinetName().equals(speciality.getCabinetName())));
+        doctorNESpecialities.remove(doctorNESpecialities.size() - 1);
+
+
+        // Add doctor in model
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("doctorSpecialities", doctorSpecialities);
+        model.addAttribute("doctorNESpecialities", doctorNESpecialities);
+
+        return "doctor/doctorViewAccount";
     }
 
     @PostMapping
@@ -116,6 +152,27 @@ public class DoctorViewAccountController {
         System.out.println("Am iesit sa editez contul doctorului!");
 //        return "doctorViewAccount";
         return showDoctorDashboard(model); // redirect to doctor dashboard
+    }
+
+    @GetMapping("/addSpeciality/{cabinetID}")
+    public String addSpeciality(@PathVariable int cabinetID, Model model) throws SQLException {
+        System.out.println("ADD SPECIALITY");
+
+        DAOFactory daoFactory = new DAOFactory();;
+        DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
+        DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
+
+        String personEmail = (String) session.getAttribute("email");
+
+        long cnp = 0;
+        if (doctorDAO.existsByEmail(personEmail)) // it's a doctor
+            cnp = doctorDAO.getCNP(personEmail);
+
+        DoctorSpeciality doctorSpeciality = new DoctorSpeciality(cabinetID, cnp);
+
+        doctorsSpecialitiesDAO.insert(doctorSpeciality);
+
+        return "doctor/doctorViewAccount";
     }
 
     private String hashPassword(String password, String salt) {

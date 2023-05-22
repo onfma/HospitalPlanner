@@ -15,6 +15,6 @@ public class DoctorViewAppointmentsController {
     @GetMapping
     public String showDoctorDashboard() {
         System.out.println("S-a afisat pagina doctorViewAppointments.html!");
-        return "doctorViewAppointments";
+        return "doctor/doctorViewAppointments";
     }
 }
