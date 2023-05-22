@@ -15,6 +15,6 @@ public class DoctorMakeReportController {
     @GetMapping
     public String showDoctorDashboard() {
         System.out.println("S-a afisat pagina doctorMakeReport.html! E conectat: " + session.getAttribute("email"));
-        return "doctorMakeReport";
+        return "doctor/doctorMakeReport";
     }
 }

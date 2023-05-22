@@ -153,6 +153,7 @@ public class DoctorsSpecialitiesDAO {
         return doctorList;
     }
 
+
     public void deleteAllDoctorSpecialities(Long doctorCNP) throws SQLException {
         String query = "DELETE FROM DOCTOR_SPECIALTIES WHERE DOCTOR_CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);

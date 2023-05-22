@@ -8,12 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MakeAppointmetModel {
+    private int cabinetID;
     private String cabinetName;
     private List<Doctor> doctorList = new ArrayList<>();
     private List<Examination> examinationList = new ArrayList<>();
     private List<CabinetSchedule> cabinetScheduleList = new ArrayList<>();
 
     public MakeAppointmetModel() {}
+
+    public void setCabinetID(int cabinetID) {
+        this.cabinetID = cabinetID;
+    }
+
+    public int getCabinetID() {
+        return cabinetID;
+    }
 
     public void setCabinetName(String cabinetName) {
         this.cabinetName = cabinetName;
