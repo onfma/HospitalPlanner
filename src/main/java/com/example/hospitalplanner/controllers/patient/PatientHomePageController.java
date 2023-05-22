@@ -60,6 +60,6 @@ public class PatientHomePageController {
         // add doctors list in model
         model.addAttribute("doctor", doctorModels);
 
-        return "patientDashboard";
+        return "patient/patientDashboard";
     }
 }

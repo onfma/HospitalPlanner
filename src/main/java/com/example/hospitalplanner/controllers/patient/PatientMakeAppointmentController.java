@@ -15,6 +15,6 @@ public class PatientMakeAppointmentController {
     @GetMapping
     public String showMakeAnAppointmentPage() {
         System.out.println("S-a afisat pagina makeAnAppointment.hmtl!");
-        return "patientMakeAppointment.html"; // redirect to homepage
+        return "patient/patientMakeAppointment"; // redirect to homepage
     }
 }

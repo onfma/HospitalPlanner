@@ -52,7 +52,7 @@ public class TestDAO {
 
 //            testAppointmentDAO(connection);
 
-//            testSmth(connection);
+            testSmth(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -73,7 +73,7 @@ public class TestDAO {
         // insert Appointments
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(connection);
 
-        Appoinments app1 = new Appoinments(9, 1, 5030524268701L, 5030524268901L, LocalDateTime.of(2023, 5, 21, 10, 0));
+        Appoinments app1 = new Appoinments(1, 1, 5030524268701L, 5030524268901L, LocalDateTime.of(2023, 6, 01, 10, 0));
 
         appointmentsDAO.insert(app1);
     }
