@@ -79,8 +79,18 @@
             </div>
           </div>
 
+          <!--    error message-->
+          <div th:if="${error}" class="alert alert-danger" role="alert" id="error-message">
+            <span th:text="${error}"></span>
+          </div>
+
+          <!--    successfully message-->
+          <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <span th:text="${successMessage}"></span>
+          </div>
+
           <!-- FORMULAR-->
-          <form class="mt-2" style="background-color: #1F2B6C;">
+          <form class="mt-2" style="background-color: #1F2B6C;" onsubmit="return validateForm()">
             <div class="container-fluid">
               <!-- Cabinet-->
               <div class="row">
@@ -222,8 +232,7 @@
               </div>
 
             </div>
-
-            <button class="container-fluid p-2" type="submit"
+            <button class="container-fluid p-2" type="submit" id="submit_form_button"
                     style="background-color: #BFD2F8;
                             font-family: Work_Sans;
                             font-weight: 500;
@@ -282,4 +291,83 @@
   </div>
 
 </body>
+
+<script>
+  function validateForm() {
+    var currentDate = new Date();
+    var selectedDate = new Date(document.getElementById("date").value);
+    var selectedTime = new Date("2000-01-01 " + document.getElementById("time").value);
+    var isScheduled = false;
+    var isScheduledForSelectedDoctor = false;
+
+    // Check if selected date is before the current date
+    if (selectedDate < currentDate) {
+      alert("Date and time are incorrect.");
+      return false; // Prevent form submission
+    }
+
+    // Check if selected date is a Saturday or Sunday
+    if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
+      alert("We don't work on the weekends.");
+      return false; // Prevent form submission
+    }
+
+    // Check if selected date and time are in the schedule
+    var scheduleList = document.getElementsByClassName("text_schedule");
+    for (var i = 0; i < scheduleList.length; i += 3) {
+      var dayOfWeek = scheduleList[i].innerText;
+      var startTimeStr = scheduleList[i + 2].innerText.split(" - ")[0];
+      var endTimeStr = scheduleList[i + 2].innerText.split(" - ")[1];
+
+      var scheduleStartTime = new Date("2000-01-01 " + startTimeStr);
+      var scheduleEndTime = new Date("2000-01-01 " + endTimeStr);
+
+      if (
+              selectedDate.getDay() === getDayOfWeekNumber(dayOfWeek) &&
+              selectedTime >= scheduleStartTime &&
+              selectedTime <= scheduleEndTime
+      ) {
+        isScheduled = true;
+        break;
+      }
+    }
+
+    if (!isScheduled) {
+      alert("Not in the Cabinet Schedule.");
+      return false; // Prevent form submission
+    }
+
+    if (!isScheduledForSelectedDoctor) {
+      alert("Not in the Doctor's Schedule.");
+      return false; // Prevent form submission
+    }
+
+    // Form is valid, allow submission
+    return true;
+  }
+
+  // Helper function to get the day of the week number
+  function getDayOfWeekNumber(dayOfWeek) {
+    switch (dayOfWeek.toLowerCase()) {
+      case "monday":
+        return 1;
+      case "tuesday":
+        return 2;
+      case "wednesday":
+        return 3;
+      case "thursday":
+        return 4;
+      case "friday":
+        return 5;
+      case "saturday":
+        return 6;
+      case "sunday":
+        return 0;
+      default:
+        return -1;
+    }
+  }
+</script>
+
+
 </html>
