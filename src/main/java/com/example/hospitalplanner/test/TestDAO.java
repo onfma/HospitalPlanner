@@ -34,7 +34,7 @@ public class TestDAO {
 
             connection = cpds.getConnection();
 
-            testPopulateDB(connection);
+//            testPopulateDB(connection);
 
 //            testAdminDAO(connection);
 
@@ -52,7 +52,7 @@ public class TestDAO {
 
 //            testAppointmentDAO(connection);
 
-            testSmth(connection);
+//            testSmth(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -70,9 +70,12 @@ public class TestDAO {
     }
 
     public void testSmth(Connection connection) throws SQLException {
-        PatientDAO patientDAO = new PatientDAO(connection);
+        // insert Appointments
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO(connection);
 
-        System.out.println(patientDAO.searchJSON(5020703228905L));
+        Appoinments app1 = new Appoinments(9, 1, 5030524268701L, 5030524268901L, LocalDateTime.of(2023, 5, 21, 10, 0));
+
+        appointmentsDAO.insert(app1);
     }
 
     public void testPopulateDB(Connection connection) throws SQLException {

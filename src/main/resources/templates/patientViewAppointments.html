@@ -60,7 +60,7 @@
     <div class="p-5 flex-fill" style="width:50%;">
       <div class="d-flex flex-column justify-content-around mb-3">
         <!-- iterate through appointments -->
-        <div th:each="appointment : ${appointments}" class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
+        <div th:each="appointment : ${upcomingAppointments}" class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
           <div class="p-3" style="width: 80%">
             <div class="pb-1 d-inline-flex " style="width:100%">
               <img src="static/img/calendar_emote.svg" alt="calendar" style="width: 10%">
@@ -112,7 +112,7 @@
     <div class="p-5 flex-fill" style="width:50%;">
       <div class="d-flex flex-column justify-content-around mb-3">
         <!-- iterate through appointments -->
-        <div th:each="appointment : ${appointments}" class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
+        <div th:each="appointment : ${pastAppointments}" class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
           <div class="p-3" style="width: 80%">
             <div class="pb-1 d-inline-flex " style="width:100%">
               <img src="static/img/calendar_emote.svg" alt="calendar" style="width: 10%">

@@ -50,7 +50,10 @@ public class PatientViewAppointmentsController {
         // Interoghează baza de date pentru a obține programările pacienților
         List<Appoinments> appointments = appointmentsDAO.getPatientAppointments(cnp);
 
-        List<AppointmentModel> appointmentModels = new ArrayList<>();
+        List<AppointmentModel> upcomingAppointments  = new ArrayList<>();
+        List<AppointmentModel> pastAppointments   = new ArrayList<>();
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
 
         for (Appoinments appointment : appointments) {
             String doctorFirstName = doctorDAO.getFirstName(appointment.getDoctorCNP());
@@ -59,11 +62,16 @@ public class PatientViewAppointmentsController {
             LocalDateTime appointmentTime = appointment.getAppointmentTime();
 
             AppointmentModel appointmentModel = new AppointmentModel(doctorFirstName, doctorLastName, specialityName, appointmentTime);
-            appointmentModels.add(appointmentModel);
+            if (appointmentTime.isAfter(currentDateTime)) {
+                upcomingAppointments.add(appointmentModel);
+            } else {
+                pastAppointments.add(appointmentModel);
+            }
         }
 
         // add appointments list in model
-        model.addAttribute("appointments", appointmentModels);
+        model.addAttribute("upcomingAppointments", upcomingAppointments);
+        model.addAttribute("pastAppointments", pastAppointments);
 
         return "patientViewAppointments";
     }
