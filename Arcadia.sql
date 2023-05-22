@@ -64,5 +64,16 @@ CREATE TABLE Appointments (
   cabinet_id NUMBER REFERENCES Cabinets(id),
   doctor_CNP NUMBER REFERENCES Doctors(CNP),
   patient_CNP NUMBER REFERENCES Pacients(CNP),
-  appointment_time TIMESTAMP NOT NULL
+  appointment_time TIMESTAMP NOT NULL,
+  duration NUMBER,
+  diagnosis VARCHAR2(3000),
+  treatment VARCHAR2(4000),
+  id_examination NUMBER REFERENCES Examination(id_examination)
+);
+
+CREATE TABLE Examination (
+  id_examination NUMBER PRIMARY KEY,
+  id_cabinet NUMBER REFERENCES Cabinets(id),
+  examination_name VARCHAR2(200),
+  average_duration NUMBER
 );

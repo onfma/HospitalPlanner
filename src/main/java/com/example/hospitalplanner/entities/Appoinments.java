@@ -9,15 +9,20 @@ public class Appoinments {
     private long doctorCNP;
     private long patientCNP;
     private LocalDateTime appointmentTime;
+    private int duration;
+    private String diagnosis;
+    private String treatment;
+    private int examinationID;
 
 
     public Appoinments() {}
-    public Appoinments(int id, int cabinetID, long doctorCNP, long patientCNP, LocalDateTime appointmentTime){
+    public Appoinments(int id, int cabinetID, long doctorCNP, long patientCNP, LocalDateTime appointmentTime, int examinationID){
         this.id = id;
         this.cabinetID = cabinetID;
         this.doctorCNP = doctorCNP;
         this.patientCNP = patientCNP;
         this.appointmentTime = appointmentTime;
+        this.examinationID = examinationID;
     }
 
     public int getId() {
@@ -56,6 +61,37 @@ public class Appoinments {
         return appointmentTime;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getTreatment() {
+        return treatment;
+    }
+
+    public void setTreatment(String treatment) {
+        this.treatment = treatment;
+    }
+
+    public int getExaminationID() {
+        return examinationID;
+    }
+
+    public void setExaminationID(int examinationID) {
+        this.examinationID = examinationID;
+    }
 
     public void setAppointmentTime(LocalDateTime appointmentTime) {
         this.appointmentTime = appointmentTime;

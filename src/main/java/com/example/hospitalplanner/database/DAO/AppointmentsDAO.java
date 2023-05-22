@@ -35,6 +35,15 @@ public class AppointmentsDAO {
             appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
 
+            if(resultSet.getInt("DURATION") != 0)
+                appoinment.setDuration(resultSet.getInt("DURATION"));
+            if(resultSet.getString("DIAGNOSIS") != null)
+                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
+            if(resultSet.getString("TREATMENT") != null)
+                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+
+            appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
+
             appoinmentsList.add(appoinment);
         }
 
@@ -67,7 +76,7 @@ public class AppointmentsDAO {
 
 
     public void insert(Appoinments appoinment) throws SQLException {
-        String query = "INSERT INTO APPOINTMENTS (ID, CABINET_ID, DOCTOR_CNP, PATIENT_CNP, APPOINTMENT_TIME) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO APPOINTMENTS (ID, CABINET_ID, DOCTOR_CNP, PATIENT_CNP, APPOINTMENT_TIME, ID_EXAMINATION) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
 
         statement.setInt(1, appoinment.getId());
@@ -75,6 +84,7 @@ public class AppointmentsDAO {
         statement.setLong(3, appoinment.getDoctorCNP());
         statement.setLong(4, appoinment.getPatientCNP());
         statement.setTimestamp(5, Timestamp.valueOf((appoinment.getAppointmentTime())));
+        statement.setInt(6, appoinment.getExaminationID());
         statement.executeUpdate();
 
         statement.close();
@@ -117,6 +127,15 @@ public class AppointmentsDAO {
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            if(resultSet.getInt("DURATION") != 0)
+                appoinment.setDuration(resultSet.getInt("DURATION"));
+            if(resultSet.getString("DIAGNOSIS") != null)
+                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
+            if(resultSet.getString("TREATMENT") != null)
+                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+
+            appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
 
             appoinmentsList.add(appoinment);
         }
@@ -166,6 +185,15 @@ public class AppointmentsDAO {
             appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
 
+            if(resultSet.getInt("DURATION") != 0)
+                appoinment.setDuration(resultSet.getInt("DURATION"));
+            if(resultSet.getString("DIAGNOSIS") != null)
+                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
+            if(resultSet.getString("TREATMENT") != null)
+                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+
+            appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
+
             appoinmentsList.add(appoinment);
         }
 
@@ -212,6 +240,15 @@ public class AppointmentsDAO {
             appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
 
+            if(resultSet.getInt("DURATION") != 0)
+                appoinment.setDuration(resultSet.getInt("DURATION"));
+            if(resultSet.getString("DIAGNOSIS") != null)
+                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
+            if(resultSet.getString("TREATMENT") != null)
+                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+
+            appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
+
             appoinmentsList.add(appoinment);
         }
 
@@ -220,11 +257,76 @@ public class AppointmentsDAO {
         return appoinmentsList;
     }
 
+    public Appoinments findAppoinment(int id) throws SQLException {
+        String query = "SELECT * FROM APPOINTMENTS WHERE ID = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, id); // set ID parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        Appoinments appoinment = new Appoinments();
+        while (resultSet.next()) {
+            appoinment.setId(resultSet.getInt("ID"));
+            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
+            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+
+            if(resultSet.getInt("DURATION") != 0)
+                appoinment.setDuration(resultSet.getInt("DURATION"));
+            if(resultSet.getString("DIAGNOSIS") != null)
+                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
+            if(resultSet.getString("TREATMENT") != null)
+                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+
+            appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
+        }
+
+        statement.close();
+        resultSet.close();
+        return appoinment;
+    }
+
     public void setAppointmentTime(int id, LocalDateTime newAppointmentTime) throws SQLException {
         String query = "UPDATE APPOINTMENTS SET APPOINTMENT_TIME = ? WHERE ID = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setTimestamp(1, Timestamp.valueOf((newAppointmentTime)));  // set APPOINTMENT_TIME parameter
+        statement.setInt(2, id);    // set ID parameter
+
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
+    public void setDuration(int id, int duration) throws SQLException {
+        String query = "UPDATE APPOINTMENTS SET DURATION = ? WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, duration);  // set DURATION parameter
+        statement.setInt(2, id);    // set ID parameter
+
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
+    public void setDiagnosis(int id, String diagnosis) throws SQLException {
+        String query = "UPDATE APPOINTMENTS SET DIAGNOSIS = ? WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, diagnosis);  // set DIAGNOSIS parameter
+        statement.setInt(2, id);    // set ID parameter
+
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
+    public void setTreatment(int id, String treatment) throws SQLException {
+        String query = "UPDATE APPOINTMENTS SET TREATMENT = ? WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, treatment);  // set TREATMENT parameter
         statement.setInt(2, id);    // set ID parameter
 
         statement.executeUpdate();
@@ -255,6 +357,24 @@ public class AppointmentsDAO {
 
         statement.close();
     }
+
+    public int getCabinetID(int id) throws SQLException {
+        String query = "SELECT CABINET_ID FROM APPOINTMENTS WHERE ID = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, id); // set ID parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        int cabinetID = 0;
+        while (resultSet.next())
+            cabinetID = (resultSet.getInt("CABINET_ID"));
+
+        statement.close();
+        resultSet.close();
+        return cabinetID;
+    }
+
+
 
     public void delete(int id) throws SQLException {
         String query = "DELETE FROM APPOINTMENTS WHERE ID = ?";

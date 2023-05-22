@@ -151,28 +151,28 @@ public class TestPerson {
         DoctorSchedule doctorSchedule3 = new DoctorSchedule(1234567890128L, "Wednesday", LocalTime.of(10,0),  LocalTime.of(17,0));
 
         // AppoinmentsList list
-        List<Appoinments> appoinmentsList = new ArrayList<>();
+//        List<Appoinments> appoinmentsList = new ArrayList<>();
+//
+//        Appoinments appoinment1 = new Appoinments(1, 1, 1234567890126L , 1234567890123L, LocalDateTime.of(2023, 5, 12, 14, 30));
+//        Appoinments appoinment2 = new Appoinments(2, 2, 1234567890127L , 1234567890123L, LocalDateTime.of(2023, 5, 13, 14, 30));
+//        Appoinments appoinment3 = new Appoinments(1, 1, 1234567890128L , 1234567890123L, LocalDateTime.of(2023, 5, 14, 14, 30));
+//
+//        appoinmentsList.add(appoinment1);
+//        appoinmentsList.add(appoinment2);
+//        appoinmentsList.add(appoinment3);
 
-        Appoinments appoinment1 = new Appoinments(1, 1, 1234567890126L , 1234567890123L, LocalDateTime.of(2023, 5, 12, 14, 30));
-        Appoinments appoinment2 = new Appoinments(2, 2, 1234567890127L , 1234567890123L, LocalDateTime.of(2023, 5, 13, 14, 30));
-        Appoinments appoinment3 = new Appoinments(1, 1, 1234567890128L , 1234567890123L, LocalDateTime.of(2023, 5, 14, 14, 30));
-
-        appoinmentsList.add(appoinment1);
-        appoinmentsList.add(appoinment2);
-        appoinmentsList.add(appoinment3);
-
-        Admin admin = new Admin(patientList, doctorList, cabinetList, cabinetSchedulesList, doctorScheduleList, appoinmentsList);
+//        Admin admin = new Admin(patientList, doctorList, cabinetList, cabinetSchedulesList, doctorScheduleList, appoinmentsList);
 
         // test if I can edit a patient's data
-        List<Patient> newPatientList = new ArrayList<>();
-        newPatientList = admin.getPatientList();
-
-        Patient newPatient = new Patient();
-        newPatient=newPatientList.get(0);
-
-        newPatient.setGender('F');
-
-        newPatientList.add(newPatient);
+//        List<Patient> newPatientList = new ArrayList<>();
+//        newPatientList = admin.getPatientList();
+//
+//        Patient newPatient = new Patient();
+//        newPatient=newPatientList.get(0);
+//
+//        newPatient.setGender('F');
+//
+//        newPatientList.add(newPatient);
     }
 
     public void passwordSaltHash() {
