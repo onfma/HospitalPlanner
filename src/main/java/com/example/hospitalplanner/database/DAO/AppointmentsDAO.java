@@ -278,7 +278,7 @@ public class AppointmentsDAO {
             if(resultSet.getString("DIAGNOSIS") != null)
                 appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
             if(resultSet.getString("TREATMENT") != null)
-                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+                appoinment.setTreatment(resultSet.getString("TREATMENT"));
 
             appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
         }
