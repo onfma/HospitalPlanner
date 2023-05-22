@@ -117,6 +117,22 @@ public class ExaminationDAO {
         return averageDuration;
     }
 
+    public String getExaminationName(int idExamination) throws SQLException {
+        String query = "SELECT EXAMINATION_NAME FROM EXAMINATION WHERE ID_EXAMINATION = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, idExamination); // set ID_EXAMINATION parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        String examinationName = null;
+        while (resultSet.next()) {
+            examinationName = resultSet.getString("EXAMINATION_NAME");
+        }
+
+        statement.close();
+        resultSet.close();
+        return examinationName;
+    }
+
     public void insert(Examination examination) throws SQLException {
         String query = "INSERT INTO EXAMINATION (ID_EXAMINATION, ID_CABINET, EXAMINATION_NAME) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);

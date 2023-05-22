@@ -135,7 +135,7 @@
           </div>
           <div class="" style="display: flex; align-items: center; justify-content: center; ">
             <button type="button" class="btn px-5" style="background-color: #159EEC; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;"
-                    data-appointment-id=${appointment.id} onclick="viewReport(this)">View</button>
+                    th:attr="data-appointment-id=${appointment.id}" onclick="viewReport(this)">View</button>
           </div>
         </div>
         <!-- end of iteration -->

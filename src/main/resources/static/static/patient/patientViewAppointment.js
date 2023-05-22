@@ -8,13 +8,31 @@ $(document).ready(function() {
 
 function cancelAppointment(button) {
   var appointmentId = button.getAttribute("data-appointment-id");
-  button.style.backgroundColor = "black";
 
   axios.post("/myAppointments/cancelAppointment", { appointmentId: appointmentId })
     .then(function (response) {
       location.reload();
     })
     .catch(function (error) {
-      console.error("Eroare la anularea programării:", error);
+      console.error("Error canceling the appointment:", error);
     });
 }
+
+function viewReport(button) {
+    var appointmentId = button.getAttribute("data-appointment-id");
+
+    window.location.href = "/viewReport/" + appointmentId;
+}
+
+
+//function viewReport(button) {
+//    var appointmentId = button.getAttribute("data-appointment-id");
+//
+//    axios.post("/viewReport", { appointmentId: appointmentId })
+//        .then(function (response) {
+//          location.reload();
+//        })
+//        .catch(function (error) {
+//          console.error("Error generating the report:", error);
+//        });
+//}

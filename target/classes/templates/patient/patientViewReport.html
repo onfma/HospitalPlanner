@@ -68,19 +68,31 @@
         <div class="container-fluid px-3 pb-4 d-flex flex-column justify-content-around text-center" style="color: #FCFEFE; height: 330px">
           <!-- cabinet -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">Cabinet:</span> cabinet</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;">
+              <span class="text_schedule" style="font-weight: 600; font-size: 20px;">Cabinet:</span>
+              <span th:text="${appointment.cabinetName}"></span>
+            </div>
           </div>
           <!-- consult -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">Consult:</span> consult type</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;">
+              <span class="text_schedule" style="font-weight: 600; font-size: 20px;">Consult:</span>
+              <span th:text="${appointment.examinationType}"></span>
+            </div>
           </div>
           <!-- doctor -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">Doctor:</span> doctor doctor</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;">
+              <span class="text_schedule" style="font-weight: 600; font-size: 20px;">Doctor:</span>
+              <span th:text="${appointment.doctorFirstName} + ' ' + ${appointment.doctorLastName}"></span>
+            </div>
           </div>
           <!-- date -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">Date:</span> 07/02/2023, 10:00 AM</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;">
+              <span class="text_schedule" style="font-weight: 600; font-size: 20px;">Date:</span>
+              <span th:text="${#temporals.format(appointment.appointmentTime, 'dd/MM/yyyy, hh:mm a')}"></span>
+            </div>
           </div>
         </div><!-- END Appointment info -->
 
@@ -104,18 +116,16 @@
       <div class="mb-5">
         <label for="diagnostic">Consultation diagnostic: </label>
         <div class="p-3" id="diagnostic" style="background-color: #BFD2F8; font-family: Work_Sans; border-radius: 10px">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.
-          <br><br>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.
-          <br>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.
+          <span th:text="${appointment.diagnosis}"></span>
         </div>
       </div><!-- END diagnostic -->
 
       <!-- treatment -->
       <div>
         <label for="treatment">Consultation treatment: </label>
-        <div class="p-3" id="treatment" style="background-color: #BFD2F8; font-family: Work_Sans; border-radius: 10px">text text <br> text</div>
+        <div class="p-3" id="treatment" style="background-color: #BFD2F8; font-family: Work_Sans; border-radius: 10px" >
+          <span th:text="${appointment.treatment}"></span>
+        </div>
       </div><!-- END treatment -->
 
     </div><!-- END report -->

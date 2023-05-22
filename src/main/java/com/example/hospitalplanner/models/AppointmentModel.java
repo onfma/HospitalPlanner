@@ -4,11 +4,16 @@ import java.time.LocalDateTime;
 
 public class AppointmentModel {
     private int id;
+    private String cabinetName;
+    private String examinationType;
     private String doctorFirstName;
     private String doctorLastName;
     private String specialityName;
     private LocalDateTime appointmentTime;
+    private String diagnosis;
+    private String treatment;
 
+    public AppointmentModel() {}
 
     public AppointmentModel(int id, String doctorFirstName, String doctorLastName, String specialityName, LocalDateTime appointmentTime) {
         this.id = id;
@@ -16,6 +21,17 @@ public class AppointmentModel {
         this.doctorLastName = doctorLastName;
         this.specialityName = specialityName;
         this.appointmentTime = appointmentTime;
+    }
+
+    public AppointmentModel(int id, String cabinetName, String examinationType, String doctorFirstName, String doctorLastName, LocalDateTime appointmentTime, String diagnosis, String treatment) {
+        this.id = id;
+        this.cabinetName = cabinetName;
+        this.examinationType = examinationType;
+        this.doctorFirstName = doctorFirstName;
+        this.doctorLastName = doctorLastName;
+        this.appointmentTime = appointmentTime;
+        this.diagnosis = diagnosis;
+        this.treatment = treatment;
     }
 
     public int getId() {
@@ -56,5 +72,37 @@ public class AppointmentModel {
 
     public void setAppointmentTime(LocalDateTime appointmentTime) {
         this.appointmentTime = appointmentTime;
+    }
+
+    public String getCabinetName() {
+        return cabinetName;
+    }
+
+    public void setCabinetName(String cabinetName) {
+        this.cabinetName = cabinetName;
+    }
+
+    public String getExaminationType() {
+        return examinationType;
+    }
+
+    public void setExaminationType(String examinationType) {
+        this.examinationType = examinationType;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setTreatment(String treatment) {
+        this.treatment = treatment;
+    }
+
+    public String getTreatment() {
+        return treatment;
     }
 }

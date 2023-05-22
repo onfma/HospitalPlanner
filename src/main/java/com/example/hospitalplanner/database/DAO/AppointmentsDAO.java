@@ -265,11 +265,13 @@ public class AppointmentsDAO {
 
         Appoinments appoinment = new Appoinments();
         while (resultSet.next()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
             appoinment.setId(resultSet.getInt("ID"));
             appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
-            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
 
             if(resultSet.getInt("DURATION") != 0)
                 appoinment.setDuration(resultSet.getInt("DURATION"));
