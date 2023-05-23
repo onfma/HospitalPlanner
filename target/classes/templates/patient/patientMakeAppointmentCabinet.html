@@ -345,27 +345,8 @@
       return false; // Prevent form submission
     }
 
-    // Check if selected date and time are in the selected doctor's schedule
-    var doctorScheduleList = JSON.parse('<%= doctorsScheduleJSON %>');
-    for (var j = 0; j < doctorScheduleList.length; j++) {
-      var doctorCNP = doctorScheduleList[j].doctor_CNP;
-      var doctorDayOfWeek = doctorScheduleList[j].dayOfWeek;
-      var doctorStartTime = new Date("2000-01-01 " + doctorScheduleList[j].startTime);
-      var doctorEndTime = new Date("2000-01-01 " + doctorScheduleList[j].endTime);
-
-      if (
-              selectedDoctor === doctorCNP &&
-              selectedDate.getDay() === getDayOfWeekNumber(doctorDayOfWeek) &&
-              selectedTime >= doctorStartTime &&
-              selectedTime <= doctorEndTime
-      ) {
-        isScheduledForSelectedDoctor = true;
-        break;
-      }
-    }
-
     if (!isScheduledForSelectedDoctor) {
-      alert("Not in doctor's schedule.");
+      alert("Not in the Doctor's Schedule.");
       return false; // Prevent form submission
     }
 
