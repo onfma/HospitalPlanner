@@ -86,23 +86,25 @@ public class PatientViewAccountController {
                 patientDAO.setPhoneNumber(cnp, newPhoneNumber);
 
             if(!newEmail.equals("")) { // change Email
-                // insert a new row in "UserAuthentication" table with the new email
-                Patient patient = new Patient();
+                if(!userAuthenticationDAO.exists(newEmail)) { // if email doesn't exist in DB
+                    // insert a new row in "UserAuthentication" table with the new email
+                    Patient patient = new Patient();
 
-                patient.setEmail(newEmail);
-                patient.setPasswordController(userAuthenticationDAO.getPassword(personEmail));
-                patient.setSalt(userAuthenticationDAO.getSalt(personEmail));
+                    patient.setEmail(newEmail);
+                    patient.setPasswordController(userAuthenticationDAO.getPassword(personEmail));
+                    patient.setSalt(userAuthenticationDAO.getSalt(personEmail));
 
-                userAuthenticationDAO.insert(patient);
+                    userAuthenticationDAO.insert(patient);
 
-                // update teh email in "Pacient" table
-                patientDAO.setEmail(cnp, newEmail);
+                    // update teh email in "Pacient" table
+                    patientDAO.setEmail(cnp, newEmail);
 
-                // delete the old email from "UserAuthentication" table
-                userAuthenticationDAO.delete(personEmail);
+                    // delete the old email from "UserAuthentication" table
+                    userAuthenticationDAO.delete(personEmail);
 
-                // update email in "session" field
-                session.setAttribute("email", newEmail);
+                    // update email in "session" field
+                    session.setAttribute("email", newEmail);
+                }
             }
 
             if(!newAddress.equals("")) // change address

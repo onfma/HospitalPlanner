@@ -1,10 +1,6 @@
 package com.example.hospitalplanner.controllers;
 
-import com.example.hospitalplanner.exceptions.AuthenticationException;
-import com.example.hospitalplanner.exceptions.ChangeAccountException;
-import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
-import com.example.hospitalplanner.exceptions.CreateAccountException;
-import com.example.hospitalplanner.exceptions.CreateAccountSuccess;
+import com.example.hospitalplanner.exceptions.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +32,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(ChangeAccountException.class)
     public ModelAndView handleChangeAccountException(ChangeAccountException ex) {
         ModelAndView modelAndView = new ModelAndView("patientViewAccount");
+        modelAndView.addObject("error", ex.getMessage());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(DoctorChangeAccountException.class)
+    public ModelAndView handleDoctorChangeAccountException(DoctorChangeAccountException ex) {
+        ModelAndView modelAndView = new ModelAndView("doctorViewAccount");
         modelAndView.addObject("error", ex.getMessage());
         return modelAndView;
     }

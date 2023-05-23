@@ -9,6 +9,7 @@ import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.schedule.DoctorSpeciality;
 import com.example.hospitalplanner.exceptions.ChangeAccountException;
 import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
+import com.example.hospitalplanner.exceptions.DoctorChangeAccountException;
 import com.example.hospitalplanner.models.MakeAppointmetModel;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,7 @@ public class DoctorViewAccountController {
                                            @RequestParam("email") String newEmail,
                                            @RequestParam("home_address") String newAddress,
                                            @RequestParam("pswd") String newPassword,
-                                           Model model) throws SQLException {
+                                           Model model) throws SQLException, DoctorChangeAccountException {
 
         System.out.println("Am intrat sa editez contul doctorului!");
 
@@ -124,23 +125,25 @@ public class DoctorViewAccountController {
                 doctorDAO.setPhoneNumber(cnp, newPhoneNumber);
 
             if(!newEmail.equals("")) { // change Email
-                // insert a new row in "UserAuthentication" table with the new email
-                Doctor doctor = new Doctor();
+                if(!userAuthenticationDAO.exists(newEmail)) { // if email doesn t exists in DB
+                    // insert a new row in "UserAuthentication" table with the new email
+                    Doctor doctor = new Doctor();
 
-                doctor.setEmail(newEmail);
-                doctor.setPasswordController(userAuthenticationDAO.getPassword(personEmail));
-                doctor.setSalt(userAuthenticationDAO.getSalt(personEmail));
+                    doctor.setEmail(newEmail);
+                    doctor.setPasswordController(userAuthenticationDAO.getPassword(personEmail));
+                    doctor.setSalt(userAuthenticationDAO.getSalt(personEmail));
 
-                userAuthenticationDAO.insert(doctor);
+                    userAuthenticationDAO.insert(doctor);
 
-                // update teh email in "Doctor" table
-                doctorDAO.setEmail(cnp, newEmail);
+                    // update teh email in "Doctor" table
+                    doctorDAO.setEmail(cnp, newEmail);
 
-                // delete the old email from "UserAuthentication" table
-                userAuthenticationDAO.delete(personEmail);
+                    // delete the old email from "UserAuthentication" table
+                    userAuthenticationDAO.delete(personEmail);
 
-                // update email in "session" field
-                session.setAttribute("email", newEmail);
+                    // update email in "session" field
+                    session.setAttribute("email", newEmail);
+                }
             }
 
             if(!newAddress.equals("")) // change address
