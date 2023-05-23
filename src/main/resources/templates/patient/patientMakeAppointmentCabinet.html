@@ -375,6 +375,14 @@
     return true;
   }
 
+  for (var i = 0; i < DoctorSchedule.length; i++) {
+    var schedule = DoctorSchedule[i];
+    var id = schedule.id;
+    var dayOfWeek = schedule.dayOfWeek;
+    var startTime = schedule.startTime;
+    var endTime = schedule.endTime;
+  }
+
   // Helper function to get the day of the week number
   function getDayOfWeekNumber(dayOfWeek) {
     switch (dayOfWeek.toLowerCase()) {
