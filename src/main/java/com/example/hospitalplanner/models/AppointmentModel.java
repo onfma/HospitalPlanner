@@ -6,12 +6,18 @@ public class AppointmentModel {
     private int id;
     private String cabinetName;
     private String examinationType;
+    private String patientFirstName;
+    private String patientLastName;
     private String doctorFirstName;
     private String doctorLastName;
     private String specialityName;
     private LocalDateTime appointmentTime;
     private String diagnosis;
     private String treatment;
+    private String formattedDate;
+    private String formattedTime;
+    private long patientCNP;
+    private char patientGender;
 
     public AppointmentModel() {}
 
@@ -104,5 +110,53 @@ public class AppointmentModel {
 
     public String getTreatment() {
         return treatment;
+    }
+
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
+
+    public String getFormattedTime() {
+        return formattedTime;
+    }
+
+    public void setFormattedTime(String formattedTime) {
+        this.formattedTime = formattedTime;
+    }
+
+    public String getPatientFirstName() {
+        return patientFirstName;
+    }
+
+    public void setPatientFirstName(String patientFirstName) {
+        this.patientFirstName = patientFirstName;
+    }
+
+    public String getPatientLastName() {
+        return patientLastName;
+    }
+
+    public void setPatientLastName(String patientLastName) {
+        this.patientLastName = patientLastName;
+    }
+
+    public long getPatientCNP() {
+        return patientCNP;
+    }
+
+    public void setPatientCNP(long patientCNP) {
+        this.patientCNP = patientCNP;
+    }
+
+    public char getPatientGender() {
+        return patientGender;
+    }
+
+    public void setPatientGender(char patientGender) {
+        this.patientGender = patientGender;
     }
 }

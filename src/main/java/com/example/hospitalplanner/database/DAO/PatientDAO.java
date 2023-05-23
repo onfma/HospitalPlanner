@@ -94,6 +94,28 @@ public class PatientDAO {
         statement.close();
     }
 
+    public Patient search(long cnp) throws SQLException {
+        String query = "SELECT * FROM PACIENTS WHERE CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, cnp);
+        ResultSet resultSet = statement.executeQuery();
+
+        Patient patient = new Patient();
+        while (resultSet.next()) {
+            patient.setCnp(resultSet.getLong("CNP"));
+            patient.setFirstName(resultSet.getString("FIRST_NAME"));
+            patient.setLastName(resultSet.getString("LAST_NAME"));
+            patient.setGender(resultSet.getString("GENDER").charAt(0));
+            patient.setPhoneNumber(resultSet.getString("PHONE_NUMBER"));
+            patient.setEmail(resultSet.getString("EMAIL"));
+            patient.setAddress(resultSet.getString("ADDRESS"));
+        }
+
+        statement.close();
+        resultSet.close();
+        return patient;
+    }
+
     public String searchJSON(long cnp) throws SQLException {
         String query = "SELECT * FROM pacients WHERE CNP = ?";
         PreparedStatement statement = connection.prepareStatement(query);

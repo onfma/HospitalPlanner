@@ -3,12 +3,12 @@
 
 <head>
   <title>HospitalPlanner</title>
-  <link rel="shortcut icon" href="static/img/page_icon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../static/img/page_icon.png" type="image/x-icon">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-  <link rel="stylesheet" href="static/styles/general_style.css">
-  <link rel="stylesheet" href="static/styles/header_style.css">
-  <link rel="stylesheet" href="static/styles/homepage_style.css">
+  <link rel="stylesheet" href="../static/styles/general_style.css">
+  <link rel="stylesheet" href="../static/styles/header_style.css">
+  <link rel="stylesheet" href="../static/styles/homepage_style.css">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -68,19 +68,19 @@
         <div class="container-fluid px-3 pb-4 d-flex flex-column justify-content-around text-center" style="color: #FCFEFE; height: 330px">
           <!-- first name -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">First name:</span> maria</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;" th:text="'First name: ' + ${appointment.patientFirstName}"></span></div>
           </div>
           <!-- last name -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">Last name:</span> onofrei</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;" th:text="'Last name: ' + ${appointment.patientLastName}"></span></div>
           </div>
           <!-- cnp -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">CNP:</span> 1234567891234</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;" th:text="'CNP: ' + ${appointment.patientCNP}"></span></div>
           </div>
           <!-- gender -->
           <div class="d-flex justify-content-start">
-            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;">Gender:</span> F</div>
+            <div class="p-2 text_schedule" style="width: 100%; text-align: start; font-size: 20px;"><span class="text_schedule" style="font-weight: 600; font-size: 20px;" th:text="'Gender: ' + ${appointment.patientGender}"></span></div>
           </div>
         </div><!-- END Patient info -->
 

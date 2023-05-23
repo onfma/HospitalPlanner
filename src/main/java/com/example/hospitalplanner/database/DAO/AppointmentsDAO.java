@@ -120,13 +120,15 @@ public class AppointmentsDAO {
         ResultSet resultSet = statement.executeQuery();
 
         List<Appoinments> appoinmentsList = new ArrayList<>();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         while (resultSet.next()) {
             Appoinments appoinment = new Appoinments();
             appoinment.setId(resultSet.getInt("ID"));
             appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
-            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
-            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME")));
+            appoinment.setPatientCNP(resultSet.getLong("PATIENT_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
 
             if(resultSet.getInt("DURATION") != 0)
                 appoinment.setDuration(resultSet.getInt("DURATION"));
@@ -270,7 +272,7 @@ public class AppointmentsDAO {
             appoinment.setId(resultSet.getInt("ID"));
             appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
-            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("PATIENT_CNP"));
             appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
 
             if(resultSet.getInt("DURATION") != 0)
