@@ -46,10 +46,9 @@ public class PatientMakeAppointmentCabinetController {
         return "patient/patientMakeAppointmentCabinet"; // redirect to homepage
     }
 
-    @GetMapping("/doctorSchedule/{cnp}")
+    @GetMapping("/{cabinetId}/doctorSchedule/{cnp}")
     public ResponseEntity<List<DoctorSchedule>> getDoctorSchedule(@PathVariable long cnp) {
         try {
-
             DAOFactory daoFactory = new DAOFactory();
             DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(daoFactory.getConnection());
 
