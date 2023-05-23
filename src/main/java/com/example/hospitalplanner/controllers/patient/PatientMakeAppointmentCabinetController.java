@@ -1,14 +1,14 @@
 package com.example.hospitalplanner.controllers.patient;
 
-import com.example.hospitalplanner.database.DAO.CabinetsDAO;
-import com.example.hospitalplanner.database.DAO.CabinetsScheduleDAO;
-import com.example.hospitalplanner.database.DAO.DoctorsSpecialitiesDAO;
-import com.example.hospitalplanner.database.DAO.ExaminationDAO;
+import com.example.hospitalplanner.database.DAO.*;
 import com.example.hospitalplanner.database.DAOFactory;
 import com.example.hospitalplanner.entities.Cabinet;
+import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.models.MakeAppointmetModel;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,5 +44,19 @@ public class PatientMakeAppointmentCabinetController {
         model.addAttribute("cabinet", makeAppointmetModel);
 
         return "patient/patientMakeAppointmentCabinet"; // redirect to homepage
+    }
+
+    @GetMapping("/doctorSchedule/{cnp}")
+    public ResponseEntity<List<DoctorSchedule>> getDoctorSchedule(@PathVariable long cnp) {
+        try {
+
+            DAOFactory daoFactory = new DAOFactory();
+            DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(daoFactory.getConnection());
+
+            List<DoctorSchedule> schedule = doctorsScheduleDAO.getDoctorSchedule_FullWeek(cnp);
+            return ResponseEntity.ok(schedule);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

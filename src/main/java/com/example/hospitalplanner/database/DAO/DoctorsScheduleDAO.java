@@ -122,6 +122,29 @@ public class DoctorsScheduleDAO {
         return jsonArray.toString();
     }
 
+    public List<DoctorSchedule> getDoctorSchedule_FullWeek(Long doctorCNP) throws SQLException {
+        String query = "SELECT * FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<DoctorSchedule> doctorScheduleList = new ArrayList<>();
+        while (resultSet.next()) {
+            DoctorSchedule doctorSchedule = new DoctorSchedule();
+
+            doctorSchedule.setId(resultSet.getLong("DOCTOR_CNP"));
+            doctorSchedule.setDayOfWeek(resultSet.getString("DAY_OF_WEEK"));
+            doctorSchedule.setStartTime(resultSet.getObject("START_TIME", LocalTime.class));
+            doctorSchedule.setEndTime(resultSet.getObject("END_TIME", LocalTime.class));
+
+            doctorScheduleList.add(doctorSchedule);
+        }
+
+        statement.close();
+        resultSet.close();
+        return doctorScheduleList;
+    }
+
     public void setStartTimeSpecificDay(Long doctorCNP, String dayOfWeek, LocalTime startTime) throws SQLException {
         String query = "UPDATE DOCTORS_SCHEDULE SET START_TIME = ? WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
 

@@ -147,6 +147,7 @@
                         font-size: 16px;
                         line-height: 22px;
                         text-align: center;"
+                            th:value="${doctor.cnp}"
                             th:text="${doctor.firstName} + ' ' + ${doctor.lastName}">
                     </option>
                   </select>
@@ -345,10 +346,30 @@
       return false; // Prevent form submission
     }
 
-    // if (!isScheduledForSelectedDoctor) {
-    //   alert("Not in the Doctor's Schedule.");
-    //   return false; // Prevent form submission
-    // }
+
+    var selectDoctorElement = document.getElementById('select_doctor');
+    var selectedCNP = selectDoctorElement.value;
+
+    var DoctorSchedule;
+
+    // Fetch the doctor's schedule using the selected CNP
+  fetch('/doctorSchedule/' + selectedCNP)
+    .then(function(response) {
+        if (!response.ok) {
+          throw new Error('Error retrieving doctor schedule');
+        }
+        return response.json();
+     })
+    .then(function(schedule) {
+      DoctorSchedule = schedule;
+      console.log('Doctor schedule:', schedule);
+
+      return true;
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+      return false; // Prevent form submission
+    });
 
     // Form is valid, allow submission
     return true;
