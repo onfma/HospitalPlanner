@@ -72,30 +72,28 @@
         var selectedCNP = document.getElementById('select_doctor').value;
         var DoctorSchedule = [];
 
-        console.log(cabinetID);
-        console.log(selectedCNP);
 
-
-        // Fetch the doctor's schedule using the selected CNP
         fetch('/' + cabinetID + '/doctorSchedule/' + selectedCNP)
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Error retrieving doctor schedule');
-                }
-            })
-            .then(function(schedule) {
-                DoctorSchedule = schedule;
-                console.log('Doctor schedule:', schedule);
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Error retrieving doctor schedule');
+                    }
+                    return response.json();
+                })
+                .then(function(schedule) {
+                    console.log('Doctor schedule:', schedule);
 
-                // Verifică structura răspunsului JSON
-                console.log('Schedule entry example:', schedule[0]); // Afișează o înregistrare de exemplu din schedule
+                    for (var i = 0; i < schedule.length; i++) {
+                        var scheduleEntry = schedule[i];
+                        // Restul codului de verificare a programului doctorului...
+                    }
 
-                return true;
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-                return false; // Prevent form submission
-            });
+                    return false; // Returnează false în afara blocului .then
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                    return false;
+                });
 
         for (var i = 0; i < DoctorSchedule.length; i++) {
             var scheduleEntry = DoctorSchedule[i];

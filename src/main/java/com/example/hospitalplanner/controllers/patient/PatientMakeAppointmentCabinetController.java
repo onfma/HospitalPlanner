@@ -26,7 +26,7 @@ public class PatientMakeAppointmentCabinetController {
 
     @GetMapping("/{cabinetId}")
     public String showMakeAnAppointmentPage(@PathVariable int cabinetId, Model model) throws SQLException {
-        System.out.println("Am intrat pagina unde faci programare pt cabinetul cu id-ul: " + cabinetId);
+//        System.out.println("Am intrat pagina unde faci programare pt cabinetul cu id-ul: " + cabinetId);
 
         DAOFactory daoFactory = new DAOFactory();
         CabinetsDAO cabinetsDAO = new CabinetsDAO(daoFactory.getConnection());
@@ -49,10 +49,15 @@ public class PatientMakeAppointmentCabinetController {
     @GetMapping("/{cabinetId}/doctorSchedule/{cnp}")
     public ResponseEntity<List<DoctorSchedule>> getDoctorSchedule(@PathVariable long cnp) {
         try {
+            System.out.println("Am intrat cu cabinet cnp-ul " + cnp);
+
             DAOFactory daoFactory = new DAOFactory();
             DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(daoFactory.getConnection());
 
             List<DoctorSchedule> schedule = doctorsScheduleDAO.getDoctorSchedule_FullWeek(cnp);
+
+            for(DoctorSchedule doctorSchedule : schedule)
+                System.out.println(doctorSchedule);
             return ResponseEntity.ok(schedule);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
