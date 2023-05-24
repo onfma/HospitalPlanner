@@ -66,14 +66,17 @@
     }
 
     function isInSelectedDoctorSchedule(){
-        var cabinetID = document.getElementById('cab').value;
+        var cabinetID = document.getElementById('cabinet').value;
         var selectedDate = new Date(document.getElementById("date").value);
         var selectedTime = new Date("2000-01-01 " + document.getElementById("time").value);
         var selectedCNP = document.getElementById('select_doctor').value;
         var DoctorSchedule = [];
 
+        console.log(cabinetID);
+        console.log(selectedCNP);
 
-        fetch('/' + cabinetID + '/doctorSchedule/' + selectedCNP)
+
+        fetch('/doctorSchedule/' + selectedCNP)
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error('Error retrieving doctor schedule');
@@ -83,10 +86,7 @@
                 .then(function(schedule) {
                     console.log('Doctor schedule:', schedule);
 
-                    for (var i = 0; i < schedule.length; i++) {
-                        var scheduleEntry = schedule[i];
-                        // Restul codului de verificare a programului doctorului...
-                    }
+                    DoctorSchedule = schedule;
 
                     return false; // Returnează false în afara blocului .then
                 })
@@ -110,14 +110,6 @@
             }
         }
         return false;
-
-        // for (var i = 0; i < DoctorSchedule.length; i++) {
-        //     var schedule = DoctorSchedule[i];
-        //     var id = schedule.id;
-        //     var dayOfWeekk = schedule.dayOfWeek;
-        //     var startTime = DoctorSchedule.startTime;
-        //     var endTime = schedule.endTime;
-        // }
     }
 
 

@@ -36,6 +36,8 @@ public class PatientMakeAppointmentCabinetController {
 
         MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
 
+        //aici n.ar treb si in model sa vina si cobinetID? cred ca de asta nu imi da mie
+        makeAppointmetModel.setCabinetID(cabinetId);
         makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(cabinetId));
         makeAppointmetModel.setDoctorList(doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetId));
         makeAppointmetModel.setExaminationList(examinationDAO.getCabinetExamination(cabinetId));
