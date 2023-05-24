@@ -101,8 +101,6 @@ public class DoctorViewAccountController {
                                            @RequestParam("pswd") String newPassword,
                                            Model model) throws SQLException, DoctorChangeAccountException {
 
-        System.out.println("Am intrat sa editez contul doctorului!");
-
         DAOFactory daoFactory = new DAOFactory();
 
         DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
@@ -152,8 +150,6 @@ public class DoctorViewAccountController {
             if(!newPassword.equals("")) // change password
                 userAuthenticationDAO.setPassword(personEmail, newPassword);
         }
-        System.out.println("Am iesit sa editez contul doctorului!");
-//        return "doctorViewAccount";
         return showDoctorDashboard(model); // redirect to doctor dashboard
     }
 

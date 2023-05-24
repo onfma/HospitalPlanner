@@ -76,7 +76,7 @@
         console.log(selectedCNP);
 
 
-        fetch('/doctorSchedule/' + selectedCNP)
+        fetch('/' + cabinetID + '/doctorSchedule/' + selectedCNP)
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error('Error retrieving doctor schedule');
