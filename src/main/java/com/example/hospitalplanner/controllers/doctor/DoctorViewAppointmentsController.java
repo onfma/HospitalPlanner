@@ -59,7 +59,6 @@ public class DoctorViewAppointmentsController {
             appointmentModel.setId(appointment.getId());
             appointmentModel.setPatientFirstName(patient.getFirstName());
             appointmentModel.setPatientLastName(patient.getLastName());
-            System.out.println("CNP: " + appointment.getPatientCNP() + ", Nume pacient: " + appointmentModel.getPatientFirstName() + " " + appointmentModel.getPatientLastName());
             appointmentModel.setCabinetName(cabinetsDAO.getSpecialityName(appointment.getCabinetID()));
             appointmentModel.setAppointmentTime(appointment.getAppointmentTime());
             appointmentModel.setFormattedDate(appointment.getAppointmentTime().format(dateFormatter));

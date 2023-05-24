@@ -10,9 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
@@ -30,8 +28,6 @@ public class DoctorMakeReportController {
         DAOFactory daoFactory = new DAOFactory();
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
         PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
-        ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
-        DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
 
         Appoinments appoinment = appointmentsDAO.findAppoinment(appointmentId);
 
@@ -43,10 +39,38 @@ public class DoctorMakeReportController {
         appointmentModel.setPatientLastName(patient.getLastName());
         appointmentModel.setPatientCNP(patient.getCnp());
         appointmentModel.setPatientGender(patient.getGender());
+        appointmentModel.setDuration(appoinment.getDuration());
+        appointmentModel.setDiagnosis(appoinment.getDiagnosis());
+        appointmentModel.setTreatment(appoinment.getTreatment());
+
+        System.out.println("diagnostic: " + appointmentModel.getDiagnosis());
 
         // Add the appointment to the model
         model.addAttribute("appointment", appointmentModel);
 
         return "doctor/doctorMakeReport";
     }
+
+    @PostMapping("/saveReport")
+    public String saveReport(@RequestParam("duration") int duration,
+                             @RequestParam("diagnostic_text") String diagnosticText,
+                             @RequestParam("treatment_text") String treatmentText,
+                             @RequestParam("appointmentId") int appointmentId,
+                             Model model) throws SQLException {
+        System.out.println("Am primit informatiile:\n\t- durata: " + duration + "\n\t- diagnostic: " + diagnosticText + "\n\t- tratament: " + treatmentText);
+        System.out.println("ID programare: " + appointmentId);
+
+        DAOFactory daoFactory = new DAOFactory();
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
+
+        appointmentsDAO.setDuration(appointmentId, duration);
+        appointmentsDAO.setDiagnosis(appointmentId, diagnosticText);
+        appointmentsDAO.setTreatment(appointmentId, treatmentText);
+
+        // Restul logicii de salvare a raportului
+
+        return "redirect:/doctorMyAppointments";
+    }
+
+
 }

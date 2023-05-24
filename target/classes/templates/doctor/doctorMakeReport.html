@@ -98,38 +98,42 @@
     </div><!-- END chenar date fixe programare -->
 
     <!-- form report -->
-    <form class="col-sm-8 p-3">
+    <form class="col-sm-8 p-3" action="/doctorMakeReport/saveReport" method="post">
 
       <!-- duration + button -->
       <div class="d-flex justify-content-between">
         <!-- duration input -->
         <div class="col" style="width: 50%">
           <label for="duration" style="display: flex; align-items: center; margin-left: 5px">
-            Enter the appointment duration:
+            Enter the appointment duration in minutes:
           </label>
           <div class="form-floating mb-3 mt-3" style="position: relative;">
-            <img src="static/img/clock_emote.svg" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-            <input type="text" class="form-control" id="duration" placeholder="Enter the duration in minutes" name="duration" required pattern="[0-9]+" title="Duration should contain only digits" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+            <img src="../static/img/clock_emote.svg" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+            <input type="text" class="form-control" id="duration" placeholder="Enter the duration in minutes" name="duration" required pattern="[0-9]+" title="Duration should contain only digits" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;"
+                   th:value="${appointment.duration != 0 ? appointment.duration : ''}">
             <label for="duration" style="display: flex; align-items: center; font-family: Work_Sans;">
-              Enter the duration in minutes
             </label>
           </div>
         </div><!-- END duration input -->
         <!-- save button -->
-        <a href="/doctorMyAppointments" class="col-sm-4 p-5" style="margin-left: 70px"><button type="submit" class="btn px-5"
+        <a class="col-sm-4 p-5" style="margin-left: 70px">
+          <input type="hidden" name="appointmentId" th:value="${appointmentId}">
+          <button type="submit" class="btn px-5"
                                                  style="background-color: #159EEC; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-size:20px; font-family: Work_Sans;">Save Report</button></a>
       </div><!-- END duration + button -->
 
       <!-- diagnostic -->
       <div class="mb-5">
         <label for="diagnostic">Consultation diagnostic (maximum 2000 characters): </label>
-        <textarea class="form-control" rows="5" id="diagnostic" name="diagnostic_text" style="background-color: #BFD2F8; font-family: Work_Sans; "></textarea>
+        <textarea class="form-control" rows="5" id="diagnostic" name="diagnostic_text" required style="background-color: #BFD2F8; font-family: Work_Sans; "
+                  th:text="${appointment.diagnosis}"></textarea>
       </div><!-- END diagnostic -->
 
       <!-- treatment -->
       <div>
         <label for="treatment">Consultation treatment (maximum 2000 characters): </label>
-        <textarea class="form-control" rows="5" id="treatment" name="treatment_text" style="background-color: #BFD2F8; font-family: Work_Sans; "></textarea>
+        <textarea class="form-control" rows="5" id="treatment" name="treatment_text" required style="background-color: #BFD2F8; font-family: Work_Sans; "
+                  th:text="${appointment.treatment}"></textarea>
       </div><!-- END treatment -->
 
     </form><!-- END form report -->

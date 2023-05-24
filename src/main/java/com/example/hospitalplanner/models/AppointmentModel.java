@@ -18,6 +18,7 @@ public class AppointmentModel {
     private String formattedTime;
     private long patientCNP;
     private char patientGender;
+    private int duration;
 
     public AppointmentModel() {}
 
@@ -158,5 +159,13 @@ public class AppointmentModel {
 
     public void setPatientGender(char patientGender) {
         this.patientGender = patientGender;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 }
