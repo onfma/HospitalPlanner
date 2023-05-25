@@ -7,9 +7,13 @@ import com.example.hospitalplanner.entities.schedule.DoctorSpeciality;
 import java.util.List;
 
 public class DoctorModel {
+    private long cnp;
     protected String firstName;
     protected String lastName;
     private String specialityName;
+    private List<String> specialityList;
+
+    public DoctorModel() {}
 
     public DoctorModel(String firstName, String lastName, String specialityName) {
         this.firstName = firstName;
@@ -39,5 +43,17 @@ public class DoctorModel {
 
     public String getSpecialityName() {
         return specialityName;
+    }
+    public void setCnp(long cnp) {
+        this.cnp = cnp;
+    }
+    public long getCnp() {
+        return cnp;
+    }
+    public List<String> getSpecialityList() {
+        return specialityList;
+    }
+    public void setSpecialityList(List<String> specialityList) {
+        this.specialityList = specialityList;
     }
 }

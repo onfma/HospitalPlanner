@@ -59,11 +59,18 @@
     <!-- doctors -->
     <div class="d-flex flex-column">
       <!-- doctor 1 -->
-      <div class="row px-4 mb-4 doctor_box">
+      <div th:each="doctor : ${doctorList}" class="row px-4 mb-4 doctor_box">
         <div class="col-sm-3" style="border-right: 5px solid #159EEC;">
-          <div style="margin-top: 12px">Nume Doctor</div>
+          <div style="margin-top: 12px" th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></div>
         </div>
-        <div class="col-sm-5" style="margin-top: 12px">Specializare 1 & Specializare 2</div>
+        <div class="col-sm-5" style="margin-top: 12px">
+            <span th:each="speciality, stat : ${doctor.specialityList}">
+              <span th:text="${speciality}"></span>
+              <span th:if="${!stat.last}"> &amp; </span>
+            </span>
+        </div>
+
+
         <div class="col-sm-4 p-2 d-flex justify-content-around">
           <button id="viewDoctor1" class="btn p-1 px-4"
                   style="background-color: #159EEC;
@@ -71,138 +78,16 @@
                           border-radius: 50px;
                           font-weight: 500;
                           font-size: 14px;
-                          font-family: Work_Sans;">View</button>
+                          font-family: Work_Sans;"
+                  th:attr="doctor-cnp=${doctor.cnp}" onclick="viewDoctor(this)">View</button>
           <button id="deleteDoctor1" class="btn p-1 px-3"
                   style="background-color: #159EEC;
                           color: #FCFEFE;
                           border-radius: 50px;
                           font-weight: 500;
                           font-size: 14px;
-                          font-family: Work_Sans;">Delete</button>
-        </div>
-      </div>
-
-      <!-- doctor 2 -->
-      <div class="row px-4 mb-4 doctor_box">
-        <div class="col-sm-3" style="border-right: 5px solid #159EEC;">
-          <div style="margin-top: 12px">Nume Doctor</div>
-        </div>
-        <div class="col-sm-5" style="margin-top: 12px">Specializare 1 & Specializare 2</div>
-        <div class="col-sm-4 p-2 d-flex justify-content-around">
-          <button id="viewDoctor2" class="btn p-1 px-4"
-                  style="background-color: #159EEC;
-                          color: #FCFEFE;
-                          border-radius: 50px;
-                          font-weight: 500;
-                          font-size: 14px;
-                          font-family: Work_Sans;">View</button>
-          <button id="deleteDoctor2" class="btn p-1 px-3"
-                  style="background-color: #159EEC;
-                          color: #FCFEFE;
-                          border-radius: 50px;
-                          font-weight: 500;
-                          font-size: 14px;
-                          font-family: Work_Sans;">Delete</button>
-        </div>
-      </div>
-
-      <!-- doctor 3 -->
-      <div class="row px-4 mb-4 doctor_box">
-        <div class="col-sm-3" style="border-right: 5px solid #159EEC;">
-          <div style="margin-top: 12px">Nume Doctor</div>
-        </div>
-        <div class="col-sm-5" style="margin-top: 12px">Specializare 1 & Specializare 2</div>
-        <div class="col-sm-4 p-2 d-flex justify-content-around">
-          <a href=""><button id="viewDoctor3" class="btn p-1 px-4"
-                    style="background-color: #159EEC;
-                      color: #FCFEFE;
-                      border-radius: 50px;
-                      font-weight: 500;
-                      font-size: 14px;
-                      font-family: Work_Sans;">View</button>
-          </a>
-          <a href=""><button id="deleteDoctor3" class="btn p-1 px-3"
-                    style="background-color: #159EEC;
-                      color: #FCFEFE;
-                      border-radius: 50px;
-                      font-weight: 500;
-                      font-size: 14px;
-                      font-family: Work_Sans;">Delete</button>
-          </a>
-        </div>
-      </div>
-
-      <!-- doctor 4 -->
-      <div class="row px-4 mb-4 doctor_box">
-        <div class="col-sm-3" style="border-right: 5px solid #159EEC;">
-          <div style="margin-top: 12px">Nume Doctor</div>
-        </div>
-        <div class="col-sm-5" style="margin-top: 12px">Specializare 1 & Specializare 2</div>
-        <div class="col-sm-4 p-2 d-flex justify-content-around">
-          <button id="viewDoctor1" class="btn p-1 px-4"
-                  style="background-color: #159EEC;
-                          color: #FCFEFE;
-                          border-radius: 50px;
-                          font-weight: 500;
-                          font-size: 14px;
-                          font-family: Work_Sans;">View</button>
-          <button id="deleteDoctor1" class="btn p-1 px-3"
-                  style="background-color: #159EEC;
-                          color: #FCFEFE;
-                          border-radius: 50px;
-                          font-weight: 500;
-                          font-size: 14px;
-                          font-family: Work_Sans;">Delete</button>
-        </div>
-      </div>
-
-      <!-- doctor 5 -->
-      <div class="row px-4 mb-4 doctor_box">
-        <div class="col-sm-3" style="border-right: 5px solid #159EEC;">
-          <div style="margin-top: 12px">Nume Doctor</div>
-        </div>
-        <div class="col-sm-5" style="margin-top: 12px">Specializare 1 & Specializare 2</div>
-        <div class="col-sm-4 p-2 d-flex justify-content-around">
-          <button id="viewDoctor2" class="btn p-1 px-4"
-                  style="background-color: #159EEC;
-                          color: #FCFEFE;
-                          border-radius: 50px;
-                          font-weight: 500;
-                          font-size: 14px;
-                          font-family: Work_Sans;">View</button>
-          <button id="deleteDoctor2" class="btn p-1 px-3"
-                  style="background-color: #159EEC;
-                          color: #FCFEFE;
-                          border-radius: 50px;
-                          font-weight: 500;
-                          font-size: 14px;
-                          font-family: Work_Sans;">Delete</button>
-        </div>
-      </div>
-
-      <!-- doctor 6 -->
-      <div class="row px-4 mb-4 doctor_box">
-        <div class="col-sm-3" style="border-right: 5px solid #159EEC;">
-          <div style="margin-top: 12px">Nume Doctor</div>
-        </div>
-        <div class="col-sm-5" style="margin-top: 12px">Specializare 1 & Specializare 2</div>
-        <div class="col-sm-4 p-2 d-flex justify-content-around">
-          <a href=""><button id="viewDoctor3" class="btn p-1 px-4"
-                             style="background-color: #159EEC;
-                      color: #FCFEFE;
-                      border-radius: 50px;
-                      font-weight: 500;
-                      font-size: 14px;
-                      font-family: Work_Sans;">View</button>
-          </a>
-          <a href=""><button id="deleteDoctor3" class="btn p-1 px-3"
-                             style="background-color: #159EEC;
-                      color: #FCFEFE;
-                      border-radius: 50px;
-                      font-weight: 500;
-                      font-size: 14px;
-                      font-family: Work_Sans;">Delete</button>
-          </a>
+                          font-family: Work_Sans;"
+                  th:attr="doctor-cnp=${doctor.cnp}" onclick="deleteDoctor(this)">Delete</button>
         </div>
       </div>
 
@@ -221,40 +106,16 @@
 </body>
 
 <script>
-  // Set the default values for start and end times
-  window.addEventListener("DOMContentLoaded", function() {
-    var startTime1Input = document.getElementById("startTime1"); startTime1Input.value = "10:00";
-    var endTime1Input = document.getElementById("endTime1"); endTime1Input.value = "19:00";
+  function viewDoctor(element) {
+    var cnp  = element.getAttribute("doctor-cnp");
 
-    var startTime2Input = document.getElementById("startTime2"); startTime2Input.value = "10:00";
-    var endTime2Input = document.getElementById("endTime2"); endTime2Input.value = "19:00";
+    window.location.href = "/adminModifyDoctor/" + cnp;
+  }
 
-    var startTime3Input = document.getElementById("startTime3"); startTime3Input.value = "10:00";
-    var endTime3Input = document.getElementById("endTime3"); endTime3Input.value = "19:00";
+  function deleteDoctor(element) {
+    var cnp  = element.getAttribute("doctor-cnp");
 
-    var startTime4Input = document.getElementById("startTime4"); startTime4Input.value = "10:00";
-    var endTime4Input = document.getElementById("endTime4"); endTime4Input.value = "19:00";
-
-    var startTime5Input = document.getElementById("startTime5"); startTime5Input.value = "10:00";
-    var endTime5Input = document.getElementById("endTime5"); endTime5Input.value = "19:00";
-  });
-
-  // Set the default values for start and end times
-  window.addEventListener("DOMContentLoaded", function() {
-    var startTime1Input = document.getElementById("startTime1_2"); startTime1Input.value = "10:00";
-    var endTime1Input = document.getElementById("endTime1_2"); endTime1Input.value = "19:00";
-
-    var startTime2Input = document.getElementById("startTime2_2"); startTime2Input.value = "10:00";
-    var endTime2Input = document.getElementById("endTime2_2"); endTime2Input.value = "19:00";
-
-    var startTime3Input = document.getElementById("startTime3_2"); startTime3Input.value = "10:00";
-    var endTime3Input = document.getElementById("endTime3_2"); endTime3Input.value = "19:00";
-
-    var startTime4Input = document.getElementById("startTime4_2"); startTime4Input.value = "10:00";
-    var endTime4Input = document.getElementById("endTime4_2"); endTime4Input.value = "19:00";
-
-    var startTime5Input = document.getElementById("startTime5_2"); startTime5Input.value = "10:00";
-    var endTime5Input = document.getElementById("endTime5_2"); endTime5Input.value = "19:00";
-  });
+    window.location.href = "/adminViewDoctors/delete/" + cnp;
+  }
 </script>
 </html>

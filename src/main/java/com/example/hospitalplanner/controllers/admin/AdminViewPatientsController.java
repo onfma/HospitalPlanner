@@ -39,6 +39,16 @@ public class AdminViewPatientsController {
     public String deletePatient(@PathVariable long cnp, Model model) throws SQLException {
         System.out.println("Am intrat sa sterg persoana cu cnp-ul: " + cnp);
 
+        DAOFactory daoFactory = new DAOFactory();
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
+        PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
+        UserAuthenticationDAO userAuthenticationDAO = new UserAuthenticationDAO(daoFactory.getConnection());
+
+        String email = patientDAO.getEmail(cnp);
+
+        appointmentsDAO.deleteAllPatientAppointments(cnp);
+        patientDAO.delete(cnp);
+        userAuthenticationDAO.delete(email);
 
         return "redirect:/adminViewPatients"; // redirect to homepage
     }

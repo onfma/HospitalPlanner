@@ -28,5 +28,5 @@
 function addSpeciality(element) {
     var cabinetID = element.getAttribute("cabinet-id");
 
-    window.location.href = "/doctorViewAccount/addSpeciality/" + cabinetID + '/';
+    window.location.href = "/doctorViewAccount/addSpeciality/" + cabinetID;
 }

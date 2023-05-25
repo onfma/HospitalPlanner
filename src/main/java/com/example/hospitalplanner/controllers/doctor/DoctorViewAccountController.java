@@ -165,19 +165,19 @@ public class DoctorViewAccountController {
     public String addSpeciality(@PathVariable int cabinetID, Model model) throws SQLException {
         System.out.println("ADD SPECIALITY");
 
-        DAOFactory daoFactory = new DAOFactory();;
-        DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
-        DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
-
-        String personEmail = (String) session.getAttribute("email");
-
-        long cnp = 0;
-        if (doctorDAO.existsByEmail(personEmail)) // it's a doctor
-            cnp = doctorDAO.getCNP(personEmail);
-
-        DoctorSpeciality doctorSpeciality = new DoctorSpeciality(cabinetID, cnp);
-
-        doctorsSpecialitiesDAO.insert(doctorSpeciality);
+//        DAOFactory daoFactory = new DAOFactory();;
+//        DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
+//        DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
+//
+//        String personEmail = (String) session.getAttribute("email");
+//
+//        long cnp = 0;
+//        if (doctorDAO.existsByEmail(personEmail)) // it's a doctor
+//            cnp = doctorDAO.getCNP(personEmail);
+//
+//        DoctorSpeciality doctorSpeciality = new DoctorSpeciality(cabinetID, cnp);
+//
+//        doctorsSpecialitiesDAO.insert(doctorSpeciality);
 
         return "redirect://doctorViewAccount";
     }
