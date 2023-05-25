@@ -33,7 +33,7 @@
       </div>
       <div class="p-2">
         <a href="/adminViewPatients" ><button type="button" class="btn"
-                                              style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View People</button></a>
+                                              style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Patients</button></a>
       </div>
       <div class="p-2 px-5">
         <a href="/adminViewDoctors" ><button type="button" class="btn"
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="p-4">
-        <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5"
+        <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5" disabled
                 style="background-color: #159EEC;
                       color: #FCFEFE;
                       border-radius: 50px;
@@ -119,6 +119,33 @@
 
     window.location.href = "/adminViewCabinets/" + cabinetId;
   }
+
+  $(document).ready(function() {
+    $('.dropdown-menu a').click(function(event) {
+      event.preventDefault(); // Prevent the default behavior of following the href link
+      var selectedOption = $(this).text();
+      $(this).closest('.dropdown').find('.form-control').val(selectedOption);
+    });
+  });
+
+  $(document).ready(function() {
+    $('input').on('input', function() {
+      var formValid = false;
+
+      $('input').each(function() {
+        if ($(this).val().trim() !== '') {
+          formValid = true;
+          return false;
+        }
+      });
+
+      if (formValid) {
+        $('#submitButtonAccount').removeAttr('disabled');
+      } else {
+        $('#submitButtonAccount').attr('disabled', 'disabled');
+      }
+    });
+  });
 
 </script>
 

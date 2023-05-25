@@ -44,17 +44,23 @@ public class PatientHomePageController {
         List<Doctor> doctorList = doctorDAO.select();
         List<DoctorModel> doctorModels = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
+        int max = 3;
+        for (int i = 0; i < max; i++) {
             Doctor doctor = doctorList.get(i);
             String doctorFirstName = doctorDAO.getFirstName(doctor.getCnp());
             String doctorLastName = doctorDAO.getLastName(doctor.getCnp());
             List<DoctorSpeciality> specialties = doctorsSpecialitiesDAO.getDoctorSpecialities(doctor.getCnp());
 
-            int cabinetID = specialties.get(0).getCabinetID();
-            String specialityName = cabinetsDAO.getSpecialityName(cabinetID);
+            System.out.println("\n specialities: " + specialties);
+            if(!specialties.isEmpty()) {
+                int cabinetID = specialties.get(0).getCabinetID();
+                String specialityName = cabinetsDAO.getSpecialityName(cabinetID);
 
-            DoctorModel doctorModel = new DoctorModel(doctorFirstName, doctorLastName, specialityName);
-            doctorModels.add(doctorModel);
+                DoctorModel doctorModel = new DoctorModel(doctorFirstName, doctorLastName, specialityName);
+                doctorModels.add(doctorModel);
+            }
+            else
+                max++;
         }
 
         // add doctors list in model

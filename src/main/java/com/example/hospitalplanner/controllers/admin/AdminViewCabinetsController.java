@@ -44,7 +44,7 @@ public class AdminViewCabinetsController {
 
 
     @GetMapping("/{cabinetId}")
-    public String showViewCabinetPage(@PathVariable int cabinetId, Model model) throws SQLException {
+    public String deleteCabinet(@PathVariable int cabinetId, Model model) throws SQLException {
         System.out.println("Am intrat sa sterg cabinetul " + cabinetId);
 
         DAOFactory daoFactory = new DAOFactory();
