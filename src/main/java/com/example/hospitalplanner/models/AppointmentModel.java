@@ -1,5 +1,7 @@
 package com.example.hospitalplanner.models;
 
+import org.json.JSONObject;
+
 import java.time.LocalDateTime;
 
 public class AppointmentModel {
@@ -167,5 +169,14 @@ public class AppointmentModel {
 
     public int getDuration() {
         return duration;
+    }
+
+    @Override
+    public String toString() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cabinetName", cabinetName);
+        jsonObject.put("doctorFirstName", doctorFirstName);
+        jsonObject.put("doctorLastName", doctorLastName);
+        return jsonObject.toString();
     }
 }

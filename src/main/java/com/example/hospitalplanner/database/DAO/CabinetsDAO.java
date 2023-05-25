@@ -86,12 +86,28 @@ public class CabinetsDAO {
         return specialityName;
     }
 
-    public void delete(Cabinet cabinet) throws SQLException {
+    public void delete(int cabinetID) throws SQLException {
         String query = "DELETE FROM CABINETS WHERE ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, cabinet.getId()); // set ID parameter
+        statement.setLong(1, cabinetID); // set ID parameter
         statement.executeUpdate();
 
         statement.close();
     }
+
+    public int getMaxId() throws SQLException {
+        String query = "SELECT MAX(ID) AS max_id FROM CABINETS";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        int maxId = 0;
+        if (resultSet.next()) {
+            maxId = resultSet.getInt("max_id");
+        }
+
+        statement.close();
+        resultSet.close();
+        return maxId;
+    }
+
 }

@@ -54,7 +54,7 @@
     <!-- program cabinete -->
     <div class="container-fluid d-flex justify-content-around" style="height: 500px;">
       <!-- cabinet 1 -->
-      <form class="col-sm-5 p-3" style="background-color: #1F2B6C; width: 33%; border-radius: 10px;">
+      <form class="col-sm-5 p-3" style="background-color: #1F2B6C; width: 40%; border-radius: 10px;">
         <!-- titlu -->
         <div class="container-fluid text-center"
              style="height: 15%;
@@ -62,58 +62,23 @@
                          font-weight: 400;
                          font-size: 26px;
                          line-height: 55px;
-                         color: #BFD2F8;">Cabinet 1
+                         color: #BFD2F8;" th:text="'Schedule - ' + ${name}">
         </div>
 
         <!-- zile -->
-        <div class="container-fluid px-3 pb-4 d-flex flex-column justify-content-between text-center" style="height: 70%; color: #FCFEFE;">
-          <!-- Monday -->
+        <div th:each="schedule, status : ${doctorScheduleList}" class="container-fluid px-3 pb-4 d-flex flex-column justify-content-between text-center" style="height: 11%; color: #FCFEFE;">
+          <!-- days -->
           <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Monday</div>
+            <div class="p-2 text_schedule" id="days_input" style="width: 45%; text-align: start;" th:text="${schedule.dayOfWeek}"></div>
             <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
             <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime1" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime1" class="time_box"></div>
+              <div class="p-2"><input type="time" th:id="'startTime_' + ${status.index}" class="time_box" th:data-start-time="${schedule.startTime}"></div>
+              <div class="p-2"><input type="time" th:id="'endTime_' + ${status.index}" class="time_box" th:data-end-time="${schedule.endTime}"></div>
             </div>
           </div>
-          <!-- Tuesday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Tuesday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime2" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime2" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Wednesday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Wednesday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime3" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime3" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Thursday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Thursday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime4" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime4" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Friday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Friday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime5" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime5" class="time_box"></div>
-            </div>
-          </div>
+        </div>
           <!-- Saturday -->
-          <div class="d-flex justify-content-start" style="">
+          <div class="d-flex justify-content-start" style="height: 11%; color: #FCFEFE;">
             <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Saturday</div>
             <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
             <div class="p-2 text_schedule" style="text-align: center; width: 96%">Closed</div>
@@ -124,7 +89,7 @@
             <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
             <div class="p-2 text_schedule" style=" text-align: center; width: 96%">Closed</div>
           </div>
-        </div>
+
 
         <!-- footer 2.0 micut -->
         <div class="container-fluid text-center pt-2 border-top border-5"
@@ -135,98 +100,7 @@
                          line-height: 55px;
                          color: #BFD2F8;
                          border-color: #BFD2F8">
-          <a href="/doctorViewAccount" ><button type="submit" class="btn"
-                                                style="background-color: #BFD2F8;
-                                                          color: #1F2B6C;
-                                                          border-radius: 50px;
-                                                          font-weight: 500;
-                                                          font-family: Work_Sans;">Modify Schedule</button></a>
-        </div>
-      </form>
-
-      <!-- cabinet 2 -->
-      <form class="col-sm-5 p-3" style="background-color: #1F2B6C; width: 33%; border-radius: 10px;">
-        <!-- titlu -->
-        <div class="container-fluid text-center"
-             style="height: 15%;
-                         font-family: Yeseva_One;
-                         font-weight: 400;
-                         font-size: 26px;
-                         line-height: 55px;
-                         color: #BFD2F8;">Cabinet 2
-        </div>
-
-        <!-- zile -->
-        <div class="container-fluid px-3 pb-4 d-flex flex-column justify-content-between text-center" style="height: 70%; color: #FCFEFE;">
-          <!-- Monday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Monday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime1_2" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime1_2" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Tuesday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Tuesday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime2_2" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime2_2" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Wednesday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Wednesday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime3_2" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime3_2" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Thursday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Thursday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime4_2" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime4_2" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Friday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Friday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="text_schedule d-flex justify-content-start" style="text-align: end; width:100%">
-              <div class="p-2"><input type="time" id="startTime5_2" class="time_box"></div>
-              <div class="p-2"><input type="time" id="endTime5_2" class="time_box"></div>
-            </div>
-          </div>
-          <!-- Saturday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Saturday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="p-2 text_schedule" style="text-align: center; width: 96%">Closed</div>
-          </div>
-          <!-- Sunday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Sunday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="p-2 text_schedule" style=" text-align: center; width: 96%">Closed</div>
-          </div>
-        </div>
-
-        <!-- footer 2.0 micut -->
-        <div class="container-fluid text-center pt-2 border-top border-5"
-             style="height: 15%;
-                         font-family: Yeseva_One;
-                         font-weight: 400;
-                         font-size: 26px;
-                         line-height: 55px;
-                         color: #BFD2F8;
-                         border-color: #BFD2F8">
-          <a href="/doctorViewAccount" ><button type="submit" class="btn"
+          <a ><button type="submit" class="btn" onclick="modifySchedule()"
                                                 style="background-color: #BFD2F8;
                                                           color: #1F2B6C;
                                                           border-radius: 50px;
@@ -249,40 +123,53 @@
 </body>
 
 <script>
-  // Set the default values for start and end times
+  // function to display doctor schedule
   window.addEventListener("DOMContentLoaded", function() {
-    var startTime1Input = document.getElementById("startTime1"); startTime1Input.value = "10:00";
-    var endTime1Input = document.getElementById("endTime1"); endTime1Input.value = "19:00";
+    var startTimeInputs = document.querySelectorAll("[id^='startTime_']");
+    var endTimeInputs = document.querySelectorAll("[id^='endTime_']");
 
-    var startTime2Input = document.getElementById("startTime2"); startTime2Input.value = "10:00";
-    var endTime2Input = document.getElementById("endTime2"); endTime2Input.value = "19:00";
+    startTimeInputs.forEach(function(input) {
+      var startTimeValue = input.getAttribute("data-start-time");
+      input.value = startTimeValue;
+    });
 
-    var startTime3Input = document.getElementById("startTime3"); startTime3Input.value = "10:00";
-    var endTime3Input = document.getElementById("endTime3"); endTime3Input.value = "19:00";
-
-    var startTime4Input = document.getElementById("startTime4"); startTime4Input.value = "10:00";
-    var endTime4Input = document.getElementById("endTime4"); endTime4Input.value = "19:00";
-
-    var startTime5Input = document.getElementById("startTime5"); startTime5Input.value = "10:00";
-    var endTime5Input = document.getElementById("endTime5"); endTime5Input.value = "19:00";
+    endTimeInputs.forEach(function(input) {
+      var endTimeValue = input.getAttribute("data-end-time");
+      input.value = endTimeValue;
+    });
   });
 
-  // Set the default values for start and end times
-  window.addEventListener("DOMContentLoaded", function() {
-    var startTime1Input = document.getElementById("startTime1_2"); startTime1Input.value = "10:00";
-    var endTime1Input = document.getElementById("endTime1_2"); endTime1Input.value = "19:00";
+  // function that modify the doctor schedule
+  function modifySchedule() {
+    var modifiedHours = [];
+    var modifiedDays = [];
 
-    var startTime2Input = document.getElementById("startTime2_2"); startTime2Input.value = "10:00";
-    var endTime2Input = document.getElementById("endTime2_2"); endTime2Input.value = "19:00";
+    var hourInputs = document.querySelectorAll('.time_box');
+    var dayInputs = document.querySelectorAll('#days_input');
 
-    var startTime3Input = document.getElementById("startTime3_2"); startTime3Input.value = "10:00";
-    var endTime3Input = document.getElementById("endTime3_2"); endTime3Input.value = "19:00";
+    hourInputs.forEach(function(input) {
+      modifiedHours.push(input.value);
+    });
 
-    var startTime4Input = document.getElementById("startTime4_2"); startTime4Input.value = "10:00";
-    var endTime4Input = document.getElementById("endTime4_2"); endTime4Input.value = "19:00";
+    dayInputs.forEach(function(input) {
+      modifiedDays.push(input.innerText);
+    });
 
-    var startTime5Input = document.getElementById("startTime5_2"); startTime5Input.value = "10:00";
-    var endTime5Input = document.getElementById("endTime5_2"); endTime5Input.value = "19:00";
-  });
+    var data = {
+      hours: modifiedHours,
+      days: modifiedDays
+    };
+
+    fetch('/doctorDashboard/modifySchedule', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  }
 </script>
 </html>

@@ -2,6 +2,7 @@ package com.example.hospitalplanner.database.DAO;
 
 import com.example.hospitalplanner.entities.Cabinet;
 import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
+import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -176,9 +177,11 @@ public class CabinetsScheduleDAO {
         resultSet.close();
 
         // Mutare primul element pe ultima poziție
-        if (!cabinetScheduleList.isEmpty()) {
-            Collections.rotate(cabinetScheduleList, -1);
-        }
+        CabinetSchedule elementAtPosition2 = cabinetScheduleList.remove(2);
+        cabinetScheduleList.add(elementAtPosition2);
+
+        CabinetSchedule firstElement = cabinetScheduleList.remove(0);
+        cabinetScheduleList.add(firstElement);
 
         return cabinetScheduleList;
     }

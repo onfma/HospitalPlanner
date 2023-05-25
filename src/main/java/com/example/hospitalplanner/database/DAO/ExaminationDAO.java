@@ -145,6 +145,15 @@ public class ExaminationDAO {
         statement.close();
     }
 
+    public void deleteAllCabinetExaminations(int cabinetID) throws SQLException {
+        String query = "DELETE FROM EXAMINATION WHERE ID_CABINET = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, cabinetID);
+        statement.executeUpdate();
+
+        statement.close();
+    }
+
     public void delete(int idExamination) throws SQLException {
         String query = "DELETE FROM EXAMINATION WHERE ID_EXAMINATION = ?";
         PreparedStatement statement = connection.prepareStatement(query);

@@ -34,7 +34,7 @@ public class DoctorViewAccountController {
 
     @GetMapping
     public String showDoctorDashboard(Model model) throws SQLException {
-        System.out.println("S-a afisat pagina doctorDashboard.html.hmtl!");
+        System.out.println("S-a afisat pagina doctorViewAccount.hmtl!");
 
         // Doctor Information
         DAOFactory daoFactory = new DAOFactory();
@@ -62,27 +62,35 @@ public class DoctorViewAccountController {
 
         for(DoctorSpeciality doctorSpeciality : doctorSpecialityList) {
             MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
+            makeAppointmetModel.setCabinetID(doctorSpeciality.getCabinetID());
             makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(doctorSpeciality.getCabinetID()));
 
             doctorSpecialities.add(makeAppointmetModel);
         }
 
         // Doctor NE-Specializations
-        List<DoctorSpeciality> doctorNESpecialityLisy = doctorsSpecialitiesDAO.select();
+        List<Cabinet> allCabinets = cabinetsDAO.select();
+
         List<MakeAppointmetModel> doctorNESpecialities = new ArrayList<>();
 
-        for(DoctorSpeciality doctorSpeciality : doctorNESpecialityLisy) {
-            MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
-            makeAppointmetModel.setCabinetID(doctorSpeciality.getCabinetID());
-            makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(doctorSpeciality.getCabinetID()));
+        for(Cabinet cabinet : allCabinets) {
+            boolean exists = false;
 
-            doctorNESpecialities.add(makeAppointmetModel);
+            for (DoctorSpeciality doctorSpeciality : doctorSpecialityList) {
+                if (cabinet.getId() == doctorSpeciality.getCabinetID()) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if(!exists) {
+                MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
+                makeAppointmetModel.setCabinetID(cabinet.getId());
+                makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(cabinet.getId()));
+
+                doctorNESpecialities.add(makeAppointmetModel);
+            }
         }
-
-        // eliminate specializations that are not of the doctor
-        doctorNESpecialities.removeIf(speciality -> doctorSpecialities.stream().anyMatch(s -> s.getCabinetName().equals(speciality.getCabinetName())));
-        doctorNESpecialities.remove(doctorNESpecialities.size() - 1);
-
 
         // Add doctor in model
         model.addAttribute("doctor", doctor);
@@ -171,7 +179,7 @@ public class DoctorViewAccountController {
 
         doctorsSpecialitiesDAO.insert(doctorSpeciality);
 
-        return "doctor/doctorViewAccount";
+        return "redirect://doctorViewAccount";
     }
 
     private String hashPassword(String password, String salt) {

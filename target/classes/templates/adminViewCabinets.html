@@ -43,7 +43,6 @@
         <a href="/adminViewCabinets" ><button type="button" class="btn"
                                               style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Cabinets</button></a>
       </div>
-
     </div>
   </div>
 </div>
@@ -56,41 +55,21 @@
 
     <!-- specializari -->
     <div class="container-fluid px-5 mb-5">
-      <div class="d-flex justify-content-around flex-wrap align-content-center p-3 px-5">
+      <div th:each="cabinet : ${cabinetList}" class="d-flex justify-content-around flex-wrap align-content-center p-3 px-5">
         <!-- specializare 1 -->
-        <a href="" class="p-4 border specializare_box mt-4">
-          <img class="p-4" src="static/img/specialty_emote_table.svg" alt="inimia_mea_bate_bate_pt_tine">
-          <br>Specializarea vietii
+        <a class="p-4 border specializare_box mt-4">
+          <img class="p-4" src="static/img/specialty_emote_table.svg" alt="inimia_mea_bate_bate_pt_tine" th:text="${cabinet.specialtyName}">
+          <br>
           <div class="d-flex justify-content-around mt-3">
-            <button id="viewSpecializare1" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;">View</button>
-            <button id="deleteSpecializare1" class="btn p-1 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;">Delete</button>
-          </div>
-        </a>
-
-        <!-- specializare 2 -->
-        <a href="" class="p-4 border specializare_box mt-4">
-          <img class="p-4" src="static/img/specialty_emote_table.svg" alt="inimia_mea_bate_bate_pt_tine">
-          <br>Specializarea vietii
-          <div class="d-flex justify-content-around mt-3">
-            <button id="viewSpecializare2" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;">View</button>
-            <button id="deleteSpecializare2" class="btn p-1 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;">Delete</button>
-          </div>
-        </a>
-
-        <!-- specializare 3 -->
-        <a href="" class="p-4 border specializare_box mt-4">
-          <img class="p-4" src="static/img/specialty_emote_table.svg" alt="inimia_mea_bate_bate_pt_tine">
-          <br>Specializarea vietii
-          <div class="d-flex justify-content-around mt-3">
-            <button id="viewSpecializare3" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;">View</button>
-            <button id="deleteSpecializare3" class="btn p-1 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;">Delete</button>
+            <button id="viewSpecializare1" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;" th:attr="data-cabinet-id=${cabinet.id}" onclick="viewCabinet(this)">View</button>
+            <button id="deleteSpecializare1" class="btn p-1 px-3" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;" th:attr="data-cabinet-id=${cabinet.id}" onclick="deleteCabinet(this)">Delete</button>
           </div>
         </a>
       </div>
     </div>
 
     <!-- create specializari -->
-    <form class="d-flex justify-content-between" style="background-color: #1F2B6C; height: 100px; border-radius: 10px">
+    <form action="/adminViewCabinets/create" method="POST" class="d-flex justify-content-between" style="background-color: #1F2B6C; height: 100px; border-radius: 10px">
       <div class="p-4">
         <button class="btn btn-primary pt-2 pb-2 px-5" style="background-color: #1F2B6C; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 24px; line-height: 42px; border:none; cursor: text">OR: </button>
       </div>
@@ -127,4 +106,20 @@
   </div>
 
 </body>
+
+<script>
+  function viewCabinet(element) {
+    var cabinetId  = element.getAttribute("data-cabinet-id");
+
+    window.location.href = "/adminViewCabinetsSchedule/" + cabinetId;
+  }
+
+  function deleteCabinet(element) {
+    var cabinetId  = element.getAttribute("data-cabinet-id");
+
+    window.location.href = "/adminViewCabinets/" + cabinetId;
+  }
+
+</script>
+
 </html>

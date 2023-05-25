@@ -1,12 +1,14 @@
 package com.example.hospitalplanner.controllers;
 
 import com.example.hospitalplanner.database.DAO.DoctorDAO;
+import com.example.hospitalplanner.database.DAO.DoctorsScheduleDAO;
 import com.example.hospitalplanner.database.DAO.PatientDAO;
 import com.example.hospitalplanner.database.DAO.UserAuthenticationDAO;
 import com.example.hospitalplanner.database.DAOFactory;
 import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.person.Patient;
 import com.example.hospitalplanner.entities.person.Person;
+import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.exceptions.AuthenticationException;
 import com.example.hospitalplanner.exceptions.ChangeAccountSuccess;
 import com.example.hospitalplanner.exceptions.CreateAccountException;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
 
 @Controller
 @RequestMapping("/createAccount")
@@ -78,6 +81,20 @@ public class CreateAccountController {
                     Doctor newDoctor = new Doctor(cnp, firstName, lastName, gender, phoneNumber, email, adress);
 
                     doctorDAO.insert(newDoctor);
+
+                    DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(daoFactory.getConnection());
+
+                    DoctorSchedule monday = new DoctorSchedule(cnp, "Monday", LocalTime.of(0,0),  LocalTime.of(0,0));
+                    DoctorSchedule tuesday = new DoctorSchedule(cnp, "Tuesday", LocalTime.of(0,0),  LocalTime.of(0,0));
+                    DoctorSchedule wednesday = new DoctorSchedule(cnp, "Wednesday", LocalTime.of(0,0),  LocalTime.of(0,0));
+                    DoctorSchedule thursday = new DoctorSchedule(cnp, "Thursday", LocalTime.of(0,0),  LocalTime.of(0,0));
+                    DoctorSchedule friday = new DoctorSchedule(cnp, "Friday", LocalTime.of(0,0),  LocalTime.of(0,0));
+
+                    doctorsScheduleDAO.insert(monday);
+                    doctorsScheduleDAO.insert(tuesday);
+                    doctorsScheduleDAO.insert(wednesday);
+                    doctorsScheduleDAO.insert(thursday);
+                    doctorsScheduleDAO.insert(friday);
 
                     throw new CreateAccountSuccess("Your account was successfully created!");
                 }

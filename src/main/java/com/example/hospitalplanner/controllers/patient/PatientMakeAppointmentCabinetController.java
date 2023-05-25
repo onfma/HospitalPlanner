@@ -3,6 +3,7 @@ package com.example.hospitalplanner.controllers.patient;
 import com.example.hospitalplanner.database.DAO.*;
 import com.example.hospitalplanner.database.DAOFactory;
 import com.example.hospitalplanner.entities.Cabinet;
+import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.models.MakeAppointmetModel;
 import jakarta.servlet.http.HttpSession;
