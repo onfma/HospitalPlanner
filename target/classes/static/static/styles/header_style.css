@@ -3,4 +3,9 @@
     font-size: 36px;
     line-height: 42px;
     color: #FCFEFE;
+    text-decoration: none;
+}
+
+.header_title:hover{
+    color: #FCFEFE;
 }
