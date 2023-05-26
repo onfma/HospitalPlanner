@@ -29,6 +29,7 @@ public class DoctorMakeReportController {
         DAOFactory daoFactory = new DAOFactory();
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
         PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
+        ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
 
         Appoinments appoinment = appointmentsDAO.findAppoinment(appointmentId);
 
@@ -44,10 +45,11 @@ public class DoctorMakeReportController {
         appointmentModel.setDiagnosis(appoinment.getDiagnosis());
         appointmentModel.setTreatment(appoinment.getTreatment());
 
-        System.out.println("diagnostic: " + appointmentModel.getDiagnosis());
+        String examinationName = examinationDAO.getExaminationName(appoinment.getExaminationID());
 
         // Add the appointment to the model
         model.addAttribute("appointment", appointmentModel);
+        model.addAttribute("examinationName", examinationName);
 
         return "doctor/doctorMakeReport";
     }

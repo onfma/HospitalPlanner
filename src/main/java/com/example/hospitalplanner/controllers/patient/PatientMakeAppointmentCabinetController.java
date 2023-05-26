@@ -238,7 +238,10 @@ public class PatientMakeAppointmentCabinetController {
 
         for(Appoinments appoinment : doctorAppointmentsPatientDay) {
              if(appoinment.getAppointmentTime().getDayOfWeek() == appointmentDateTime.getDayOfWeek()) { // if the appointment Doctor day is the same with the appointment Patient day
+
                 int averageDoctorExamination = (int) examinationDAO.getAverageDuration(appoinment.getExaminationID());
+
+//                 System.out.println("\nAm gasit programarea: " +appoinment + ", average: " + averageDoctorExamination);
 
                 String patientStart = this.time;
                 String patientEnd = appointmentEndTime.format(formatter);
@@ -254,15 +257,27 @@ public class PatientMakeAppointmentCabinetController {
                 LocalTime doctorStartTime = LocalTime.of(hour, minute);
                 LocalTime doctorEndTime = LocalTime.parse(doctorEnd);
 
-                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isAfter(doctorEndTime))
-                    return true;
-                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isAfter(patientEndTime))
-                    return true;
+                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime)) {
+//                    System.out.println("\nTRUE:" +
+//                            "\n\t- docS: " + doctorStartTime +
+//                            "\n\t- docE: " + doctorEndTime +
+//                            "\n\t- patS: " + patientStartTime +
+//                            "\n\t- patE: " + patientEndTime);
+                    return false;
+                }
+                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime)) {
+//                    System.out.println("\nTRUE:" +
+//                            "\n\t- docS: " + doctorStartTime +
+//                            "\n\t- docE: " + doctorEndTime +
+//                            "\n\t- patS: " + patientStartTime +
+//                            "\n\t- patE: " + patientEndTime);
+                    return false;
+                }
 
              }
         }
 
-        return false;
+        return true;
     }
 
     public String calculateAppointmentEndTime(Appoinments appointment, int averageDuration) {
