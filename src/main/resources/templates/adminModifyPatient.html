@@ -151,7 +151,7 @@
 
         <div class="row mb-3">
           <!-- email -->
-          <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
+          <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px;">
             <div>
               <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Email address:</a>
               <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${patient.email}"></a>
@@ -164,21 +164,6 @@
                      style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
               <label for="email" style="display: flex; align-items: center;">
                 Change your email address
-              </label>
-            </div>
-          </div>
-          <!-- password -->
-          <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
-            <div>
-              <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Password:</a>
-              <!--                            <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none">¯\_(ツ)_/¯</a>-->
-            </div>
-            <div class="form-floating mb-3 mt-2" style="position: relative;">
-              <img src="../static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
-              <input type="password" class="form-control" id="pwd" placeholder="Change your password" name="pswd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
-                     title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
-                     style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-              <label for="pwd">Change your password
               </label>
             </div>
           </div>
@@ -195,9 +180,9 @@
   <!-- title -->
   <div class="container-fluid pt-2 pb-5 px-5 mt-5 text-center homepage_title">Patient <a style="color: #159EEC;">appointments</a></div>
 
-  <div th:each="appointment : ${appointments}" class="d-flex flex-column justify-content-around mb-3">
+  <div th:each="appointment : ${appointments}" class="d-flex justify-content-around mb-3">
     <!-- appointment 1 -->
-    <div class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE">
+    <div class="p-4 d-inline-flex mb-3" style="background-color: #1F2B6C; border-radius: 10px; color: #FCFEFE; width: 40%">
       <div class="p-3" style="width: 80%">
         <div class="pb-1 d-inline-flex " style="width:100%">
           <img src="../static/img/calendar_emote.svg" alt="calendar" style="width: 10%">
