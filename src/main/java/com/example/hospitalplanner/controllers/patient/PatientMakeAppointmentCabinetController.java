@@ -3,6 +3,7 @@ package com.example.hospitalplanner.controllers.patient;
 import com.example.hospitalplanner.database.DAO.*;
 import com.example.hospitalplanner.database.DAOFactory;
 import com.example.hospitalplanner.entities.Examination;
+import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.entities.Appoinments;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import java.sql.SQLException;
@@ -33,6 +35,15 @@ public class PatientMakeAppointmentCabinetController {
     private String date;
     private String time;
     private int examinationId;
+    private int cabinetID;
+    private long doctorCnp;
+    private String appointmentDayOfWeekString;
+    private DoctorsSpecialitiesDAO doctorsSpecialitiesDAO;
+    private DoctorsScheduleDAO doctorsScheduleDAO;
+    private AppointmentsDAO appointmentsDAO;
+    private ExaminationDAO examinationDAO;
+    private LocalDateTime appointmentDateTime;
+    private long patientCNP;
 
     @Autowired
     private HttpSession session;
@@ -89,6 +100,7 @@ public class PatientMakeAppointmentCabinetController {
                                              @RequestParam("time") String time,
                                              Model model) throws SQLException, MakeAppointmentException {
 
+        this.doctorCnp = doctorCnp;
         this.date = date;
         this.time = time;
         this.examinationId = examinationId;
@@ -99,10 +111,18 @@ public class PatientMakeAppointmentCabinetController {
         DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(daoFactory.getConnection());
         ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
+        DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
+
+        this.doctorsScheduleDAO = doctorsScheduleDAO;
+        this.doctorsSpecialitiesDAO = doctorsSpecialitiesDAO;
+        this.appointmentsDAO = appointmentsDAO;
+        this.examinationDAO = examinationDAO;
 
         int cabinetID = (int) session.getAttribute("cabinetId");
+        this.cabinetID = cabinetID;
         String personEmail = (String) session.getAttribute("email");
         long patientCNP = patientDAO.getCNP(personEmail);
+        this.patientCNP = patientCNP;
         String redirect = "redirect:/makeAppointment/" + cabinetID;
 
 
@@ -115,6 +135,7 @@ public class PatientMakeAppointmentCabinetController {
                 "\n\t- time: " + time);
 
         LocalDateTime appointmentDateTime = LocalDateTime.parse(date + "T" + time);
+        this.appointmentDateTime = appointmentDateTime;
         LocalDateTime currentDateTime = LocalDateTime.now();
 
         // if date and time are in the past
@@ -126,6 +147,7 @@ public class PatientMakeAppointmentCabinetController {
         // if the date is on weekend days
         DayOfWeek dayOfWeek = appointmentDateTime.getDayOfWeek();
         String appointmentDayOfWeekString = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+        this.appointmentDayOfWeekString = appointmentDayOfWeekString;
         if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
             System.out.println("Error: You cannot make an appointment on weekends!");
             return redirect;
@@ -173,14 +195,13 @@ public class PatientMakeAppointmentCabinetController {
 
             return "redirect:/myAppointments";
         } else { // if the slot isn't available
-            System.out.println("\nNU se poate face programarea!");
+            System.out.println("\nNU se poate face programarea la doctorul si ora ceruta!");
+
+            List<Appoinments> appoinmentSlots = new ArrayList<>();
+
+            appoinmentSlots = recommendSameTimeDoctorDifferent(appoinmentSlots);
+
         }
-
-
-
-
-
-
 
 // X        // cand se salveaza un raport -> modifica durata media in DB
 
@@ -241,8 +262,6 @@ public class PatientMakeAppointmentCabinetController {
 
                 int averageDoctorExamination = (int) examinationDAO.getAverageDuration(appoinment.getExaminationID());
 
-//                 System.out.println("\nAm gasit programarea: " +appoinment + ", average: " + averageDoctorExamination);
-
                 String patientStart = this.time;
                 String patientEnd = appointmentEndTime.format(formatter);
 
@@ -257,23 +276,10 @@ public class PatientMakeAppointmentCabinetController {
                 LocalTime doctorStartTime = LocalTime.of(hour, minute);
                 LocalTime doctorEndTime = LocalTime.parse(doctorEnd);
 
-                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime)) {
-//                    System.out.println("\nTRUE:" +
-//                            "\n\t- docS: " + doctorStartTime +
-//                            "\n\t- docE: " + doctorEndTime +
-//                            "\n\t- patS: " + patientStartTime +
-//                            "\n\t- patE: " + patientEndTime);
+                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime))
                     return false;
-                }
-                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime)) {
-//                    System.out.println("\nTRUE:" +
-//                            "\n\t- docS: " + doctorStartTime +
-//                            "\n\t- docE: " + doctorEndTime +
-//                            "\n\t- patS: " + patientStartTime +
-//                            "\n\t- patE: " + patientEndTime);
+                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime))
                     return false;
-                }
-
              }
         }
 
@@ -291,5 +297,49 @@ public class PatientMakeAppointmentCabinetController {
         String endTimeString = endTime.format(formatter);
 
         return endTimeString;
+    }
+
+    public List<Appoinments> recommendSameTimeDoctorDifferent(List<Appoinments> appoinmentSlots) throws SQLException {
+
+        List<Doctor> doctorList = doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetID);
+
+        // delete the doctor from the patient form
+        for(Doctor doctor : doctorList)
+            if(doctor.getCnp() == doctorCnp)
+                doctorList.remove(doctor);
+
+        for(Doctor doctor : doctorList) {
+            List<DoctorSchedule> doctorScheduleList = doctorsScheduleDAO.getDoctorSchedule_FullWeek(doctor.getCnp());
+
+            DoctorSchedule doctorScheduleDay = doctorsScheduleDAO.getDoctorSchedule_SpecificDay(doctor.getCnp(), appointmentDayOfWeekString);
+
+            List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
+
+            int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
+
+            if (appointmentDuration == 0)
+                appointmentDuration = 30;
+
+            if(isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
+                Appoinments newAppointment = new Appoinments();
+                newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+                newAppointment.setCabinetID(cabinetID);
+                newAppointment.setDoctorCNP(doctorCnp);
+                newAppointment.setPatientCNP(patientCNP);
+
+                LocalDate localDate = LocalDate.parse(date);
+                LocalTime localTime = LocalTime.parse(time);
+
+                // Crearea obiectului LocalDateTime
+                LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+
+                newAppointment.setAppointmentTime(localDateTime);
+                newAppointment.setExaminationID(examinationId);
+
+                appoinmentSlots.add(newAppointment);
+            }
+        }
+
+        return appoinmentSlots;
     }
 }
