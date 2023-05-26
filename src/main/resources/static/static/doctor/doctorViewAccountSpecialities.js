@@ -25,6 +25,12 @@
     });
   });
 
+function deleteSpeciality(element) {
+    var cabinetID = element.getAttribute("cabinet-id");
+
+    window.location.href = "/doctorViewAccount/deleteSpeciality/" + cabinetID;
+}
+
 function addSpeciality(element) {
     var cabinetID = element.getAttribute("cabinet-id");
 
