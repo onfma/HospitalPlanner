@@ -99,55 +99,55 @@
           </div>
 
           <!-- FORMULAR-->
-          <form class="mt-2" style="background-color: #1F2B6C;" onsubmit="return validateForm()">
+          <form action="/makeAppointment/patientAppointment" method="POST" class="mt-2" style="background-color: #1F2B6C;" onsubmit="return validateForm()">
             <div class="container-fluid">
               <!-- Cabinet-->
               <div class="row">
                 <div class="p-3 container-fluid d-flex justify-content-start" style="text-align: center;
-                                                                                      border: 2px solid;
-                                                                                      border-color: transparent transparent #BFD2F8 transparent;
-                                                                                      color: #BFD2F8;">
+                                                                            border: 2px solid;
+                                                                            border-color: transparent transparent #BFD2F8 transparent;
+                                                                            color: #BFD2F8;">
                   <div class="col-sm-2" style="font-family: Work_Sans;
-                                              font-weight: 600;
-                                              font-size: 16px;
-                                              line-height: 22px;
-                                              text-align: start;">Cabinet:</div>
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 22px;
+                                    text-align: start;">Cabinet:</div>
                   <div class="col-sm-10 cabinet" style="font-family: Work_Sans;
-                                              font-weight: 500;
-                                              font-size: 16px;
-                                              line-height: 22px;
-                                              text-align: center;" id="cabinet" th:value="${cabinet.cabinetID}" th:text="${cabinet.cabinetName}"></div>
+                                    font-weight: 500;
+                                    font-size: 16px;
+                                    line-height: 22px;
+                                    text-align: center;" id="cabinet" th:value="${cabinet.cabinetID}" th:text="${cabinet.cabinetName}"></div>
                 </div>
               </div>
 
               <!-- Doctor-->
               <div class="row">
                 <div class="p-3 container-fluid d-flex justify-content-start" style="text-align: center;
-                                                                                      border: 2px solid;
-                                                                                      border-color: transparent transparent #BFD2F8 transparent;
-                                                                                      color: #BFD2F8;">
+                                                                            border: 2px solid;
+                                                                            border-color: transparent transparent #BFD2F8 transparent;
+                                                                            color: #BFD2F8;">
                   <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
-                                              font-weight: 600;
-                                              font-size: 16px;
-                                              line-height: 22px;
-                                              text-align: start;">Doctor:</div>
-                  <select class="form-select" id="select_doctor" name="select_doctor" title="Select your preferred doctor" required
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 22px;
+                                    text-align: start;">Doctor:</div>
+                  <select class="form-select" id="select_doctor" name="doctorCnp" title="Select your preferred doctor" required
                           style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  color: #BFD2F8;
-                                  background-color: #1F2B6C;
-                                  border:none;
-                                  text-align: center;
-                                  cursor: pointer;">
-                    <option disabled selected></option>
-                    <option th:each="doctor : ${cabinet.doctorList}"
-                            style="font-family: Work_Sans;
                         font-weight: 500;
                         font-size: 16px;
                         line-height: 22px;
-                        text-align: center;"
+                        color: #BFD2F8;
+                        background-color: #1F2B6C;
+                        border:none;
+                        text-align: center;
+                        cursor: pointer;">
+                    <option disabled selected></option>
+                    <option th:each="doctor : ${cabinet.doctorList}"
+                            style="font-family: Work_Sans;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 22px;
+              text-align: center;"
                             th:value="${doctor.cnp}"
                             th:text="${doctor.firstName} + ' ' + ${doctor.lastName}">
                     </option>
@@ -158,31 +158,32 @@
               <!-- Tip Consult-->
               <div class="row">
                 <div class="p-3 container-fluid d-flex justify-content-start" style="text-align: center;
-                                                                                      border: 2px solid;
-                                                                                      border-color: transparent transparent #BFD2F8 transparent;
-                                                                                      color: #BFD2F8;">
+                                                                            border: 2px solid;
+                                                                            border-color: transparent transparent #BFD2F8 transparent;
+                                                                            color: #BFD2F8;">
                   <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
-                                              font-weight: 600;
-                                              font-size: 16px;
-                                              line-height: 22px;
-                                              text-align: start;">Consultation:</div>
-                  <select class="form-select" id="select_consultation" name="select_consultation" title="Select your consultation type" required
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 22px;
+                                    text-align: start;">Consultation:</div>
+                  <select class="form-select" id="select_consultation" name="examinationId" title="Select your consultation type" required
                           style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  color: #BFD2F8;
-                                  background-color: #1F2B6C;
-                                  border:none;
-                                  text-align: center;
-                                  cursor: pointer;">
-                    <option disabled selected></option>
-                    <option th:each="examination : ${cabinet.examinationList}"
-                            style="font-family: Work_Sans;
                         font-weight: 500;
                         font-size: 16px;
                         line-height: 22px;
-                        text-align: center;"
+                        color: #BFD2F8;
+                        background-color: #1F2B6C;
+                        border:none;
+                        text-align: center;
+                        cursor: pointer;">
+                    <option disabled selected></option>
+                    <option th:each="examination : ${cabinet.examinationList}"
+                            style="font-family: Work_Sans;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 22px;
+              text-align: center;"
+                            th:value="${examination.idExamination}"
                             th:text="${examination.examinationName}">
                     </option>
                   </select>
@@ -192,67 +193,68 @@
               <!-- Date & Time-->
               <div class="row ">
                 <div class="col-sm-6 p-3 container-fluid d-flex justify-content-start" style="font-family: Work_Sans;
-                                                  font-weight: 500;
-                                                  font-size: 16px;
-                                                  line-height: 22px;
-                                                  text-align: start;
-                                                  color: #BFD2F8;
-                                                  border: 2px solid;
-                                                  border-color: #BFD2F8 #BFD2F8 #BFD2F8 transparent;">
+                                        font-weight: 500;
+                                        font-size: 16px;
+                                        line-height: 22px;
+                                        text-align: start;
+                                        color: #BFD2F8;
+                                        border: 2px solid;
+                                        border-color: #BFD2F8 #BFD2F8 #BFD2F8 transparent;">
                   <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
-                                              font-weight: 600;
-                                              font-size: 16px;
-                                              line-height: 22px;
-                                              text-align: start;">Date:</div>
-                  <input class="container-fluid col-sm-10" type="date" id="date" required
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 22px;
+                                    text-align: start;">Date:</div>
+                  <input class="container-fluid col-sm-10" type="date" name="date" required
                          style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  color: #BFD2F8;
-                                  background-color: #1F2B6C;
-                                  border:none;
-                                  text-align: center;
-                                  cursor: pointer;">
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 22px;
+                        color: #BFD2F8;
+                        background-color: #1F2B6C;
+                        border:none;
+                        text-align: center;
+                        cursor: pointer;">
                 </div>
                 <div class="col-sm-6 p-3 container-fluid d-flex justify-content-start" style="font-family: Work_Sans;
-                                                  font-weight: 500;
-                                                  font-size: 16px;
-                                                  line-height: 22px;
-                                                  text-align: start;
-                                                  color: #BFD2F8;
-                                                  border: 2px solid;
-                                                  border-color: #BFD2F8 #BFD2F8 #BFD2F8 transparent;">
+                                        font-weight: 500;
+                                        font-size: 16px;
+                                        line-height: 22px;
+                                        text-align: start;
+                                        color: #BFD2F8;
+                                        border: 2px solid;
+                                        border-color: #BFD2F8 #BFD2F8 #BFD2F8 transparent;">
                   <div class="col-sm-2 pt-1" style=" height:100%;font-family: Work_Sans;
-                                              font-weight: 600;
-                                              font-size: 16px;
-                                              line-height: 22px;
-                                              text-align: start;">Time:</div>
-                  <input class="container-fluid col-sm-10" type="time" id="time" required
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 22px;
+                                    text-align: start;">Time:</div>
+                  <input class="container-fluid col-sm-10" type="time" name="time" required
                          style="font-family: Work_Sans;
-                                  font-weight: 500;
-                                  font-size: 16px;
-                                  line-height: 22px;
-                                  color: #BFD2F8;
-                                  background-color: #1F2B6C;
-                                  border:none;
-                                  text-align: center;
-                                  cursor: pointer;">
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 22px;
+                        color: #BFD2F8;
+                        background-color: #1F2B6C;
+                        border:none;
+                        text-align: center;
+                        cursor: pointer;">
                 </div>
               </div>
 
             </div>
             <button class="container-fluid p-2" type="submit" id="submit_form_button"
                     style="background-color: #BFD2F8;
-                            font-family: Work_Sans;
-                            font-weight: 500;
-                            font-size: 16px;
-                            line-height: 22px;
-                            text-align: center;
-                            text-transform: uppercase;
-                            color: #1F2B6C;
-                            border: none;">SUBMIT</button>
+                  font-family: Work_Sans;
+                  font-weight: 500;
+                  font-size: 16px;
+                  line-height: 22px;
+                  text-align: center;
+                  text-transform: uppercase;
+                  color: #1F2B6C;
+                  border: none;">SUBMIT</button>
           </form>
+
         </div>
       </div>
 
