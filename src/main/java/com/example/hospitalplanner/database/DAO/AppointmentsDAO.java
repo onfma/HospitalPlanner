@@ -449,4 +449,20 @@ public class AppointmentsDAO {
 
         statement.close();
     }
+
+    public int getMaxAppointmentId() throws SQLException {
+        String query = "SELECT MAX(ID) FROM APPOINTMENTS";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+
+        int maxId = 0;
+        if (resultSet.next()) {
+            maxId = resultSet.getInt(1);
+        }
+
+        statement.close();
+        resultSet.close();
+        return maxId;
+    }
+
 }

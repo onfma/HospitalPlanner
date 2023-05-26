@@ -6,6 +6,7 @@ import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.print.Doc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,6 +99,27 @@ public class DoctorsScheduleDAO {
         statement.close();
         resultSet.close();
         return jsonArray.toString();
+    }
+
+
+    public DoctorSchedule getDoctorSchedule_SpecificDay(Long doctorCNP, String dayOfWeek) throws SQLException {
+        String query = "SELECT * FROM DOCTORS_SCHEDULE WHERE DOCTOR_CNP = ? AND DAY_OF_WEEK = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, doctorCNP); // set DOCTOR_CNP parameter
+        statement.setString(2, dayOfWeek);
+        ResultSet resultSet = statement.executeQuery();
+
+        DoctorSchedule doctorSchedule = new DoctorSchedule();
+        while (resultSet.next()) {
+            doctorSchedule.setId(resultSet.getLong("DOCTOR_CNP"));
+            doctorSchedule.setDayOfWeek(resultSet.getString("DAY_OF_WEEK"));
+            doctorSchedule.setStartTime(resultSet.getObject("START_TIME", LocalTime.class));
+            doctorSchedule.setEndTime(resultSet.getObject("END_TIME", LocalTime.class));
+        }
+
+        statement.close();
+        resultSet.close();
+        return doctorSchedule;
     }
 
     public String getDoctorSchedule_FullWeekJSON(Long doctorCNP) throws SQLException {

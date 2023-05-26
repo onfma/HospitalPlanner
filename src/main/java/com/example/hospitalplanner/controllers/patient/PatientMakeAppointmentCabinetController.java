@@ -6,6 +6,7 @@ import com.example.hospitalplanner.entities.Examination;
 import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.entities.Appoinments;
+import com.example.hospitalplanner.exceptions.DoctorChangeAccountException;
 import com.example.hospitalplanner.exceptions.MakeAppointmentException;
 import com.example.hospitalplanner.models.MakeAppointmetModel;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
@@ -27,6 +30,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/makeAppointment")
 public class PatientMakeAppointmentCabinetController {
+    private String date;
+    private String time;
+    private int examinationId;
+
     @Autowired
     private HttpSession session;
 
@@ -82,14 +89,22 @@ public class PatientMakeAppointmentCabinetController {
                                              @RequestParam("time") String time,
                                              Model model) throws SQLException, MakeAppointmentException {
 
-        int cabinetID = (int) session.getAttribute("cabinetId");
-        String personEmail = (String) session.getAttribute("email");
-        String redirect = "redirect:/makeAppointment/" + cabinetID;
+        this.date = date;
+        this.time = time;
+        this.examinationId = examinationId;
 
         DAOFactory daoFactory = new DAOFactory();
+        PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
         CabinetsScheduleDAO cabinetsScheduleDAO = new CabinetsScheduleDAO(daoFactory.getConnection());
         DoctorsScheduleDAO doctorsScheduleDAO = new DoctorsScheduleDAO(daoFactory.getConnection());
         ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
+
+        int cabinetID = (int) session.getAttribute("cabinetId");
+        String personEmail = (String) session.getAttribute("email");
+        long patientCNP = patientDAO.getCNP(personEmail);
+        String redirect = "redirect:/makeAppointment/" + cabinetID;
+
 
         System.out.println("Programarea se face pt:" +
                 "\n\t- email pacient: " + personEmail +
@@ -110,6 +125,7 @@ public class PatientMakeAppointmentCabinetController {
 
         // if the date is on weekend days
         DayOfWeek dayOfWeek = appointmentDateTime.getDayOfWeek();
+        String appointmentDayOfWeekString = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
         if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
             System.out.println("Error: You cannot make an appointment on weekends!");
             return redirect;
@@ -118,25 +134,55 @@ public class PatientMakeAppointmentCabinetController {
         List<CabinetSchedule> cabinetScheduleList = cabinetsScheduleDAO.getCabinetSchedule_FullWeek(cabinetID);
 
         // verify if it's in cabinet schedule or not
-        if(!isInCabinetSchedule(appointmentDateTime, cabinetScheduleList)) {
+        if(isInCabinetSchedule(appointmentDateTime, cabinetScheduleList)) {
             System.out.println("Ora programării nu este disponibilă în programul cabinetului.");
             return redirect;
         }
 
         // verify if appointment patient time is available in doctor schedule
         List<DoctorSchedule> doctorScheduleList = doctorsScheduleDAO.getDoctorSchedule_FullWeek(doctorCnp);
+
+        DoctorSchedule doctorScheduleDay = doctorsScheduleDAO.getDoctorSchedule_SpecificDay(doctorCnp, appointmentDayOfWeekString);
+
+        List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
+
         int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
 
         if (appointmentDuration == 0)
             appointmentDuration = 30;
 
-        if(isSlotAvailable(doctorScheduleList, appointmentDateTime, appointmentDuration))
+        if(isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
+            System.out.println("\nSe poate face programarea!");
+
+            Appoinments newAppointment = new Appoinments();
+            newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+            newAppointment.setCabinetID(cabinetID);
+            newAppointment.setDoctorCNP(doctorCnp);
+            newAppointment.setPatientCNP(patientCNP);
+
+            LocalDate localDate = LocalDate.parse(date);
+            LocalTime localTime = LocalTime.parse(time);
+
+            // Crearea obiectului LocalDateTime
+            LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+
+            newAppointment.setAppointmentTime(localDateTime);
+            newAppointment.setExaminationID(examinationId);
+
+            appointmentsDAO.insert(newAppointment);
+
+            return "redirect:/myAppointments";
+        } else { // if the slot isn't available
+            System.out.println("\nNU se poate face programarea!");
+        }
 
 
 
 
 
-        // cand se salveaza un raport -> modifica durata media in DB
+
+
+// X        // cand se salveaza un raport -> modifica durata media in DB
 
 // X        // daca data e in trecut : alert("Date is incorrect.");
 // X        // daca este in weekend: alert("We don't work on the weekends.");
@@ -180,14 +226,55 @@ public class PatientMakeAppointmentCabinetController {
         return false;
     }
 
-    public LocalDateTime calculateAppointmentEndTime(Appoinments appointment, Examination examination) {
+    public boolean isSlotAvailable(List<Appoinments> doctorAppointmentsPatientDay, LocalDateTime appointmentDateTime, int duration) throws SQLException {
+        DAOFactory daoFactory = new DAOFactory();
+        ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
+
+        LocalDateTime appointmentEndTime = appointmentDateTime.plusMinutes(duration);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        if(doctorAppointmentsPatientDay.isEmpty())
+            return true;
+
+        for(Appoinments appoinment : doctorAppointmentsPatientDay) {
+             if(appoinment.getAppointmentTime().getDayOfWeek() == appointmentDateTime.getDayOfWeek()) { // if the appointment Doctor day is the same with the appointment Patient day
+                int averageDoctorExamination = (int) examinationDAO.getAverageDuration(appoinment.getExaminationID());
+
+                String patientStart = this.time;
+                String patientEnd = appointmentEndTime.format(formatter);
+
+                LocalDateTime appTime = appoinment.getAppointmentTime();
+                int hour = appTime.getHour();
+                int minute = appTime.getMinute();
+
+                String doctorEnd = calculateAppointmentEndTime(appoinment, averageDoctorExamination);
+
+                LocalTime patientStartTime = LocalTime.parse(patientStart);
+                LocalTime patientEndTime = LocalTime.parse(patientEnd);
+                LocalTime doctorStartTime = LocalTime.of(hour, minute);
+                LocalTime doctorEndTime = LocalTime.parse(doctorEnd);
+
+                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isAfter(doctorEndTime))
+                    return true;
+                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isAfter(patientEndTime))
+                    return true;
+
+             }
+        }
+
+        return false;
+    }
+
+    public String calculateAppointmentEndTime(Appoinments appointment, int averageDuration) {
         LocalDateTime startTime = appointment.getAppointmentTime();
 
-        int averageDuration = (int) examination.getAverageDuration();
         if(averageDuration == 0)
             averageDuration = 30;
         LocalDateTime endTime = startTime.plusMinutes(averageDuration);
 
-        return endTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String endTimeString = endTime.format(formatter);
+
+        return endTimeString;
     }
 }
