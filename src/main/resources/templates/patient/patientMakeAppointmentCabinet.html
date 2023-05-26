@@ -88,14 +88,14 @@
             </div>
           </div>
 
-          <!--    error message-->
-          <div th:if="${error}" class="alert alert-danger" role="alert" id="error-message">
-            <span th:text="${error}"></span>
-          </div>
-
-          <!--    successfully message-->
+          <!--        error message-->
           <div th:if="${successMessage}" class="alert alert-success" role="alert">
             <span th:text="${successMessage}"></span>
+          </div>
+
+          <!--        successful message-->
+          <div th:if="${eroare}" class="alert alert-danger" role="alert">
+            <span th:text="${eroare}"></span>
           </div>
 
           <!-- FORMULAR-->

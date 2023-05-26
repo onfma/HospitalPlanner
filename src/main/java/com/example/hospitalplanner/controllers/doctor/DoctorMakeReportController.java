@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/doctorMakeReport")
@@ -57,8 +58,8 @@ public class DoctorMakeReportController {
                              @RequestParam("treatment_text") String treatmentText,
                              @RequestParam("appointmentId") int appointmentId,
                              Model model) throws SQLException {
-        System.out.println("Am primit informatiile:\n\t- durata: " + duration + "\n\t- diagnostic: " + diagnosticText + "\n\t- tratament: " + treatmentText);
-        System.out.println("ID programare: " + appointmentId);
+//        System.out.println("Am primit informatiile:\n\t- durata: " + duration + "\n\t- diagnostic: " + diagnosticText + "\n\t- tratament: " + treatmentText);
+//        System.out.println("ID programare: " + appointmentId);
 
         DAOFactory daoFactory = new DAOFactory();
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
@@ -67,7 +68,23 @@ public class DoctorMakeReportController {
         appointmentsDAO.setDiagnosis(appointmentId, diagnosticText);
         appointmentsDAO.setTreatment(appointmentId, treatmentText);
 
-        // Restul logicii de salvare a raportului
+        Appoinments appointment = appointmentsDAO.findAppoinment(appointmentId);
+
+        int examinationID = appointment.getExaminationID();
+
+        List<Appoinments> appointmentsWithSameExamination = appointmentsDAO.getAppointmentsSameExamination(examinationID);
+
+        float averageDuration = 0;
+        int sum = 0;
+        for (Appoinments appoinmentSameExamination : appointmentsWithSameExamination)
+            sum = sum + appoinmentSameExamination.getDuration();
+
+        averageDuration = sum / appointmentsWithSameExamination.size();
+
+        ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
+
+        examinationDAO.setAverageDuration(examinationID, averageDuration);
+
 
         return "redirect:/doctorMyAppointments";
     }

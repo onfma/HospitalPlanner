@@ -6,4 +6,8 @@ public class MakeAppointmentException extends Exception {
         super(message);
         this.redirect = redirect;
     }
+
+    public String getRedirect() {
+        return redirect;
+    }
 }

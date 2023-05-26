@@ -204,6 +204,40 @@ public class AppointmentsDAO {
         return appoinmentsList;
     }
 
+    public List<Appoinments> getAppointmentsSameExamination(int idExamination) throws SQLException {
+        String query = "SELECT * FROM APPOINTMENTS WHERE ID_EXAMINATION = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, idExamination); // set ID_EXAMINATION parameter
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Appoinments> appoinmentsList = new ArrayList<>();
+        while (resultSet.next()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            Appoinments appoinment = new Appoinments();
+            appoinment.setId(resultSet.getInt("ID"));
+            appoinment.setCabinetID(resultSet.getInt("CABINET_ID"));
+            appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setPatientCNP(resultSet.getLong("DOCTOR_CNP"));
+            appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
+
+            if(resultSet.getInt("DURATION") != 0)
+                appoinment.setDuration(resultSet.getInt("DURATION"));
+            if(resultSet.getString("DIAGNOSIS") != null)
+                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
+            if(resultSet.getString("TREATMENT") != null)
+                appoinment.setDiagnosis(resultSet.getString("TREATMENT"));
+
+            appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
+
+            appoinmentsList.add(appoinment);
+        }
+
+        statement.close();
+        resultSet.close();
+        return appoinmentsList;
+    }
+
     public String getCabinetAppointmentsJSON(int cabinetID) throws SQLException {
         String query = "SELECT * FROM APPOINTMENTS WHERE CABINET_ID = ?";
         PreparedStatement statement = connection.prepareStatement(query);

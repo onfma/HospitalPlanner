@@ -3,6 +3,7 @@ package com.example.hospitalplanner.controllers;
 import com.example.hospitalplanner.exceptions.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
@@ -16,14 +17,12 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(MakeAppointmentException.class)
-    public ModelAndView handleMakeAppointmentException(MakeAppointmentException ex, String redirect) {
-        ModelAndView redirectModelAndView = new ModelAndView(redirect);
-        redirectModelAndView.addObject("error", ex.getMessage());
-        return redirectModelAndView;
+    public ModelAndView handleMakeAppointmentException(MakeAppointmentException ex) {
+        String redirect = ex.getRedirect();
 
-//        ModelAndView modelAndView = new ModelAndView("patient/patientMakeAppointmentCabinet");
-//        modelAndView.addObject("error", ex.getMessage());
-//        return modelAndView;
+        ModelAndView modelAndView = new ModelAndView(redirect);
+        modelAndView.addObject("error", ex.getMessage());
+        return modelAndView;
     }
 
     @ExceptionHandler(MakeAppointmentSuccess.class)
