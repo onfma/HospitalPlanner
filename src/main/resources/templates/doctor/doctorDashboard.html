@@ -75,18 +75,20 @@
             </div>
           </div>
         </div>
-          <!-- Saturday -->
-          <div class="d-flex justify-content-start" style="height: 11%; color: #FCFEFE;">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Saturday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="p-2 text_schedule" style="text-align: center; width: 96%">Closed</div>
-          </div>
-          <!-- Sunday -->
-          <div class="d-flex justify-content-start" style="">
-            <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Sunday</div>
-            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
-            <div class="p-2 text_schedule" style=" text-align: center; width: 96%">Closed</div>
-          </div>
+
+        <!-- Saturday -->
+        <div class="d-flex justify-content-start px-3" style="height: 11%; color: #FCFEFE;">
+          <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Saturday</div>
+          <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
+          <div class="p-2 text_schedule" style="text-align: center; width: 96%">Closed</div>
+        </div>
+        <!-- Sunday -->
+        <div class="d-flex justify-content-start px-3" style="">
+          <div class="p-2 text_schedule" style="width: 45%; text-align: start;">Sunday</div>
+          <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC;">-</div>
+          <div class="p-2 text_schedule" style=" text-align: center; width: 96%">Closed</div>
+        </div>
+
 
 
         <!-- footer 2.0 micut -->
@@ -122,7 +124,7 @@
 
 <script>
   // function to display doctor schedule
-  window.addEventListener("DOMContentLoaded", function() {
+  function dispaly_schedule(){
     var startTimeInputs = document.querySelectorAll("[id^='startTime_']");
     var endTimeInputs = document.querySelectorAll("[id^='endTime_']");
 
@@ -135,7 +137,9 @@
       var endTimeValue = input.getAttribute("data-end-time");
       input.value = endTimeValue;
     });
-  });
+  }
+
+  window.addEventListener("DOMContentLoaded", dispaly_schedule());
 
   // function that modify the doctor schedule
   function modifySchedule() {

@@ -60,178 +60,185 @@
       <span th:text="${successMessage}"></span>
     </div>
 
-    <!-- account form -->
-    <form action="/doctorViewAccount" method="POST" class="container-fluid mt-3">
-      <div class="row">
-        <!-- info boxes -->
-        <div class="col-sm-9 p-3">
+    <div class="container-fluid row">
+      <div class="col-sm-9">
+        <!-- account form -->
+        <form action="/doctorViewAccount" method="POST" class="container-fluid mt-3">
           <div class="row">
-            <div class="col-sm-12 p-3">
+            <!-- info boxes -->
+            <div class="p-3">
+              <div class="row">
+                <div class="col-sm-12 p-3">
 
-              <div class="row mb-3">
-                <!-- cnp -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="cnp">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">CNP:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.cnp}"></a>
+                  <div class="row mb-3">
+                    <!-- cnp -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="cnp">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">CNP:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.cnp}"></a>
+                      </div>
+                    </div>
+                    <!-- gender -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="gender">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Gender:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.gender}"></a>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <!-- gender -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="gender">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Gender:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.gender}"></a>
-                  </div>
-                </div>
-              </div>
 
-              <div class="row mb-3">
-                <!-- first name -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="firstName">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">First name:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.firstName}"></a>
+                  <div class="row mb-3">
+                    <!-- first name -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;" id="firstName">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">First name:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.firstName}"></a>
+                      </div>
+                      <div class="form-floating mt-2 mb-3" style="position: relative;">
+                        <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                        <input type="text" class="form-control" id="first_name" placeholder="Change your first name" name="first_name" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                        <label for="first_name" style="display: flex; align-items: center;">
+                          Change your first name
+                        </label>
+                      </div>
+                    </div>
+                    <!-- last name -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="lastName">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Last name:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.lastName}"></a>
+                      </div>
+                      <div class="form-floating mb-3 mt-2" style="position: relative;">
+                        <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                        <input type="text" class="form-control" id="last_name" placeholder="Change your last name" name="last_name" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                        <label for="last_name" style="display: flex; align-items: center;">
+                          Change your last name
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-floating mt-2 mb-3" style="position: relative;">
-                    <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                    <input type="text" class="form-control" id="first_name" placeholder="Change your first name" name="first_name" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                    <label for="first_name" style="display: flex; align-items: center;">
-                      Change your first name
-                    </label>
-                  </div>
-                </div>
-                <!-- last name -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;" id="lastName">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Last name:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.lastName}"></a>
-                  </div>
-                  <div class="form-floating mb-3 mt-2" style="position: relative;">
-                    <img src="static/img/user_emote.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                    <input type="text" class="form-control" id="last_name" placeholder="Change your last name" name="last_name" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                    <label for="last_name" style="display: flex; align-items: center;">
-                      Change your last name
-                    </label>
-                  </div>
-                </div>
-              </div>
 
-              <div class="row mb-3">
-                <!-- tel -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Phone number:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.phoneNumber}"></a>
+                  <div class="row mb-3">
+                    <!-- tel -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Phone number:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.phoneNumber}"></a>
+                      </div>
+                      <div class="form-floating mb-3 mt-2" style="position: relative;">
+                        <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                        <input type="tel" class="form-control" id="tel" placeholder="Change your phone number" name="tel" pattern="[0-9]{10}" title="Phone number should be a 10-digit number. EX: '0712345678'" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                        <label for="tel" style="display: flex; align-items: center;">
+                          Change your phone number
+                        </label>
+                      </div>
+                    </div>
+                    <!-- home address -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Address:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.address}"></a>
+                      </div>
+                      <div class="form-floating mb-3 mt-2" style="position: relative;">
+                        <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                        <input type="text" class="form-control" id="home_address" placeholder="Change your home address" name="home_address" pattern="[a-zA-Z0-9,. ;]+" title="Address should contain only letters, digits, or the following characters: [,.;]" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                        <label for="home_address" style="display: flex; align-items: center;">
+                          Change your home address
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-floating mb-3 mt-2" style="position: relative;">
-                    <img src="static/img/phone_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                    <input type="tel" class="form-control" id="tel" placeholder="Change your phone number" name="tel" pattern="[0-9]{10}" title="Phone number should be a 10-digit number. EX: '0712345678'" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                    <label for="tel" style="display: flex; align-items: center;">
-                      Change your phone number
-                    </label>
-                  </div>
-                </div>
-                <!-- home address -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Address:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.address}"></a>
-                  </div>
-                  <div class="form-floating mb-3 mt-2" style="position: relative;">
-                    <img src="static/img/home_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                    <input type="text" class="form-control" id="home_address" placeholder="Change your home address" name="home_address" pattern="[a-zA-Z0-9,. ;]+" title="Address should contain only letters, digits, or the following characters: [,.;]" style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                    <label for="home_address" style="display: flex; align-items: center;">
-                      Change your home address
-                    </label>
-                  </div>
-                </div>
-              </div>
 
-              <div class="row mb-3">
-                <!-- email -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Email address:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.email}"></a>
+                  <div class="row mb-3">
+                    <!-- email -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px;">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Email address:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none" th:text="${doctor.email}"></a>
+                      </div>
+                      <div class="form-floating mb-3 mt-2" style="position: relative;">
+                        <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
+                        <input type="email" class="form-control" id="email" placeholder="Change your email address" name="email"
+                               pattern="^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$" oninvalid="setCustomValidity('Email format should be in that format: user@example.com')"
+                               oninput="setCustomValidity('')"
+                               style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                        <label for="email" style="display: flex; align-items: center;">
+                          Change your email address
+                        </label>
+                      </div>
+                    </div>
+                    <!-- password -->
+                    <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
+                      <div>
+                        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Password:</a>
+                        <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none"></a>
+                      </div>
+                      <div class="form-floating mb-3 mt-2" style="position: relative;">
+                        <img src="static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
+                        <input type="password" class="form-control" id="pwd" placeholder="Change your password" name="pswd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
+                               title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
+                               style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
+                        <label for="pwd">Change your password
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-floating mb-3 mt-2" style="position: relative;">
-                    <img src="static/img/email_emote_form.png" alt="user_emote" style="position: absolute; right: 0; padding-right: 30px; top: 25%;">
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email"
-                           pattern="^[a-zA-Z0-9\\Q#$%^&*,.?~@[]{}+-_/=\\E]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+$" oninvalid="setCustomValidity('Email format should be in that format: user@example.com')"
-                           oninput="setCustomValidity('')"
-                           style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                    <label for="email" style="display: flex; align-items: center;">
-                      Enter your email address
-                    </label>
-                  </div>
-                </div>
-                <!-- password -->
-                <div class="col pt-3 pb-2" style="background-color: #1F2B6C; border-radius: 10px; margin-left: 15px;">
-                  <div>
-                    <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Password:</a>
-                    <a class="container-fluid" style="height: 20px; color: #FCFEFE; text-decoration: none"></a>
-                  </div>
-                  <div class="form-floating mb-3 mt-2" style="position: relative;">
-                    <img src="static/img/password_emote.png" alt="password_emote" style="position: absolute; right: 0; padding-right: 32px; top: 25%;">
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pswd" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
-                           title="The password must contain at least: (8 characters, an uppercase letter, a lowercase letter, a number)"
-                           style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 5px; font-family: Work_Sans; font-weight: 500; font-size: 24px; line-height: 28px;">
-                    <label for="pwd">Enter your password
-                    </label>
-                  </div>
-                </div>
-              </div>
 
-            </div>
-            <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5"
-                    style="background-color: #159EEC;
+                </div>
+                <button id="submitButtonAccount" type="submit" class="btn btn-primary pt-2 pb-2 px-5"
+                        style="background-color: #159EEC;
                     color: #FCFEFE;
                     border-radius: 50px;
                     font-weight: 500;
                     font-size: 26px;
                     line-height: 42px;
                     font-family: Work_Sans;" disabled>Save Changes</button>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
-    <!-- specializari -->
-    <div class="col-sm-3">
-      <div class="col pt-3 pb-4 p-3 text-center" style="background-color: #1F2B6C; border-radius: 10px; margin-right: 15px; height: 100%" id="specializari">
-        <!-- titlu -->
-        <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Specializations:</a>
-        <!-- toate specializarile -->
-        <div class="d-flex flex-column justify-content-around mt-3" style="height: 90%;">
+      <!-- specializari -->
+      <div class="col-sm-3">
+        <div class="col pt-3 pb-4 p-3 text-center" style="background-color: #1F2B6C; border-radius: 10px; height: 100%" id="specializari">
+          <!-- titlu -->
+          <a class="container-fluid" style="height: 20px; color: #159EEC; text-decoration: none">Specializations:</a>
+          <!-- toate specializarile -->
+          <div class="d-flex flex-column justify-content-around mt-3" style="height: 90%;">
 
-          <!-- specializare 1 -->
-          <div class="p-2" style="background-color: #BFD2F8; border-radius: 10px;" th:each="doctorSpeciality : ${doctorSpecialities}">
-            <div class="container-fluid mb-3" th:text="${doctorSpeciality.cabinetName}"></div>
-            <div class="d-flex justify-content-around">
-              <button id="addSpecializare1" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
-                      disabled>Add
-              </button>
-              <button id="deleteSpecializare2" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
-                      th:attr="cabinet-id=${doctorSpeciality.cabinetID}" onclick="deleteSpeciality(this)">Delete
-              </button>
+            <!-- specializare 1 -->
+            <div class="p-2" style="background-color: #BFD2F8; border-radius: 10px;" th:each="doctorSpeciality : ${doctorSpecialities}">
+              <div class="container-fluid mb-3" th:text="${doctorSpeciality.cabinetName}"></div>
+              <div class="d-flex justify-content-around">
+                <button id="addSpecializare1" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
+                        disabled>Add
+                </button>
+                <button id="deleteSpecializare2" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
+                        th:attr="cabinet-id=${doctorSpeciality.cabinetID}" onclick="deleteSpeciality(this)">Delete
+                </button>
+              </div>
             </div>
-          </div>
 
-          <!-- specializare 2 -->
-          <div class="p-2" style="background-color: #BFD2F8; border-radius: 10px;" th:each="doctorSpeciality : ${doctorNESpecialities}">
-            <div class="container-fluid mb-3" th:text="${doctorSpeciality.cabinetName}"></div>
-            <div class="d-flex justify-content-around">
-              <button id="addSpecializare2" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
-                      th:attr="cabinet-id=${doctorSpeciality.cabinetID}" onclick="addSpeciality(this)">Add
-              </button>
-              <button id="deleteSpecializare1" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
-                      disabled>Delete
-              </button>
+            <!-- specializare 2 -->
+            <div class="p-2" style="background-color: #BFD2F8; border-radius: 10px;" th:each="doctorSpeciality : ${doctorNESpecialities}">
+              <div class="container-fluid mb-3" th:text="${doctorSpeciality.cabinetName}"></div>
+              <div class="d-flex justify-content-around">
+                <button id="addSpecializare2" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
+                        th:attr="cabinet-id=${doctorSpeciality.cabinetID}" onclick="addSpeciality(this)">Add
+                </button>
+                <button id="deleteSpecializare1" class="btn p-1 px-4" style="background-color: #159EEC; color: #FCFEFE; border-radius: 50px; font-weight: 500; font-size: 14px; font-family: Work_Sans;"
+                        disabled>Delete
+                </button>
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
+
+
+
   </div>
 
   <!-- FOOTER -->
