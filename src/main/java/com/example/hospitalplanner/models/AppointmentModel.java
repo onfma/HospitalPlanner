@@ -2,7 +2,9 @@ package com.example.hospitalplanner.models;
 
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class AppointmentModel {
     private int id;
@@ -25,6 +27,8 @@ public class AppointmentModel {
     private int duration;
     private int examinationID;
     private String examinationName;
+    private LocalDate localDate;
+    private LocalTime localTime;
 
     public AppointmentModel() {}
 
@@ -205,6 +209,22 @@ public class AppointmentModel {
 
     public int getDuration() {
         return duration;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
+    }
+
+    public LocalTime getLocalTime() {
+        return localTime;
+    }
+
+    public void setLocalTime(LocalTime localTime) {
+        this.localTime = localTime;
     }
 
     @Override

@@ -23,12 +23,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping("/makeAppointment")
@@ -45,6 +44,7 @@ public class PatientMakeAppointmentCabinetController {
     private ExaminationDAO examinationDAO;
     private LocalDateTime appointmentDateTime;
     private DoctorDAO doctorDAO;
+    private CabinetsScheduleDAO cabinetsScheduleDAO;
     private long patientCNP;
 
     @Autowired
@@ -121,6 +121,7 @@ public class PatientMakeAppointmentCabinetController {
         this.appointmentsDAO = appointmentsDAO;
         this.examinationDAO = examinationDAO;
         this.doctorDAO = doctorDAO;
+        this.cabinetsScheduleDAO = cabinetsScheduleDAO;
 
         int cabinetID = (int) session.getAttribute("cabinetId");
         this.cabinetID = cabinetID;
@@ -166,10 +167,6 @@ public class PatientMakeAppointmentCabinetController {
         }
 
         // verify if appointment patient time is available in doctor schedule
-        List<DoctorSchedule> doctorScheduleList = doctorsScheduleDAO.getDoctorSchedule_FullWeek(doctorCnp);
-
-        DoctorSchedule doctorScheduleDay = doctorsScheduleDAO.getDoctorSchedule_SpecificDay(doctorCnp, appointmentDayOfWeekString);
-
         List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
 
         int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
@@ -203,7 +200,11 @@ public class PatientMakeAppointmentCabinetController {
 
             List<AppointmentModel> appoinmentSlots = new ArrayList<>();
 
-            appoinmentSlots = recommendSameTimeDoctorDifferent(appoinmentSlots);
+            // recommend possible appointments for other doctor, but at the same time
+            appoinmentSlots = recommendSameTimeDifferentDoctor(appoinmentSlots);
+
+            // recommend possible appointments for the same doctor, but at different appointment time
+            appoinmentSlots = recommendDifferentTimeSameDoctor(appoinmentSlots);
 
             PatientAppointmentRecommendationController PatientAppointmentRecommendationController = new PatientAppointmentRecommendationController();
 
@@ -301,6 +302,11 @@ public class PatientMakeAppointmentCabinetController {
                 LocalTime doctorStartTime = LocalTime.of(hour, minute);
                 LocalTime doctorEndTime = LocalTime.parse(doctorEnd);
 
+                System.out.println("\n\t-DocS: " + doctorStartTime +
+                            "\n\t- docE: " + doctorEndTime +
+                            "\n\t- patientS: " + patientStartTime +
+                            "\n\t- patientE: " + patientEndTime);
+
                 if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime)) {
 //                    System.out.println("\n\t-DocS: " + doctorStartTime +
 //                            "\n\t- docE: " + doctorEndTime +
@@ -313,6 +319,8 @@ public class PatientMakeAppointmentCabinetController {
 //                            "\n\t- docE: " + doctorEndTime +
 //                            "\n\t- patientS: " + patientStartTime +
 //                            "\n\t- patientE: " + patientEndTime);
+                    return false;
+                } else if (patientStartTime.equals(doctorStartTime)) {
                     return false;
                 }
              }
@@ -334,7 +342,116 @@ public class PatientMakeAppointmentCabinetController {
         return endTimeString;
     }
 
-    public List<AppointmentModel> recommendSameTimeDoctorDifferent(List<AppointmentModel> appoinmentSlots) throws SQLException {
+    public List<AppointmentModel> recommendDifferentTimeSameDoctor(List<AppointmentModel> appoinmentSlots) throws SQLException {
+        List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
+
+        int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
+        if (appointmentDuration == 0)
+            appointmentDuration = 30;
+
+        // create a map to store every (startTimeAppointment, endTimeAppointment) from a Doctor's Appointment Schedule
+        Map<LocalTime, LocalTime> appointmentsMap = new HashMap<>();
+
+        // Iterați prin lista de programări ale doctorului
+        for (Appoinments appointment : doctorAppointmentsPatientDay) {
+            LocalDateTime appointmentTime = appointment.getAppointmentTime();
+            LocalTime startTime = appointmentTime.toLocalTime();
+            LocalTime endTime = startTime.plusMinutes(appointmentDuration);
+
+            // Adăugați startTime-ul și endTime-ul în Map
+            appointmentsMap.put(startTime, endTime);
+        }
+
+        // sort in ascending order according to the start time of a doctor's appointment
+        Map<LocalTime, LocalTime> sortedAppointmentsMap = new TreeMap<>(appointmentsMap);
+
+        System.out.println("\nProgramarile doctorului:");
+        // AFISAM programarile doctorului
+        for (Map.Entry<LocalTime, LocalTime> entry : sortedAppointmentsMap.entrySet()) {
+            LocalTime startTime = entry.getKey();
+            LocalTime endTime = entry.getValue();
+
+            System.out.println("\t- start: " + startTime + ", end: " + endTime);
+        }
+
+        // Create a new Map to store the endTime and the number of minutes available
+        Map<LocalTime, Integer> availableTimeMap = new HashMap<>();
+
+        LocalTime previousEndTime = null;
+
+        LocalTime startDay = null;
+        LocalTime finishDay = null;
+        boolean findStartDay = false;
+
+        // Iterate through the sorted map entries
+        for (Map.Entry<LocalTime, LocalTime> entry : sortedAppointmentsMap.entrySet()) {
+            LocalTime startTime = entry.getKey();
+            LocalTime endTime = entry.getValue();
+
+            if(!findStartDay) {
+                startDay = startTime;
+                findStartDay = true;
+            }
+            finishDay = endTime;
+
+            // Calculate the number of minutes available between the endTime of the previous schedule and the startTime of the current schedule
+            if (previousEndTime != null) {
+                int minutesAvailable = (int) java.time.Duration.between(previousEndTime, startTime).toMinutes();
+                availableTimeMap.put(previousEndTime, minutesAvailable);
+            }
+
+            previousEndTime = endTime;
+        }
+
+        System.out.println("\nstartDay: " + startDay + ", finishDay: " + finishDay);
+
+        System.out.println("\ntimupul liber al doctorului:");
+
+        boolean findAnyAppointment = false;
+        // iteram pentru a gasi posibilele programari ale pacientului
+        for (Map.Entry<LocalTime, Integer> entry : availableTimeMap.entrySet()) {
+            LocalTime endTime = entry.getKey();
+            int minutesAvailable = entry.getValue();
+
+            System.out.println("\t- end: " + endTime + ", minutes available: " + minutesAvailable);
+
+            if (minutesAvailable > appointmentDuration + 3) {
+                findAnyAppointment = true;
+                AppointmentModel addAppointment;
+                addAppointment = createAppointment(endTime);
+                appoinmentSlots.add(addAppointment);
+            }
+        }
+
+        if(!findAnyAppointment) {
+            // Extract the day of the week from `appointment Date Time`
+            DayOfWeek appointmentDayOfWeek = appointmentDateTime.getDayOfWeek();
+            String appointmentDayOfWeekString = appointmentDayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+
+            DoctorSchedule doctorSchedule = doctorsScheduleDAO.getDoctorSchedule_SpecificDay(doctorCnp, appointmentDayOfWeekString);
+
+            LocalTime doctorStartDay = doctorSchedule.getStartTime();
+            LocalTime doctorEndDay = doctorSchedule.getEndTime();
+
+            if(startDay.minusMinutes(appointmentDuration + 3).isAfter(doctorStartDay)) {
+                AppointmentModel addAppointment;
+                addAppointment = createAppointment(startDay.minusMinutes(appointmentDuration + 3));
+                appoinmentSlots.add(addAppointment);
+            }
+
+            if(finishDay.plusMinutes(appointmentDuration + 3).isBefore(doctorEndDay)) {
+                AppointmentModel addAppointment;
+                addAppointment = createAppointment(finishDay.plusMinutes(appointmentDuration + 3));
+                appoinmentSlots.add(addAppointment);
+            }
+
+        }
+
+
+        return appoinmentSlots;
+    }
+
+    public List<AppointmentModel> recommendSameTimeDifferentDoctor(List<AppointmentModel> appoinmentSlots) throws SQLException {
 
         List<Doctor> doctorList = doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetID);
 
@@ -366,7 +483,9 @@ public class PatientMakeAppointmentCabinetController {
                 newAppointment.setPatientCNP(patientCNP);
 
                 LocalDate localDate = LocalDate.parse(date);
+                newAppointment.setLocalDate(localDate);
                 LocalTime localTime = LocalTime.parse(time);
+                newAppointment.setLocalTime(localTime);
 
                 // Crearea obiectului LocalDateTime
                 LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
@@ -380,5 +499,30 @@ public class PatientMakeAppointmentCabinetController {
         }
 
         return appoinmentSlots;
+    }
+
+    public AppointmentModel createAppointment(LocalTime startTime) throws SQLException {
+        AppointmentModel newAppointment = new AppointmentModel();
+        newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+        newAppointment.setCabinetId(cabinetID);
+        newAppointment.setDoctorCNP(doctorCnp);
+        newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
+        newAppointment.setDoctorLastName(doctorDAO.getLastName(newAppointment.getDoctorCNP()));
+        newAppointment.setPatientCNP(patientCNP);
+
+        LocalDate localDate = LocalDate.parse(date);
+        newAppointment.setLocalDate(localDate);
+
+        LocalTime newStartTime = startTime.plusMinutes(3);
+        newAppointment.setLocalTime(newStartTime);
+
+        // Crearea obiectului LocalDateTime
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, newStartTime);
+
+        newAppointment.setAppointmentTime(localDateTime);
+        newAppointment.setExaminationID(examinationId);
+        newAppointment.setExaminationName(examinationDAO.getExaminationName(newAppointment.getExaminationID()));
+
+        return newAppointment;
     }
 }
