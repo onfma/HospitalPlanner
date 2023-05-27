@@ -132,13 +132,13 @@ public class PatientMakeAppointmentCabinetController {
         String redirect = "redirect:/makeAppointment/" + cabinetID;
 
 
-        System.out.println("Programarea se face pt:" +
-                "\n\t- email pacient: " + personEmail +
-                "\n\t- cabinetID: " + cabinetID +
-                "\n\t- doctorCNP: " + doctorCnp +
-                "\n\t- examinationID: " + examinationId +
-                "\n\t- date: " + date +
-                "\n\t- time: " + time);
+//        System.out.println("Programarea se face pt:" +
+//                "\n\t- email pacient: " + personEmail +
+//                "\n\t- cabinetID: " + cabinetID +
+//                "\n\t- doctorCNP: " + doctorCnp +
+//                "\n\t- examinationID: " + examinationId +
+//                "\n\t- date: " + date +
+//                "\n\t- time: " + time);
 
         LocalDateTime appointmentDateTime = LocalDateTime.parse(date + "T" + time);
         this.appointmentDateTime = appointmentDateTime;
@@ -229,7 +229,7 @@ public class PatientMakeAppointmentCabinetController {
             Examination examination = new Examination();
 
             model.addAttribute("cabinet", makeAppointmetModel);
-            
+
             return "patient/patientAppointmentRecommandation";
         }
     }
@@ -282,27 +282,12 @@ public class PatientMakeAppointmentCabinetController {
                 LocalTime doctorStartTime = LocalTime.of(hour, minute);
                 LocalTime doctorEndTime = LocalTime.parse(doctorEnd);
 
-                System.out.println("\n\t-DocS: " + doctorStartTime +
-                            "\n\t- docE: " + doctorEndTime +
-                            "\n\t- patientS: " + patientStartTime +
-                            "\n\t- patientE: " + patientEndTime);
-
-                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime)) {
-//                    System.out.println("\n\t-DocS: " + doctorStartTime +
-//                            "\n\t- docE: " + doctorEndTime +
-//                            "\n\t- patientS: " + patientStartTime +
-//                            "\n\t- patientE: " + patientEndTime);
+                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime))
                     return false;
-                }
-                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime)) {
-//                    System.out.println("\n\t-DocS: " + doctorStartTime +
-//                            "\n\t- docE: " + doctorEndTime +
-//                            "\n\t- patientS: " + patientStartTime +
-//                            "\n\t- patientE: " + patientEndTime);
+                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime))
                     return false;
-                } else if (patientStartTime.equals(doctorStartTime)) {
+                else if (patientStartTime.equals(doctorStartTime))
                     return false;
-                }
              }
         }
 
@@ -419,13 +404,10 @@ public class PatientMakeAppointmentCabinetController {
             // sort in ascending order according to the start time of a doctor's appointment
             Map<LocalTime, LocalTime> sortedAppointmentsMap = new TreeMap<>(appointmentsMap);
 
-            System.out.println("\nProgramarile doctorului:");
             // AFISAM programarile doctorului
             for (Map.Entry<LocalTime, LocalTime> entry : sortedAppointmentsMap.entrySet()) {
                 LocalTime startTime = entry.getKey();
                 LocalTime endTime = entry.getValue();
-
-                System.out.println("\t- start: " + startTime + ", end: " + endTime);
             }
 
             // Create a new Map to store the endTime and the number of minutes available
