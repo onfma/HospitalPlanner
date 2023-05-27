@@ -94,6 +94,15 @@ public class PatientMakeAppointmentCabinetController {
         }
     }
 
+    @PostMapping("/addAppointment")
+    public String processMakeAppointmentForm(@RequestBody AppointmentModel appointment,
+                                             @RequestParam("appointmentId") String appointmentId,
+                                             Model model) throws SQLException {
+        System.out.println("Se va adauga programarea: " + appointment);
+        System.out.println("\nam primit id-ul: " + appointmentId);
+
+        return "redirect:/myAppointments";
+    }
 
     @PostMapping("/patientAppointment")
     public String processMakeAppointmentForm(@RequestParam("doctorCnp") long doctorCnp,
@@ -215,6 +224,16 @@ public class PatientMakeAppointmentCabinetController {
             removeAppointmentsWithSameTime(appoinmentSlots);
 
             model.addAttribute("appoinmentSlots", appoinmentSlots);
+
+            // Verifică dacă lista appointmentSlots este null sau goală
+            if (appoinmentSlots == null || appoinmentSlots.isEmpty()) {
+                // Dacă este null sau goală, setează un atribut în model pentru a afișa înlocuitorul
+                model.addAttribute("showPlaceholder", true);
+            } else {
+                // Altfel, setează un atribut în model pentru a afișa formularul
+                model.addAttribute("showPlaceholder", false);
+            }
+
 
             MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
 
