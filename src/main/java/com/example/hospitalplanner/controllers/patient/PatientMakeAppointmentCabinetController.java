@@ -9,6 +9,7 @@ import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.entities.Appoinments;
 import com.example.hospitalplanner.exceptions.DoctorChangeAccountException;
 import com.example.hospitalplanner.exceptions.MakeAppointmentException;
+import com.example.hospitalplanner.models.AppointmentModel;
 import com.example.hospitalplanner.models.MakeAppointmetModel;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class PatientMakeAppointmentCabinetController {
     private AppointmentsDAO appointmentsDAO;
     private ExaminationDAO examinationDAO;
     private LocalDateTime appointmentDateTime;
+    private DoctorDAO doctorDAO;
     private long patientCNP;
 
     @Autowired
@@ -62,7 +64,6 @@ public class PatientMakeAppointmentCabinetController {
 
         MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
 
-        //aici n.ar treb si in model sa vina si cobinetID? cred ca de asta nu imi da mie
         makeAppointmetModel.setCabinetID(cabinetId);
         makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(cabinetId));
         makeAppointmetModel.setDoctorList(doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetId));
@@ -112,11 +113,14 @@ public class PatientMakeAppointmentCabinetController {
         ExaminationDAO examinationDAO = new ExaminationDAO(daoFactory.getConnection());
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO(daoFactory.getConnection());
         DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
+        CabinetsDAO cabinetsDAO = new CabinetsDAO(daoFactory.getConnection());
+        DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
 
         this.doctorsScheduleDAO = doctorsScheduleDAO;
         this.doctorsSpecialitiesDAO = doctorsSpecialitiesDAO;
         this.appointmentsDAO = appointmentsDAO;
         this.examinationDAO = examinationDAO;
+        this.doctorDAO = doctorDAO;
 
         int cabinetID = (int) session.getAttribute("cabinetId");
         this.cabinetID = cabinetID;
@@ -174,7 +178,7 @@ public class PatientMakeAppointmentCabinetController {
             appointmentDuration = 30;
 
         if(isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
-            System.out.println("\nSe poate face programarea!");
+            System.out.println("\nSe poate face programarea pt ora si doctorul cerute!");
 
             Appoinments newAppointment = new Appoinments();
             newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
@@ -197,10 +201,32 @@ public class PatientMakeAppointmentCabinetController {
         } else { // if the slot isn't available
             System.out.println("\nNU se poate face programarea la doctorul si ora ceruta!");
 
-            List<Appoinments> appoinmentSlots = new ArrayList<>();
+            List<AppointmentModel> appoinmentSlots = new ArrayList<>();
 
             appoinmentSlots = recommendSameTimeDoctorDifferent(appoinmentSlots);
 
+            PatientAppointmentRecommendationController PatientAppointmentRecommendationController = new PatientAppointmentRecommendationController();
+
+            model.addAttribute("appoinmentSlots", appoinmentSlots);
+
+            MakeAppointmetModel makeAppointmetModel = new MakeAppointmetModel();
+
+            int cabinetId = (int) session.getAttribute("cabinetId");
+
+            makeAppointmetModel.setCabinetID(cabinetId);
+            makeAppointmetModel.setCabinetName(cabinetsDAO.getSpecialityName(cabinetId));
+            makeAppointmetModel.setDoctorList(doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetId));
+            makeAppointmetModel.setExaminationList(examinationDAO.getCabinetExamination(cabinetId));
+            makeAppointmetModel.setCabinetScheduleList(cabinetsScheduleDAO.getCabinetSchedule_FullWeek(cabinetId));
+
+            Examination examination = new Examination();
+
+            model.addAttribute("cabinet", makeAppointmetModel);
+
+//            System.out.println("Posibile programari: " + appoinmentSlots);
+
+//            PatientAppointmentRecommendationController.showPatientAppointmentRecommendationPage(model);
+            return "patient/patientAppointmentRecommandation";
         }
 
 // X        // cand se salveaza un raport -> modifica durata media in DB
@@ -224,7 +250,7 @@ public class PatientMakeAppointmentCabinetController {
                 // daca nu e liber doctorul in ziua respectiva, cauta in programul celorlalti doctori din acelasi cabinet
 
 //        throw new MakeAppointmentException("Ceva exceptie", redirect);
-        return redirect; // redirect to patient dashboard
+//        return redirect; // redirect to patient dashboard
     }
 
     public boolean isInCabinetSchedule(LocalDateTime appointmentDateTime, List<CabinetSchedule> cabinetScheduleList){
@@ -259,7 +285,6 @@ public class PatientMakeAppointmentCabinetController {
 
         for(Appoinments appoinment : doctorAppointmentsPatientDay) {
              if(appoinment.getAppointmentTime().getDayOfWeek() == appointmentDateTime.getDayOfWeek()) { // if the appointment Doctor day is the same with the appointment Patient day
-
                 int averageDoctorExamination = (int) examinationDAO.getAverageDuration(appoinment.getExaminationID());
 
                 String patientStart = this.time;
@@ -276,10 +301,20 @@ public class PatientMakeAppointmentCabinetController {
                 LocalTime doctorStartTime = LocalTime.of(hour, minute);
                 LocalTime doctorEndTime = LocalTime.parse(doctorEnd);
 
-                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime))
+                if(doctorStartTime.isBefore(patientStartTime) && patientStartTime.isBefore(doctorEndTime)) {
+//                    System.out.println("\n\t-DocS: " + doctorStartTime +
+//                            "\n\t- docE: " + doctorEndTime +
+//                            "\n\t- patientS: " + patientStartTime +
+//                            "\n\t- patientE: " + patientEndTime);
                     return false;
-                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime))
+                }
+                else if (patientStartTime.isBefore(doctorStartTime) && doctorStartTime.isBefore(patientEndTime)) {
+//                    System.out.println("\n\t-DocS: " + doctorStartTime +
+//                            "\n\t- docE: " + doctorEndTime +
+//                            "\n\t- patientS: " + patientStartTime +
+//                            "\n\t- patientE: " + patientEndTime);
                     return false;
+                }
              }
         }
 
@@ -299,7 +334,7 @@ public class PatientMakeAppointmentCabinetController {
         return endTimeString;
     }
 
-    public List<Appoinments> recommendSameTimeDoctorDifferent(List<Appoinments> appoinmentSlots) throws SQLException {
+    public List<AppointmentModel> recommendSameTimeDoctorDifferent(List<AppointmentModel> appoinmentSlots) throws SQLException {
 
         List<Doctor> doctorList = doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetID);
 
@@ -313,7 +348,7 @@ public class PatientMakeAppointmentCabinetController {
 
             DoctorSchedule doctorScheduleDay = doctorsScheduleDAO.getDoctorSchedule_SpecificDay(doctor.getCnp(), appointmentDayOfWeekString);
 
-            List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
+            List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctor.getCnp());
 
             int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
 
@@ -321,10 +356,13 @@ public class PatientMakeAppointmentCabinetController {
                 appointmentDuration = 30;
 
             if(isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
-                Appoinments newAppointment = new Appoinments();
+
+                AppointmentModel newAppointment = new AppointmentModel();
                 newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
-                newAppointment.setCabinetID(cabinetID);
-                newAppointment.setDoctorCNP(doctorCnp);
+                newAppointment.setCabinetId(cabinetID);
+                newAppointment.setDoctorCNP(doctor.getCnp());
+                newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
+                newAppointment.setDoctorLastName(doctorDAO.getLastName(newAppointment.getDoctorCNP()));
                 newAppointment.setPatientCNP(patientCNP);
 
                 LocalDate localDate = LocalDate.parse(date);
@@ -335,6 +373,7 @@ public class PatientMakeAppointmentCabinetController {
 
                 newAppointment.setAppointmentTime(localDateTime);
                 newAppointment.setExaminationID(examinationId);
+                newAppointment.setExaminationName(examinationDAO.getExaminationName(newAppointment.getExaminationID()));
 
                 appoinmentSlots.add(newAppointment);
             }

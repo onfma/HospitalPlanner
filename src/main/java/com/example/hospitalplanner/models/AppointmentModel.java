@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 public class AppointmentModel {
     private int id;
     private String cabinetName;
+    private long doctorCNP;
+    private int cabinetId;
     private String examinationType;
     private String patientFirstName;
     private String patientLastName;
@@ -21,6 +23,8 @@ public class AppointmentModel {
     private long patientCNP;
     private char patientGender;
     private int duration;
+    private int examinationID;
+    private String examinationName;
 
     public AppointmentModel() {}
 
@@ -41,6 +45,38 @@ public class AppointmentModel {
         this.appointmentTime = appointmentTime;
         this.diagnosis = diagnosis;
         this.treatment = treatment;
+    }
+
+    public void setExaminationID(int examinationID) {
+        this.examinationID = examinationID;
+    }
+
+    public int getExaminationID() {
+        return examinationID;
+    }
+
+    public void setExaminationName(String examinationName) {
+        this.examinationName = examinationName;
+    }
+
+    public String getExaminationName() {
+        return examinationName;
+    }
+
+    public void setDoctorCNP(long doctorCNP) {
+        this.doctorCNP = doctorCNP;
+    }
+
+    public long getDoctorCNP() {
+        return doctorCNP;
+    }
+
+    public int getCabinetId() {
+        return cabinetId;
+    }
+
+    public void setCabinetId(int cabinetId) {
+        this.cabinetId = cabinetId;
     }
 
     public int getId() {
