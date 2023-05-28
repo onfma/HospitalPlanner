@@ -95,11 +95,17 @@ public class PatientMakeAppointmentCabinetController {
     }
 
     @PostMapping("/addAppointment")
-    public String processMakeAppointmentForm(@RequestBody AppointmentModel appointment,
-                                             @RequestParam("appointmentId") String appointmentId,
-                                             Model model) throws SQLException {
-        System.out.println("Se va adauga programarea: " + appointment);
-        System.out.println("\nam primit id-ul: " + appointmentId);
+    public String processMakeAppointmentForm(@RequestParam Map<String, Object> requestData, Model model) throws SQLException {
+        int cabinetId = (int) requestData.get("cabinetId");
+        long doctorCNP = (long) requestData.get("doctorCNP");
+        LocalDateTime appointmentTime = LocalDateTime.parse((String) requestData.get("appointmentTime"));
+        int examinationID = (int) requestData.get("examinationID");
+
+        System.out.println("Se va adauga examinarea cu următoarele date:" +
+                "\n\t- cabinetId: " + cabinetId +
+                "\n\t- doctorCNP: " + doctorCNP +
+                "\n\t- appointmentTime: " + appointmentTime +
+                "\n\t- examinationID: " + examinationID);
 
         return "redirect:/myAppointments";
     }
