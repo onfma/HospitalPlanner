@@ -11,6 +11,7 @@ import com.example.hospitalplanner.exceptions.DoctorChangeAccountException;
 import com.example.hospitalplanner.exceptions.MakeAppointmentException;
 import com.example.hospitalplanner.models.AppointmentModel;
 import com.example.hospitalplanner.models.MakeAppointmetModel;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/makeAppointment")
 public class PatientMakeAppointmentCabinetController {
+    private int idApp = 0;
     private String date;
     private String time;
     private int examinationId;
@@ -46,7 +48,9 @@ public class PatientMakeAppointmentCabinetController {
     private LocalDateTime appointmentDateTime;
     private DoctorDAO doctorDAO;
     private CabinetsScheduleDAO cabinetsScheduleDAO;
+    private AppointmentsModelDAO appointmentsModelDAO;
     private long patientCNP;
+
 
     @Autowired
     private HttpSession session;
@@ -94,18 +98,21 @@ public class PatientMakeAppointmentCabinetController {
         }
     }
 
-    @PostMapping("/addAppointment")
-    public String processMakeAppointmentForm(@RequestParam Map<String, Object> requestData, Model model) throws SQLException {
-        int cabinetId = (int) requestData.get("cabinetId");
-        long doctorCNP = (long) requestData.get("doctorCNP");
-        LocalDateTime appointmentTime = LocalDateTime.parse((String) requestData.get("appointmentTime"));
-        int examinationID = (int) requestData.get("examinationID");
+    @PostMapping("/addAppointment/{id}")
+    public String processMakeAppointmentForm(HttpServletRequest request,
+                                             @PathVariable int id,
+                                             Model model) throws SQLException {
 
-        System.out.println("Se va adauga examinarea cu următoarele date:" +
-                "\n\t- cabinetId: " + cabinetId +
-                "\n\t- doctorCNP: " + doctorCNP +
-                "\n\t- appointmentTime: " + appointmentTime +
-                "\n\t- examinationID: " + examinationID);
+        String appointmentId = request.getParameter("data");
+
+        System.out.println("\n am primit id-ul : " + appointmentId + " sau: " + id);
+
+//        System.out.println("Se va adauga examinarea cu următoarele date:" +
+//                "\n\t- status: " + cabinetId +
+//                "\n\t- cabinetId: " + cabinetId +
+//                "\n\t- doctorCNP: " + doctorCNP +
+//                "\n\t- appointmentTime: " + appointmentTime +
+//                "\n\t- examinationID: " + examinationID);
 
         return "redirect:/myAppointments";
     }
@@ -121,6 +128,7 @@ public class PatientMakeAppointmentCabinetController {
         this.date = date;
         this.time = time;
         this.examinationId = examinationId;
+        idApp = 0;
 
         DAOFactory daoFactory = new DAOFactory();
         PatientDAO patientDAO = new PatientDAO(daoFactory.getConnection());
@@ -131,6 +139,7 @@ public class PatientMakeAppointmentCabinetController {
         DoctorsSpecialitiesDAO doctorsSpecialitiesDAO = new DoctorsSpecialitiesDAO(daoFactory.getConnection());
         CabinetsDAO cabinetsDAO = new CabinetsDAO(daoFactory.getConnection());
         DoctorDAO doctorDAO = new DoctorDAO(daoFactory.getConnection());
+        AppointmentsModelDAO appointmentsModelDAO = new AppointmentsModelDAO(daoFactory.getConnection());
 
         this.doctorsScheduleDAO = doctorsScheduleDAO;
         this.doctorsSpecialitiesDAO = doctorsSpecialitiesDAO;
@@ -138,6 +147,7 @@ public class PatientMakeAppointmentCabinetController {
         this.examinationDAO = examinationDAO;
         this.doctorDAO = doctorDAO;
         this.cabinetsScheduleDAO = cabinetsScheduleDAO;
+        this.appointmentsModelDAO = appointmentsModelDAO;
 
         int cabinetID = (int) session.getAttribute("cabinetId");
         this.cabinetID = cabinetID;
@@ -228,6 +238,18 @@ public class PatientMakeAppointmentCabinetController {
             appoinmentSlots = recommendDifferentTimeDifferentDaySameDoctor(appoinmentSlots);
 
             removeAppointmentsWithSameTime(appoinmentSlots);
+
+            System.out.println("Programari ce trebuie inserate: ");
+            for(AppointmentModel newAppointmentModel : appoinmentSlots) {
+                System.out.println("\t* id: " + newAppointmentModel.getId() +
+                        "\n\t\t- doctorCNP: " + newAppointmentModel.getDoctorCNP() +
+                        "\n\t\t- patientCNP: " + newAppointmentModel.getPatientCNP() +
+                        "\n\t\t- appointmentTime: " + newAppointmentModel.getAppointmentTime());
+            }
+
+            for(AppointmentModel newAppointmentModel : appoinmentSlots) {
+                appointmentsModelDAO.insert(newAppointmentModel);
+            }
 
             model.addAttribute("appoinmentSlots", appoinmentSlots);
 
@@ -544,7 +566,8 @@ public class PatientMakeAppointmentCabinetController {
             if(isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
 
                 AppointmentModel newAppointment = new AppointmentModel();
-                newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+                newAppointment.setId(idApp);
+                idApp++;
                 newAppointment.setCabinetId(cabinetID);
                 newAppointment.setDoctorCNP(doctor.getCnp());
                 newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
@@ -572,7 +595,8 @@ public class PatientMakeAppointmentCabinetController {
 
     public AppointmentModel createAppointment(LocalTime startTime) throws SQLException {
         AppointmentModel newAppointment = new AppointmentModel();
-        newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+        newAppointment.setId(idApp);
+        idApp++;
         newAppointment.setCabinetId(cabinetID);
         newAppointment.setDoctorCNP(doctorCnp);
         newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
@@ -597,7 +621,8 @@ public class PatientMakeAppointmentCabinetController {
 
     public AppointmentModel createAppointmentLOCAL(LocalDateTime appTime) throws SQLException {
         AppointmentModel newAppointment = new AppointmentModel();
-        newAppointment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+        newAppointment.setId(idApp);
+        idApp++;
         newAppointment.setCabinetId(cabinetID);
         newAppointment.setDoctorCNP(doctorCnp);
         newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
@@ -629,7 +654,7 @@ public class PatientMakeAppointmentCabinetController {
             LocalDateTime currentAppointmentTime = appointment.getAppointmentTime();
 
             if (prevAppointmentTime != null && prevAppointmentTime.equals(currentAppointmentTime)) {
-                iterator.remove();
+                appointmentSlots.remove(iterator);
             } else {
                 prevAppointmentTime = currentAppointmentTime;
             }

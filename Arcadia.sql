@@ -71,6 +71,15 @@ CREATE TABLE Appointments (
   id_examination NUMBER REFERENCES Examination(id_examination)
 );
 
+CREATE TABLE AppointmentsModel (
+  id NUMBER PRIMARY KEY,
+  cabinet_id NUMBER REFERENCES Cabinets(id),
+  doctor_CNP NUMBER REFERENCES Doctors(CNP),
+  patient_CNP NUMBER REFERENCES Pacients(CNP),
+  appointment_time TIMESTAMP NOT NULL,
+  id_examination NUMBER REFERENCES Examination(id_examination)
+);
+
 CREATE TABLE Examination (
   id_examination NUMBER PRIMARY KEY,
   id_cabinet NUMBER REFERENCES Cabinets(id),
