@@ -103,16 +103,22 @@ public class PatientMakeAppointmentCabinetController {
                                              @PathVariable int id,
                                              Model model) throws SQLException {
 
-        String appointmentId = request.getParameter("data");
+        AppointmentModel appointmentModel = appointmentsModelDAO.findAppoinment(id);
 
-        System.out.println("\n am primit id-ul : " + appointmentId + " sau: " + id);
+        Appoinments appoinment = new Appoinments();
 
-//        System.out.println("Se va adauga examinarea cu următoarele date:" +
-//                "\n\t- status: " + cabinetId +
-//                "\n\t- cabinetId: " + cabinetId +
-//                "\n\t- doctorCNP: " + doctorCNP +
-//                "\n\t- appointmentTime: " + appointmentTime +
-//                "\n\t- examinationID: " + examinationID);
+        appoinment.setId(appointmentsDAO.getMaxAppointmentId() + 1);
+        appoinment.setCabinetID(appointmentModel.getCabinetId());
+        appoinment.setDoctorCNP(appointmentModel.getDoctorCNP());
+        appoinment.setPatientCNP(appointmentModel.getPatientCNP());
+        appoinment.setAppointmentTime(appointmentModel.getAppointmentTime());
+        appoinment.setExaminationID(appointmentModel.getExaminationID());
+
+        appointmentsDAO.insert(appoinment);
+
+        System.out.println(appoinment);
+
+        appointmentsModelDAO.deleteAll();
 
         return "redirect:/myAppointments";
     }
@@ -550,43 +556,46 @@ public class PatientMakeAppointmentCabinetController {
 
         List<Doctor> doctorList = doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetID);
 
-        // delete the doctor from the patient form
-        for(Doctor doctor : doctorList)
-            if(doctor.getCnp() == doctorCnp)
-                doctorList.remove(doctor);
+        if(!doctorList.isEmpty()) {
 
-        for(Doctor doctor : doctorList) {
-            List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctor.getCnp());
+            // delete the doctor from the patient form
+            for (Doctor doctor : doctorList)
+                if (doctor.getCnp() == doctorCnp)
+                    doctorList.remove(doctor);
 
-            int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
+            for (Doctor doctor : doctorList) {
+                List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctor.getCnp());
 
-            if (appointmentDuration == 0)
-                appointmentDuration = 30;
+                int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
 
-            if(isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
+                if (appointmentDuration == 0)
+                    appointmentDuration = 30;
 
-                AppointmentModel newAppointment = new AppointmentModel();
-                newAppointment.setId(idApp);
-                idApp++;
-                newAppointment.setCabinetId(cabinetID);
-                newAppointment.setDoctorCNP(doctor.getCnp());
-                newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
-                newAppointment.setDoctorLastName(doctorDAO.getLastName(newAppointment.getDoctorCNP()));
-                newAppointment.setPatientCNP(patientCNP);
+                if (isSlotAvailable(doctorAppointmentsPatientDay, appointmentDateTime, appointmentDuration)) {
 
-                LocalDate localDate = LocalDate.parse(date);
-                newAppointment.setLocalDate(localDate);
-                LocalTime localTime = LocalTime.parse(time);
-                newAppointment.setLocalTime(localTime);
+                    AppointmentModel newAppointment = new AppointmentModel();
+                    newAppointment.setId(idApp);
+                    idApp++;
+                    newAppointment.setCabinetId(cabinetID);
+                    newAppointment.setDoctorCNP(doctor.getCnp());
+                    newAppointment.setDoctorFirstName(doctorDAO.getFirstName(newAppointment.getDoctorCNP()));
+                    newAppointment.setDoctorLastName(doctorDAO.getLastName(newAppointment.getDoctorCNP()));
+                    newAppointment.setPatientCNP(patientCNP);
 
-                // Crearea obiectului LocalDateTime
-                LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+                    LocalDate localDate = LocalDate.parse(date);
+                    newAppointment.setLocalDate(localDate);
+                    LocalTime localTime = LocalTime.parse(time);
+                    newAppointment.setLocalTime(localTime);
 
-                newAppointment.setAppointmentTime(localDateTime);
-                newAppointment.setExaminationID(examinationId);
-                newAppointment.setExaminationName(examinationDAO.getExaminationName(newAppointment.getExaminationID()));
+                    // Crearea obiectului LocalDateTime
+                    LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
 
-                appoinmentSlots.add(newAppointment);
+                    newAppointment.setAppointmentTime(localDateTime);
+                    newAppointment.setExaminationID(examinationId);
+                    newAppointment.setExaminationName(examinationDAO.getExaminationName(newAppointment.getExaminationID()));
+
+                    appoinmentSlots.add(newAppointment);
+                }
             }
         }
 

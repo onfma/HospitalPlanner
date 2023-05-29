@@ -305,14 +305,6 @@ public class AppointmentsModelDAO {
             appoinment.setDoctorCNP(resultSet.getLong("DOCTOR_CNP"));
             appoinment.setPatientCNP(resultSet.getLong("PATIENT_CNP"));
             appoinment.setAppointmentTime(LocalDateTime.parse(resultSet.getString("APPOINTMENT_TIME"), formatter));
-
-            if(resultSet.getInt("DURATION") != 0)
-                appoinment.setDuration(resultSet.getInt("DURATION"));
-            if(resultSet.getString("DIAGNOSIS") != null)
-                appoinment.setDiagnosis(resultSet.getString("DIAGNOSIS"));
-            if(resultSet.getString("TREATMENT") != null)
-                appoinment.setTreatment(resultSet.getString("TREATMENT"));
-
             appoinment.setExaminationID(resultSet.getInt("ID_EXAMINATION"));
         }
 
