@@ -388,6 +388,8 @@ public class PatientMakeAppointmentCabinetController {
     }
 
     public List<AppointmentModel> recommendSameTimeDifferentDaySameDoctor(List<AppointmentModel> appoinmentSlots) throws SQLException {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
         List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
 
         int appointmentDuration = (int) examinationDAO.getAverageDuration(examinationId);
@@ -412,19 +414,31 @@ public class PatientMakeAppointmentCabinetController {
         if(isSlotAvailable(doctorAppointmentsPatientDay, nextDay, appointmentDuration)) {
             AppointmentModel addAppointment;
             addAppointment = createAppointmentLOCAL(nextDay);
-            appoinmentSlots.add(addAppointment);
+            LocalDateTime addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+            // if date and time are in the past
+            if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                appoinmentSlots.add(addAppointment);
+            }
         }
 
         if(isSlotAvailable(doctorAppointmentsPatientDay, previousDay, appointmentDuration)) {
             AppointmentModel addAppointment;
             addAppointment = createAppointmentLOCAL(previousDay);
-            appoinmentSlots.add(addAppointment);
+            LocalDateTime addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+            // if date and time are in the past
+            if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                appoinmentSlots.add(addAppointment);
+            }
         }
 
         return appoinmentSlots;
     }
 
     public List<AppointmentModel> recommendDifferentTimeSameDoctor(List<AppointmentModel> appoinmentSlots, LocalDateTime appDateTime) throws SQLException {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
         List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
 
         // keep only the appointments who have the same day as "appDateTime"
@@ -502,7 +516,12 @@ public class PatientMakeAppointmentCabinetController {
                     findAnyAppointment = true;
                     AppointmentModel addAppointment;
                     addAppointment = createAppointment(endTime);
-                    appoinmentSlots.add(addAppointment);
+                    LocalDateTime addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+                    // if date and time are in the past
+                    if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                        appoinmentSlots.add(addAppointment);
+                    }
                 }
             }
 
@@ -519,13 +538,23 @@ public class PatientMakeAppointmentCabinetController {
                 if (startDay.minusMinutes(appointmentDuration + 3).isAfter(doctorStartDay)) {
                     AppointmentModel addAppointment;
                     addAppointment = createAppointment(startDay.minusMinutes(appointmentDuration + 3));
-                    appoinmentSlots.add(addAppointment);
+                    LocalDateTime addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+                    // if date and time are in the past
+                    if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                        appoinmentSlots.add(addAppointment);
+                    }
                 }
 
                 if (finishDay.plusMinutes(appointmentDuration + 3).isBefore(doctorEndDay)) {
                     AppointmentModel addAppointment;
                     addAppointment = createAppointment(finishDay.plusMinutes(appointmentDuration + 3));
-                    appoinmentSlots.add(addAppointment);
+                    LocalDateTime addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+                    // if date and time are in the past
+                    if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                        appoinmentSlots.add(addAppointment);
+                    }
                 }
 
             }
@@ -542,10 +571,20 @@ public class PatientMakeAppointmentCabinetController {
 
             AppointmentModel addAppointment;
             addAppointment = createAppointment(doctorStartDay);
-            appoinmentSlots.add(addAppointment);
+            LocalDateTime addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+            // if date and time are in the past
+            if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                appoinmentSlots.add(addAppointment);
+            }
 
             addAppointment = createAppointment(doctorEndDay);
-            appoinmentSlots.add(addAppointment);
+            addAppointmentDateTime = addAppointment.getAppointmentTime();
+
+            // if date and time are in the past
+            if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                appoinmentSlots.add(addAppointment);
+            }
         }
 
 
@@ -553,15 +592,21 @@ public class PatientMakeAppointmentCabinetController {
     }
 
     public List<AppointmentModel> recommendSameTimeDifferentDoctor(List<AppointmentModel> appoinmentSlots) throws SQLException {
+        LocalDateTime currentDateTime = LocalDateTime.now();
 
         List<Doctor> doctorList = doctorsSpecialitiesDAO.getDoctorsHaveSameSpeciality(cabinetID);
 
         if(!doctorList.isEmpty()) {
 
             // delete the doctor from the patient form
-            for (Doctor doctor : doctorList)
-                if (doctor.getCnp() == doctorCnp)
-                    doctorList.remove(doctor);
+            Iterator<Doctor> iterator = doctorList.iterator();
+            while (iterator.hasNext()) {
+                Doctor doctor = iterator.next();
+                if (doctor.getCnp() == doctorCnp) {
+                    iterator.remove();
+                    break;
+                }
+            }
 
             for (Doctor doctor : doctorList) {
                 List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctor.getCnp());
@@ -594,7 +639,12 @@ public class PatientMakeAppointmentCabinetController {
                     newAppointment.setExaminationID(examinationId);
                     newAppointment.setExaminationName(examinationDAO.getExaminationName(newAppointment.getExaminationID()));
 
-                    appoinmentSlots.add(newAppointment);
+                    LocalDateTime addAppointmentDateTime = newAppointment.getAppointmentTime();
+
+                    // if date and time are in the past
+                    if (addAppointmentDateTime.isAfter(currentDateTime)) {
+                        appoinmentSlots.add(newAppointment);
+                    }
                 }
             }
         }
