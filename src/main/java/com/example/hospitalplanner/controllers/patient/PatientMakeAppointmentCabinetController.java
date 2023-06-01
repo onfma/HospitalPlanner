@@ -7,6 +7,7 @@ import com.example.hospitalplanner.entities.person.Doctor;
 import com.example.hospitalplanner.entities.schedule.CabinetSchedule;
 import com.example.hospitalplanner.entities.schedule.DoctorSchedule;
 import com.example.hospitalplanner.entities.Appoinments;
+import com.example.hospitalplanner.exceptions.CreateAccountException;
 import com.example.hospitalplanner.exceptions.DoctorChangeAccountException;
 import com.example.hospitalplanner.exceptions.MakeAppointmentException;
 import com.example.hospitalplanner.models.AppointmentModel;
@@ -163,13 +164,13 @@ public class PatientMakeAppointmentCabinetController {
         String redirect = "redirect:/makeAppointment/" + cabinetID;
 
 
-//        System.out.println("Programarea se face pt:" +
-//                "\n\t- email pacient: " + personEmail +
-//                "\n\t- cabinetID: " + cabinetID +
-//                "\n\t- doctorCNP: " + doctorCnp +
-//                "\n\t- examinationID: " + examinationId +
-//                "\n\t- date: " + date +
-//                "\n\t- time: " + time);
+        System.out.println("Programarea se face pt:" +
+                "\n\t- email pacient: " + personEmail +
+                "\n\t- cabinetID: " + cabinetID +
+                "\n\t- doctorCNP: " + doctorCnp +
+                "\n\t- examinationID: " + examinationId +
+                "\n\t- date: " + date +
+                "\n\t- time: " + time);
 
         LocalDateTime appointmentDateTime = LocalDateTime.parse(date + "T" + time);
         this.appointmentDateTime = appointmentDateTime;
@@ -178,7 +179,7 @@ public class PatientMakeAppointmentCabinetController {
         // if date and time are in the past
         if (appointmentDateTime.isBefore(currentDateTime)) {
             System.out.println("Error: The specified date and time are in the past!");
-            return redirect;
+            throw new MakeAppointmentException("The specified date and time are in the past!");
         }
 
         // if the date is on weekend days

@@ -16,21 +16,16 @@ public class ExceptionHandlerController {
         return modelAndView;
     }
 
+    ////////////////////////////
+
     @ExceptionHandler(MakeAppointmentException.class)
     public ModelAndView handleMakeAppointmentException(MakeAppointmentException ex) {
-        String redirect = ex.getRedirect();
-
-        ModelAndView modelAndView = new ModelAndView(redirect);
+        ModelAndView modelAndView = new ModelAndView("patient/patientMakeAppointmentCabinet");
         modelAndView.addObject("error", ex.getMessage());
         return modelAndView;
     }
 
-    @ExceptionHandler(MakeAppointmentSuccess.class)
-    public ModelAndView handleMakeAppointmentSuccess(MakeAppointmentSuccess ex) {
-        ModelAndView modelAndView = new ModelAndView("patientMakeAppointmentCabinet");
-        modelAndView.addObject("successMessage", ex.getMessage());
-        return modelAndView;
-    }
+    ////////////////////////////
 
     @ExceptionHandler(CreateAccountException.class)
     public ModelAndView handleCreateAccountException(CreateAccountException ex) {
