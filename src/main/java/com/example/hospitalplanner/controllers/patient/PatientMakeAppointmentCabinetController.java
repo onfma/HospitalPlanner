@@ -254,6 +254,7 @@ public class PatientMakeAppointmentCabinetController {
                         "\n\t\t- appointmentTime: " + newAppointmentModel.getAppointmentTime());
             }
 
+            appointmentsModelDAO.deleteAll();
             for(AppointmentModel newAppointmentModel : appoinmentSlots) {
                 appointmentsModelDAO.insert(newAppointmentModel);
             }
