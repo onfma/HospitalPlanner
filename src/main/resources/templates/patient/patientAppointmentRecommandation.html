@@ -18,168 +18,174 @@
 <body>
 
 
-<!-- HEADER -->
-<div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
-  <div class="d-flex justify-content-between mb-1 ml-5 px-5" style="background-color: transparent !important;">
-    <div class="bg-info text-center" style="background-color: transparent !important;">
-      <a href="/patientDashboard" class="header_title">HOSPITAL<a href="/patientDashboard" class="header_title" style="color: #159EEC;">PLANNER</a></a>
-    </div>
-    <div class="d-flex flex-row-reverse">
-      <!-- Logout button -->
-      <div class="p-2">
-        <a href="/logout">
-          <button type="button" class="btn"
-                  style="background-color: #159EEC; color: #BFD2F8; border-radius: 50px; font-weight: 500; font-family: Work_Sans; margin-left:40px;">Logout</button>
-        </a>
+  <!-- HEADER -->
+  <div class="container-fluid pt-5 pb-5 px-5" style="background-color: #1F2B6C;">
+    <div class="d-flex justify-content-between mb-1 ml-5 px-5" style="background-color: transparent !important;">
+      <div class="bg-info text-center" style="background-color: transparent !important;">
+        <a href="/patientDashboard" class="header_title">HOSPITAL<a href="/patientDashboard" class="header_title" style="color: #159EEC;">PLANNER</a></a>
       </div>
+      <div class="d-flex flex-row-reverse">
+        <!-- Logout button -->
+        <div class="p-2">
+          <a href="/logout">
+            <button type="button" class="btn"
+                    style="background-color: #159EEC; color: #BFD2F8; border-radius: 50px; font-weight: 500; font-family: Work_Sans; margin-left:40px;">Logout</button>
+          </a>
+        </div>
 
-      <!-- View Account button -->
-      <div class="p-2">
-        <a href="/patientViewAccount">
-          <button type="button" class="btn"
-                  style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Account</button>
-        </a>
-      </div>
+        <!-- View Account button -->
+        <div class="p-2">
+          <a href="/patientViewAccount">
+            <button type="button" class="btn"
+                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">View Account</button>
+          </a>
+        </div>
 
-      <!-- My Appointments button -->
-      <div class="p-2 px-5">
-        <a href="/myAppointments">
-          <button type="button" class="btn"
-                  style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button>
-        </a>
+        <!-- My Appointments button -->
+        <div class="p-2 px-5">
+          <a href="/myAppointments">
+            <button type="button" class="btn"
+                    style="background-color: #BFD2F8; color: #1F2B6C; border-radius: 50px; font-weight: 500; font-family: Work_Sans;">My Appointments</button>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- BODY -->
-<div class="container-fluid">
-  <div class="row">
+  <!-- BODY -->
+  <div class="container-fluid">
+    <div class="row">
 
-    <!-- formular -->
-    <div class="col-sm-7 p-5">
-      <div class="p-5">
-        <!-- text -->
-        <div class="mb-5">
-          <!-- titlu -->
-          <div class="mb-4"
-               style="font-family: Yeseva_One;
-                        font-weight: 400;
-                        font-size: 32px;
-                        line-height: 37px;
-                        color: #1F2B6C;" th:text="${cabinet.cabinetName} + ' Cabinet'">
-          </div>
-          <!-- intructiuni -->
-          <div style="font-family: Work_Sans;
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 16px;
-                        line-height: 22px;
-                        color: #212124;">
-            Welcome to HospitalPlanner! In order to make an appointment at one of our clinics,
-            please provide the name of the doctor you wish to see, as well as the type of consultation
-            you require. Additionally, select the desired date and starting time for your appointment
-            based on your preferences and the clinic's schedule displayed on the right side of the page.
-            To minimize wait times and avoid unnecessary congestion, we recommend considering the suggestions
-            provided by our website regarding the preferred appointment time and date.
-            <br><br>Thank you for your understanding and cooperation.
-          </div>
-        </div>
-
-
-        <!-- INLOCUITOR  -->
-        <div th:if="${showPlaceholder}" class="container-fluid text-center p-5 mb-5" style="background-color: #1F2B6C;">
-          <div class="mb-5" style="font-weight: 400;
-              font-size: 36px;
-              line-height: 42px;
-              text-align: center;
-              text-transform: uppercase;
-              color: #BFD2F8;">Sorry</div>
-          <div style="font-family: Work_Sans;
-              font-weight: 400;
-              font-size: 18px;
-              line-height: 25px;
-              text-align: center;
-              color: #FCFEFE;">The date you selected is unavailable, and nothing like it is open. Please select another date for your examination - preferably two days after the date selected now.</div>
-          <div class="mt-5" style="font-weight: 400;
-              font-size: 36px;
-              line-height: 42px;
-              text-align: center;
-              text-transform: uppercase;
-              color: #BFD2F8;">HospitalPlanner</div>
-        </div>
-        <!-- FINAL INLOCUITOR  -->
-
-        <!-- SUGESTII -->
-        <div th:each="appointment, stat : ${appoinmentSlots}" class="container-fluid p-4">
-          <!-- Sugestie 1-->
-          <div class="row px-1 mb-3 doctor_box">
-            <div class="col-sm-10" style="border-right: 5px solid #159EEC;">
-              <div style="margin-top: 12px" th:value="${appointment.examinationID}" th:text="${appointment.doctorFirstName} + ' ' + ${appointment.doctorLastName} + ' | ' + ${appointment.localDate} + ' | ' + ${appointment.localTime}"></div>
+      <!-- formular -->
+      <div class="col-sm-7 p-5">
+        <div class="p-5">
+          <!-- text -->
+          <div class="mb-5">
+            <!-- titlu -->
+            <div class="mb-4"
+                 style="font-family: Yeseva_One;
+                          font-weight: 400;
+                          font-size: 32px;
+                          line-height: 37px;
+                          color: #1F2B6C;" th:text="${cabinet.cabinetName} + ' Cabinet'">
             </div>
-
-            <div class="col-sm-2 p-2 d-flex justify-content-around">
-              <form th:action="@{'/makeAppointment/addAppointment/' + ${appointment.id}}" method="POST">
-                <input type="hidden" name="data" th:value="${appointment.id}" />
-                <button id="addAppointment" class="btn p-1 px-3" style="background-color: #159EEC;
-          color: #FCFEFE;
-          border-radius: 50px;
-          font-weight: 500;
-          font-size: 14px;
-          font-family: Work_Sans;">Select</button>
-              </form>
+            <!-- intructiuni -->
+            <div style="font-family: Work_Sans;
+                          font-style: normal;
+                          font-weight: 400;
+                          font-size: 16px;
+                          line-height: 22px;
+                          color: #212124;">
+              Welcome to HospitalPlanner! In order to make an appointment at one of our clinics,
+              please provide the name of the doctor you wish to see, as well as the type of consultation
+              you require. Additionally, select the desired date and starting time for your appointment
+              based on your preferences and the clinic's schedule displayed on the right side of the page.
+              To minimize wait times and avoid unnecessary congestion, we recommend considering the suggestions
+              provided by our website regarding the preferred appointment time and date.
+              <br><br>Thank you for your understanding and cooperation.
             </div>
           </div>
-        </div><!-- FINAL SUGESTII -->
 
 
+          <!-- INLOCUITOR  -->
+          <div th:if="${showPlaceholder}" class="container-fluid text-center p-5 mb-5" style="background-color: #1F2B6C;">
+            <div class="mb-5" style="font-weight: 400;
+                font-size: 36px;
+                line-height: 42px;
+                text-align: center;
+                text-transform: uppercase;
+                color: #BFD2F8;">Sorry</div>
+            <div style="font-family: Work_Sans;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 25px;
+                text-align: center;
+                color: #FCFEFE;">The date you selected is unavailable, and nothing like it is open. Please select another date for your examination - preferably two days after the date selected now.</div>
+            <div class="mt-5" style="font-weight: 400;
+                font-size: 36px;
+                line-height: 42px;
+                text-align: center;
+                text-transform: uppercase;
+                color: #BFD2F8;">HospitalPlanner</div>
+          </div>
+          <!-- FINAL INLOCUITOR  -->
 
-      </div>
-    </div>
+          <!-- SUGESTII TITLU -->
+          <div class="container-fluid text-center mb-5 mt-5"
+               style="height: 15%;
+                       font-family: Yeseva_One;
+                       font-weight: 400;
+                       font-size: 36px;
+                       line-height: 55px;
+                       color: #1F2B6C;"> Based on your preferences, the only appointment slots are:
+          </div>
+          <!-- SUGESTII -->
+          <div th:each="appointment, stat : ${appoinmentSlots}" class="container-fluid p-4">
+                      <!-- Sugestie 1-->
+            <div class="row px-1 mb-3 doctor_box">
+              <div class="col-sm-10" style="border-right: 5px solid #159EEC;">
+                <div style="margin-top: 12px" th:value="${appointment.examinationID}" th:text="${appointment.doctorFirstName} + ' ' + ${appointment.doctorLastName} + ' | ' + ${appointment.localDate} + ' | ' + ${appointment.localTime}"></div>
+              </div>
 
-    <!-- program cabinet -->
-    <div class="col-sm-5 p-3" style="background-color: #1F2B6C;">
-      <!-- titlu -->
-      <div class="container-fluid text-center"
-           style="height: 15%;
-                     font-family: Yeseva_One;
-                     font-weight: 400;
-                     font-size: 48px;
-                     line-height: 55px;
-                     color: #BFD2F8;">Schedule hours
-      </div>
-
-      <!-- zile -->
-      <div class="container-fluid px-5 pb-4 d-flex flex-column justify-content-between text-center" style="height: 70%; color: #FCFEFE;">
-        <!-- luni -->
-        <div class="d-flex justify-content-between" th:each="cabinetSchedule : ${cabinet.cabinetScheduleList}">
-          <div class="p-2 text_schedule" style="width: 30%;text-align: start; font-size: 25px;" th:text="${cabinetSchedule.dayOfWeek}"></div>
-          <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
-          <div class="p-2 text_schedule" style="width: 45%; text-align: end; font-size: 25px;" th:text="${cabinetSchedule.startTime} + ' - ' + ${cabinetSchedule.endTime}"></div>
+              <div class="col-sm-2 p-2 d-flex justify-content-around">
+                <form th:action="@{'/makeAppointment/addAppointment/' + ${appointment.id}}" method="POST">
+                  <input type="hidden" name="data" th:value="${appointment.id}" />
+                  <button id="addAppointment" class="btn p-1 px-3" style="background-color: #159EEC;
+            color: #FCFEFE;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 14px;
+            font-family: Work_Sans;">Select</button>
+                </form>
+              </div>
+            </div>
+          </div><!-- FINAL SUGESTII -->
         </div>
       </div>
 
-      <!-- footer 2.0 micut -->
-      <div class="container-fluid text-center pt-4 border-top border-5"
-           style="height: 15%;
-                     font-family: Yeseva_One;
-                     font-weight: 400;
-                     font-size: 26px;
-                     line-height: 55px;
-                     color: #BFD2F8;
-                     border-color: #BFD2F8">together, we can do good
+      <!-- program cabinet -->
+      <div class="col-sm-5 p-3" style="background-color: #1F2B6C;">
+        <!-- titlu -->
+        <div class="container-fluid text-center"
+             style="height: 15%;
+                       font-family: Yeseva_One;
+                       font-weight: 400;
+                       font-size: 48px;
+                       line-height: 55px;
+                       color: #BFD2F8;">Schedule hours
+        </div>
+
+        <!-- zile -->
+        <div class="container-fluid px-5 pb-4 d-flex flex-column justify-content-between text-center" style="height: 70%; color: #FCFEFE;">
+          <!-- luni -->
+          <div class="d-flex justify-content-between" th:each="cabinetSchedule : ${cabinet.cabinetScheduleList}">
+            <div class="p-2 text_schedule" style="width: 30%;text-align: start; font-size: 25px;" th:text="${cabinetSchedule.dayOfWeek}"></div>
+            <div class="p-2 text_schedule" style="font-size: 26px; color: #159EEC">-</div>
+            <div class="p-2 text_schedule" style="width: 45%; text-align: end; font-size: 25px;" th:text="${cabinetSchedule.startTime} + ' - ' + ${cabinetSchedule.endTime}"></div>
+          </div>
+        </div>
+
+        <!-- footer 2.0 micut -->
+        <div class="container-fluid text-center pt-4 border-top border-5"
+             style="height: 15%;
+                       font-family: Yeseva_One;
+                       font-weight: 400;
+                       font-size: 26px;
+                       line-height: 55px;
+                       color: #BFD2F8;
+                       border-color: #BFD2F8">together, we can do good
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- FOOTER -->
-<div class="container-fluid pt-5 pb-3 px-5" style="background-color: #1F2B6C;">
-  <div class="container-fluid pt-2 pb-2 px-5 text-center header_title" style="color: #BFD2F8;">HOSPITALPLANNER</div>
-  <div class="container-fluid pt-2 pb-5 px-5 text-center" style="font-weight: 400; font-size: 18px; line-height: 140%; color: #FCFEFE; font-family: Work_Sans;">
-    Proiecteare Avansata - Facultatea de Informatica Iasi - 2023<br>© Chichirau Claudiu-Constantin & Onofrei Maria
+  <!-- FOOTER -->
+  <div class="container-fluid pt-5 pb-3 px-5" style="background-color: #1F2B6C;">
+    <div class="container-fluid pt-2 pb-2 px-5 text-center header_title" style="color: #BFD2F8;">HOSPITALPLANNER</div>
+    <div class="container-fluid pt-2 pb-5 px-5 text-center" style="font-weight: 400; font-size: 18px; line-height: 140%; color: #FCFEFE; font-family: Work_Sans;">
+      Proiecteare Avansata - Facultatea de Informatica Iasi - 2023<br>© Chichirau Claudiu-Constantin & Onofrei Maria
+    </div>
   </div>
-</div>
 
 </body>
 
