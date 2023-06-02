@@ -1,6 +1,7 @@
 package com.example.hospitalplanner.controllers;
 
 import com.example.hospitalplanner.exceptions.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,12 +19,13 @@ public class ExceptionHandlerController {
 
     ////////////////////////////
 
-    @ExceptionHandler(MakeAppointmentException.class)
-    public ModelAndView handleMakeAppointmentException(MakeAppointmentException ex) {
-        ModelAndView modelAndView = new ModelAndView("patient/patientMakeAppointmentCabinet");
-        modelAndView.addObject("error", ex.getMessage());
-        return modelAndView;
-    }
+//    @ExceptionHandler(MakeAppointmentException.class)
+//    public String handleMakeAppointmentException(MakeAppointmentException ex, Model model) {
+//        model.addAttribute("error", ex.getMessage());
+//        model.addAttribute("cabinetId", ex.getCabinetId());
+//        System.out.println("mesajul de eroare: <" + model.getAttribute("error") + ">, cabientul este: " + model.getAttribute("cabinetId"));
+//        return "redirect:/makeAppointment/" + ex.getCabinetId();
+//    }
 
     ////////////////////////////
 

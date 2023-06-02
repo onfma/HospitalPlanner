@@ -62,12 +62,12 @@
           <!-- text -->
           <div class="mb-5">
             <!-- titlu -->
-            <div class="mb-4">
-<!--                 style="font-family: Yeseva_One;-->
-<!--                        font-weight: 400;-->
-<!--                        font-size: 32px;-->
-<!--                        line-height: 37px;-->
-<!--                        color: #1F2B6C;" th:text="${cabinet.cabinetName} + ' Cabinet'">-->
+            <div class="mb-4"
+                 style="font-family: Yeseva_One;
+                        font-weight: 400;
+                        font-size: 32px;
+                        line-height: 37px;
+                        color: #1F2B6C;" th:text="${cabinet.cabinetName} + ' Cabinet'">
             </div>
             <!-- intructiuni -->
             <div style="font-family: Work_Sans;
@@ -87,8 +87,8 @@
           </div>
 
           <!-- successful message -->
-          <div th:if="${eroare}" class="alert alert-danger" role="alert">
-            <span th:text="${eroare}"></span>
+          <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
           </div>
 
           <!-- FORMULAR-->

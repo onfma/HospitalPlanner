@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -61,6 +63,8 @@ public class PatientMakeAppointmentCabinetController {
 
         session.removeAttribute("cabinetId");
         session.setAttribute("cabinetId", cabinetId);
+
+        System.out.println("eroare: <" + model.getAttribute("error") + ">");
 
         DAOFactory daoFactory = new DAOFactory();
         CabinetsDAO cabinetsDAO = new CabinetsDAO(daoFactory.getConnection());
@@ -177,27 +181,21 @@ public class PatientMakeAppointmentCabinetController {
         LocalDateTime currentDateTime = LocalDateTime.now();
 
         // if date and time are in the past
-        if (appointmentDateTime.isBefore(currentDateTime)) {
-            System.out.println("Error: The specified date and time are in the past!");
-            throw new MakeAppointmentException("The specified date and time are in the past!");
-        }
+        if (appointmentDateTime.isBefore(currentDateTime))
+            throw new MakeAppointmentException("The specified date and time are in the past!", cabinetID);
 
         // if the date is on weekend days
         DayOfWeek dayOfWeek = appointmentDateTime.getDayOfWeek();
         String appointmentDayOfWeekString = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
         this.appointmentDayOfWeekString = appointmentDayOfWeekString;
-        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-            System.out.println("Error: You cannot make an appointment on weekends!");
-            return redirect;
-        }
+        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+            throw new MakeAppointmentException("You cannot make an appointment on weekends!", cabinetID);
 
         List<CabinetSchedule> cabinetScheduleList = cabinetsScheduleDAO.getCabinetSchedule_FullWeek(cabinetID);
 
         // verify if it's in cabinet schedule or not
-        if(isInCabinetSchedule(appointmentDateTime, cabinetScheduleList)) {
-            System.out.println("Ora programării nu este disponibilă în programul cabinetului.");
-            return redirect;
-        }
+        if(isInCabinetSchedule(appointmentDateTime, cabinetScheduleList))
+            throw new MakeAppointmentException("The appointment time is not available in the office schedule!", cabinetID);
 
         // verify if appointment patient time is available in doctor schedule
         List<Appoinments> doctorAppointmentsPatientDay = appointmentsDAO.getDoctorAppointments(doctorCnp);
@@ -721,5 +719,14 @@ public class PatientMakeAppointmentCabinetController {
             }
         }
     }
+
+    @ExceptionHandler(MakeAppointmentException.class)
+    public String handleMakeAppointmentException(MakeAppointmentException ex, Model model) throws SQLException {
+        model.addAttribute("error", ex.getMessage());
+        System.out.println("mesajul de eroare: <" + model.getAttribute("error") + ">, cabientul este: " + model.getAttribute("cabinetId"));
+        return showMakeAnAppointmentPage(ex.getCabinetId(), model);
+        //        return "redirect:/makeAppointment/{cabinetId}";
+    }
+
 
 }
