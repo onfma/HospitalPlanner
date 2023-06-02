@@ -1,7 +1,7 @@
 # HospitalPlanner
 Preface: _Planificarea pacientilor la cabinetele doctorilor dintr-un spital, pe baza preferintelor si programului acestora._
 
-Hospital Planner is a web application designed to streamline appointment management in hospitals. It offers patients the ability to book appointments with doctors and view their schedules. In cases where a preferred appointment slot is unavailable, the system provides recommendations for alternative open slots based on the patient's preferences.
+Hospital Planner is a **Java Spring Web application** designed to streamline appointment management in hospitals, with the help of **Bootstrap 5** and **Oracle SQL**. It offers patients the ability to book appointments with doctors and view their schedules. In cases where a preferred appointment slot is unavailable, the system provides recommendations for alternative open slots based on the patient's preferences.
 
 Furthermore, each appointment includes a report feature, allowing doctors to fill in treatment details and diagnoses. Patients can access their reports once they have been completed by the doctor, providing transparency and easy access to their medical information.
 
