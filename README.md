@@ -7,7 +7,11 @@ Furthermore, each appointment includes a report feature, allowing doctors to fil
 
 Healthcare professionals can manage their schedules, and administrators have access to a dashboard for administrative tasks. The application aims to enhance the patient experience, optimize resource utilization, and provide data-driven insights for decision-making.
 
+[Project video presentation](https://www.youtube.com/watch?v=IANTuoulf0c&ab_channel=ClaudiuChichirau)
+
 [Figma UX design](https://www.figma.com/file/6zpBQJNomRsYVidhVadLm7/MEDDICAL---Hospital-website-template-(Community)-(Community)?type=design&node-id=503%3A2300&t=SFmIibILdErc8FxS-1)
+
+
 
 ## How to run
 
